@@ -12,7 +12,7 @@ public class Conexion {
 
 			try { // registro el driver de connection
 
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName("com.mysql.cj.jdbc.Driver");
 
 			} catch (ClassNotFoundException e) {
 
