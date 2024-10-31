@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ProbarBaseDatos {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         try {
             Connection connection = Conexion.dameConexion("convive");
 
@@ -19,4 +19,3 @@ public class ProbarBaseDatos {
         }
     }
 }
-

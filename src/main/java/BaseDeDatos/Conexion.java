@@ -1,41 +1,25 @@
 package BaseDeDatos;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexion {
-	
+    public static Connection dameConexion(String bbdd) {
+        Connection conn = null;
+        try {
+            // Cargar el driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // Establecer conexión
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + bbdd, "root", "");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: Driver MySQL no encontrado.");
+            e.printStackTrace();
+        } catch (SQLException ex) {
+            System.out.println("Error: No se pudo establecer conexión con la base de datos.");
+            ex.printStackTrace();
+        }
+        return conn;
+    }
+}
 
-	
-		public static  Connection dameConexion(String bbdd) {
-			Connection conn = null;
-
-			try { // registro el driver de connection
-
-				Class.forName("com.mysql.jdbc.Driver");
-
-			} catch (ClassNotFoundException e) {
-
-				e.printStackTrace();
-
-			}
-
-			try { // Establezco la conexion don la BBDD
-
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+bbdd, "root", "");
-				
-			} catch (SQLException ex) {
-
-				ex.printStackTrace();
-				System.out.println("SQLException : " + ex.getMessage());
-
-			}
-			return conn;
-
-		}
-		}
-
-	
-	
-
-	

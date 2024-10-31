@@ -1,70 +1,61 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ConVive</groupId>
-  <artifactId>ConVive</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <name>ConVive</name>
-  <url>http://maven.apache.org</url>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ConVive</groupId>
+    <artifactId>ConVive</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>20</java.version> <!-- Asegúrate que JavaFX y MySQL son compatibles con tu versión de Java -->
-  </properties>
+    <name>ConVive</name>
+    <url>http://maven.apache.org</url>
 
-  <dependencies>
-    <!-- Dependencia JavaFX Controls -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>${java.version}</version>
-    </dependency>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version> <!-- Usa una versión compatible con MySQL y JavaFX -->
+    </properties>
 
-    <!-- Dependencia JavaFX FXML -->
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>${java.version}</version>
-    </dependency>
-
-    <!-- Conector MySQL -->
-    <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.33</version> <!-- Asegúrate de utilizar la última versión compatible -->
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-        <!-- Plugin para ejecutar JavaFX -->
-        <plugin>
+    <dependencies>
+        <!-- JavaFX Controls -->
+        <dependency>
             <groupId>org.openjfx</groupId>
-            <artifactId>javafx-maven-plugin</artifactId>
-            <version>0.0.8</version>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>run</goal>
-                    </goals>
-                </execution>
-            </executions>
-            <configuration>
-                <mainClass>ConVive.MainApp</mainClass> <!-- Cambia esto por el nombre de tu clase principal con el paquete completo -->
-                <modulePaths>
-                    <modulePath>${java.home}/lib</modulePath>
-                </modulePaths>
-                <systemProperties>
-                    <systemProperty>
-                        <name>prism.verbose</name>
-                        <value>true</value>
-                    </systemProperty>
-                </systemProperties>
-            </configuration>
-        </plugin>
-    </plugins>
-  </build>
+            <artifactId>javafx-controls</artifactId>
+            <version>${java.version}</version>
+        </dependency>
+
+        <!-- JavaFX FXML -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${java.version}</version>
+        </dependency>
+
+        <!-- Conector MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin para ejecutar JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>BaseDeDatos.ProbarBaseDatos</mainClass> <!-- Asegúrate de que este sea el nombre de la clase principal -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
