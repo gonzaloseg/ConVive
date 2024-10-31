@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class ProbarBaseDatos {
 	public static void main(String[] args) {
         try {
-            Connection connection = Conexion.getConnection();
+            Connection connection = Conexion.dameConexion("convive");
 
             if (connection != null) {
                 System.out.println("Conexión a la base de datos establecida con éxito.");
