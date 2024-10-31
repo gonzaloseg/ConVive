@@ -1,4 +1,4 @@
-package controlador;
+package dao;
 
 public class Main {
 

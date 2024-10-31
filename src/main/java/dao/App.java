@@ -1,4 +1,4 @@
-package controlador;
+package dao;
 
 /**
  * Hello world!

@@ -1,4 +1,4 @@
-package modelo;
+package dto;
 
 public class Adulto {
 
