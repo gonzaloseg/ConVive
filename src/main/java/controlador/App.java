@@ -1,4 +1,4 @@
-package ConVive.ConVive;
+package controlador;
 
 /**
  * Hello world!
