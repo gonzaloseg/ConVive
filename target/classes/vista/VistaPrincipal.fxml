@@ -1,8 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22">
+   <children>
+      <Separator layoutX="158.0" layoutY="123.0" prefHeight="1.0" prefWidth="319.0" />
+      <HBox layoutX="198.0" layoutY="25.0" prefHeight="26.0" prefWidth="166.0">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="mes " />
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text=" año" />
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
+         </children>
+      </HBox>
+      <ScrollPane layoutX="158.0" layoutY="187.0" prefHeight="298.0" prefWidth="319.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+      <HBox layoutX="121.0" layoutY="52.0" prefHeight="26.0" prefWidth="319.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="lunes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="46.0" text="martes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="miercoles">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="jueves">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="viernes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="51.0" text="sabado">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="54.0" text="domingo">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <FlowPane layoutX="127.0" layoutY="78.0" prefHeight="200.0" prefWidth="319.0" />
+   </children>
 </AnchorPane>
-
