@@ -9,16 +9,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22">
+<AnchorPane fx:controller="dao.CalendarController" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Separator layoutX="158.0" layoutY="123.0" prefHeight="1.0" prefWidth="319.0" />
-      <HBox layoutX="198.0" layoutY="25.0" prefHeight="26.0" prefWidth="166.0">
+      <Separator layoutX="158.0" layoutY="159.0" prefHeight="1.0" prefWidth="319.0" />
+      <HBox layoutX="130.0" layoutY="25.0" prefHeight="26.0" prefWidth="166.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="mes " />
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text=" año" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
+            <Button onAction="#backOneMonth" mnemonicParsing="false" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
+            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="mes " />
+            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text=" año" />
+            <Button onAction="#forwardOneMonth" mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
          </children>
       </HBox>
       <ScrollPane layoutX="158.0" layoutY="187.0" prefHeight="298.0" prefWidth="319.0">
@@ -26,7 +25,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
-      <HBox layoutX="121.0" layoutY="52.0" prefHeight="26.0" prefWidth="319.0">
+      <HBox layoutX="53.0" layoutY="52.0" prefHeight="26.0" prefWidth="319.0">
          <children>
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="lunes">
                <font>
@@ -38,7 +37,7 @@
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="miercoles">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="miércoles">
                <font>
                   <Font size="9.0" />
                </font>
@@ -53,7 +52,7 @@
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="51.0" text="sabado">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="51.0" text="sábado">
                <font>
                   <Font size="9.0" />
                </font>
@@ -65,6 +64,6 @@
             </Label>
          </children>
       </HBox>
-      <FlowPane layoutX="127.0" layoutY="78.0" prefHeight="200.0" prefWidth="319.0" />
+      <FlowPane fx:id="calendar" layoutX="59.0" layoutY="78.0" prefHeight="200.0" prefWidth="319.0" />
    </children>
 </AnchorPane>
