@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>20</java.version> <!-- Asegúrate que JavaFX y MySQL son compatibles con tu versión de Java -->
+    <java.version>21</java.version> <!-- Asegúrate que JavaFX y MySQL son compatibles con tu versión de Java -->
   </properties>
 
   <dependencies>
