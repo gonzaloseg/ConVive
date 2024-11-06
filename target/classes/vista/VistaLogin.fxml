@@ -7,6 +7,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane minHeight="502.0" minWidth="400.0" prefHeight="502.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.LoginControlador">
    <children>
@@ -26,6 +27,10 @@
       <PasswordField fx:id="txtcontrasenia2" layoutX="173.0" layoutY="386.0" />
       <Button layoutX="301.0" layoutY="468.0" mnemonicParsing="false" text="crear usuario" />
       <DatePicker fx:id="datepickerFechaN" layoutX="174.0" layoutY="254.0" prefHeight="25.0" prefWidth="149.0" />
-      <ComboBox fx:id="comboboxVivienda" layoutX="173.0" layoutY="296.0" onAction="#seleccionarVivienda" prefWidth="150.0" />
+      <VBox fx:id="vboxPisos" layoutX="173.0" layoutY="299.0" prefHeight="200.0" prefWidth="149.0">
+         <children>
+            <ComboBox fx:id="comboboxVivienda" prefWidth="150.0" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
