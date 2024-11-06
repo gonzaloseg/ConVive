@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="834.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
+<AnchorPane prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
    <children>
-      <Separator layoutX="292.0" layoutY="321.0" prefHeight="2.0" prefWidth="470.0" />
-      <HBox layoutX="363.0" layoutY="41.0" prefHeight="18.0" prefWidth="146.0">
+      <Separator layoutX="352.0" layoutY="324.0" prefHeight="0.0" prefWidth="834.0" />
+      <HBox layoutX="359.0" layoutY="51.0" prefHeight="26.0" prefWidth="304.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
-            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="mes " />
-            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text=" año" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
+            <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
+            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="mes " />
+            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="74.0" text=" año" />
+            <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
          </children>
       </HBox>
-      <ScrollPane layoutX="292.0" layoutY="342.0" prefHeight="467.0" prefWidth="469.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
+      <ScrollPane layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0">
+         <content>
+            <ListView fx:id="listviewActividades" prefHeight="330.0" prefWidth="819.0" />
+         </content>
       </ScrollPane>
-      <HBox layoutX="292.0" layoutY="67.0" prefHeight="26.0" prefWidth="319.0">
+      <HBox layoutX="349.0" layoutY="77.0" prefHeight="26.0" prefWidth="319.0">
          <children>
             <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="lunes">
                <font>
@@ -64,7 +69,40 @@
             </Label>
          </children>
       </HBox>
-      <FlowPane fx:id="calendar" layoutX="292.0" layoutY="93.0" prefHeight="200.0" prefWidth="319.0" />
-      <Button fx:id="botonVolver" layoutX="97.0" layoutY="93.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+      <FlowPane fx:id="calendar" layoutX="349.0" layoutY="103.0" prefHeight="200.0" prefWidth="319.0" style="-fx-background-color: FFFFFF;" />
+      <Button fx:id="botonVolver" layoutX="726.0" layoutY="14.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+      <Label layoutX="352.0" layoutY="358.0" text="Próximas actividades" />
+      <Button fx:id="btnFiltros" layoutX="1135.0" layoutY="346.0" mnemonicParsing="false" text="Filtros" />
+      <Label layoutX="874.0" layoutY="110.0" text="¿Quieres proponer alguna actividad?" />
+      <Button fx:id="btnNuevaActividad" layoutX="903.0" layoutY="155.0" mnemonicParsing="false" onAction="#abrirCrearActividad" text="Añadir nueva actividad" />
+      <VBox prefHeight="750.0" prefWidth="308.0" style="-fx-background-color: FFFFFF;">
+         <children>
+            <ImageView fx:id="img" fitHeight="328.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imagenes/output-onlinepngtools.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lbMiPerfil" style="-fx-padding: 25;" text="Mi perfil">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="lbMiComunidad" style="-fx-padding: 25;" text="Mi comunidad">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="lbListaEventos" style="-fx-padding: 25;" text="Lista de eventos">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+            <Label fx:id="lbCerrarSesion" style="-fx-padding: 25;" text="Cerrar sesión">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
