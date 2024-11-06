@@ -36,6 +36,8 @@ public class LoginControlador implements Initializable{
     private DatePicker datepickerFechaN;
     @FXML
 	private Button botonVolver;
+    @FXML
+    private Button botonCrearUsuario;
 	  
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -54,6 +56,23 @@ public class LoginControlador implements Initializable{
             pisos.add(i + "ºB"); //añade los pisos B
         }
         comboboxVivienda.setItems(pisos); //carga los pisos al combobox
+        
+	}
+	
+	
+	
+	@FXML
+    void crearUsuario(ActionEvent event) { //BOTON AGREGAR USUARIO
+		String nombre = txtnombre.getText();
+		String apellidos = txtapellidos.getText();
+		String dni = txtDNI.getText();
+		String contrasenia = txtcontrasenia.getText();
+		String contrasenia2 = txtcontrasenia.getText();
+		String piso = comboboxVivienda.getAccessibleText();
+		String fechaN = datepickerFechaN.getAccessibleText();
+		
+		
+
 	}
 	
 	 
@@ -64,5 +83,6 @@ public class LoginControlador implements Initializable{
 		Stage escenario = (Stage) this.botonVolver.getScene().getWindow();
 		escenario.close();
     }
+	
 
 }
