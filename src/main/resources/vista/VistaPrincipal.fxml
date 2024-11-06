@@ -65,5 +65,6 @@
          </children>
       </HBox>
       <FlowPane fx:id="calendar" layoutX="292.0" layoutY="93.0" prefHeight="200.0" prefWidth="319.0" />
+      <Button fx:id="botonVolver" layoutX="97.0" layoutY="93.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
    </children>
 </AnchorPane>
