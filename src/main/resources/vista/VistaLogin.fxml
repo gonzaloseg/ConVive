@@ -25,9 +25,9 @@
       <TextField fx:id="txtDNI" layoutX="173.0" layoutY="213.0" />
       <PasswordField fx:id="txtcontrasenia" layoutX="173.0" layoutY="342.0" />
       <PasswordField fx:id="txtcontrasenia2" layoutX="173.0" layoutY="386.0" />
-      <Button fx:id="botonCrearUsuario" layoutX="301.0" layoutY="468.0" mnemonicParsing="false" onAction="#crearUsuario" text="crear usuario" />
+      <Button fx:id="botonCrearUsuario" layoutX="301.0" layoutY="468.0" mnemonicParsing="false" onAction="#crearNuevoVecino" text="crear usuario" />
       <DatePicker fx:id="datepickerFechaN" layoutX="174.0" layoutY="254.0" prefHeight="25.0" prefWidth="149.0" />
-      <VBox fx:id="vboxPisos" layoutX="173.0" layoutY="299.0" prefHeight="200.0" prefWidth="149.0">
+      <VBox fx:id="vboxPisos" layoutX="173.0" layoutY="299.0" prefHeight="43.0" prefWidth="150.0">
          <children>
             <ComboBox fx:id="comboboxVivienda" prefWidth="150.0" />
          </children>
