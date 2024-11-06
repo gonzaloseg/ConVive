@@ -17,13 +17,13 @@
       <Label layoutX="37.0" layoutY="300.0" text="Vivienda " />
       <Label layoutX="39.0" layoutY="346.0" text="Contraseña " />
       <Label layoutX="36.0" layoutY="390.0" text="Repetir contraseña" />
-      <TextField layoutX="173.0" layoutY="127.0" />
-      <TextField layoutX="173.0" layoutY="169.0" />
-      <TextField layoutX="173.0" layoutY="213.0" />
-      <TextField layoutX="173.0" layoutY="254.0" />
-      <TextField layoutX="173.0" layoutY="300.0" />
-      <PasswordField layoutX="173.0" layoutY="342.0" />
-      <PasswordField layoutX="173.0" layoutY="386.0" />
+      <TextField fx:id="txtnombre" layoutX="173.0" layoutY="127.0" />
+      <TextField fx:id="txtapellidos" layoutX="173.0" layoutY="169.0" />
+      <TextField fx:id="txtDNI" layoutX="173.0" layoutY="213.0" />
+      <TextField fx:id="txtfecha_nacimiento" layoutX="173.0" layoutY="254.0" />
+      <TextField fx:id="txtvivienda" layoutX="173.0" layoutY="300.0" />
+      <PasswordField fx:id="txtcontrasenia" layoutX="173.0" layoutY="342.0" />
+      <PasswordField fx:id="txtcontrasenia2" layoutX="173.0" layoutY="386.0" />
       <Button layoutX="301.0" layoutY="468.0" mnemonicParsing="false" text="crear usuario" />
    </children>
 </AnchorPane>

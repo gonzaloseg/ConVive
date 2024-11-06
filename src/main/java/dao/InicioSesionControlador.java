@@ -83,8 +83,25 @@ public class InicioSesionControlador implements Initializable{
     		
 			//Comprobar si los datos corresponenden con la BBDD
 			if (autentificar) {
-				new Alert(Alert.AlertType.INFORMATION, "Los datos introducidos son correctos").showAndWait();;
-			
+				
+					new Alert(Alert.AlertType.INFORMATION, "Los datos introducidos son correctos").showAndWait();;
+			    try {
+			        // Cargar la vista principal desde el archivo FXML
+			        Parent root = FXMLLoader.load(getClass().getResource("/vista/VistaPrincipal.fxml"));
+			        
+			        // Crear una nueva escena con la vista principal
+			        Scene escena = new Scene(root);
+			        
+			        // Obtener el escenario actual y reemplazarlo con la nueva escena
+			        Stage escenarioActual = (Stage) botonIniciarSesion.getScene().getWindow();
+			        escenarioActual.setScene(escena);
+			        escenarioActual.setTitle("Principal - Convive");
+			        escenarioActual.show();
+			        
+			    } catch (Exception e) {
+			        e.printStackTrace();
+			        new Alert(Alert.AlertType.ERROR, "No se pudo cargar la ventana principal").showAndWait();
+			    }
 			}else {
 				new Alert(Alert.AlertType.ERROR, "DNI o Contraseña incorrectos").showAndWait();;
 			}
