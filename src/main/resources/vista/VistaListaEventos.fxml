@@ -5,6 +5,6 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.ListaEventosControlador">
    <children>
-      <Button fx:id="btnVolver" layoutX="49.0" layoutY="46.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
+      <Button fx:id="botonVolver" layoutX="49.0" layoutY="46.0" mnemonicParsing="false" onAction="#volver" text="Volver" />
    </children>
 </AnchorPane>

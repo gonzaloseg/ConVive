@@ -18,8 +18,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 public class PrincipalControlador implements Initializable{
-	@FXML
-    private Button botonVolver;
+	
 	@FXML
 	private Button btnMesAnterior; //boton retroceder mes (calendario)
 	@FXML
@@ -47,50 +46,36 @@ public class PrincipalControlador implements Initializable{
     
 	private LocalDate currentDate = LocalDate.now();  // Fecha actual
 
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Inicializamos las acciones de las etiquetas
+		
+		//Convertir los label en botones
         lbMiPerfil.setOnMouseClicked(event -> abrirMiPerfil());
-        lbCerrarSesion.setOnMouseClicked(event -> cerrarSesion());
         lbMiComunidad.setOnMouseClicked(event -> abrirMiComunidad());
         lbListaEventos.setOnMouseClicked(event -> abrirListaEventos());
+        lbCerrarSesion.setOnMouseClicked(event -> cerrarSesion());
         
         // Actualizamos el calendario con el mes y año actuales
         actualizarCalendario();
 	}
 	
-	@FXML
-    void volver() { //BOTON VOLVER 
-		Stage escenario = (Stage) this.botonVolver.getScene().getWindow();
-		escenario.close();
-    }
 	
-	// Método para cerrar sesión (cierra ConVive)
-	private void cerrarSesion() {
-        // Cerrar la ventana principal
-        Stage escenario = (Stage) lbCerrarSesion.getScene().getWindow();
-        escenario.close();
-        
-	}
-
-    // Método para abrir la ventana "Mi perfil" y cerrar la ventana actual
+    
     @FXML
-	private void abrirMiPerfil() {
+	private void abrirMiPerfil() { //BOTON ABRIR PERFIL
         try {
-            // Cargar la nueva ventana ("VistaMiPerfil.fxml")
+            // Cargar la ventana del perfil
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiPerfil.fxml"));
             AnchorPane root = loader.load();
 
-            // Crear una nueva escena con la vista "Mi perfil - ConVive"
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Perfil - ConVive");
-
-            // Mostrar la nueva ventana
             stage.show();
 
-            // Cerrar la ventana actual
             Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();
             currentStage.close();
 
@@ -99,57 +84,78 @@ public class PrincipalControlador implements Initializable{
         }
     }
     
-    // Método para abrir la ventana "Mi comunidad" y cerrar la ventana actual
+    
+    
     @FXML
-    private void abrirMiComunidad() {
+    private void abrirMiComunidad() {  //BOTON ABRIR VENTANA COMUNIDAD
         try {
-            // Cargar la nueva ventana ("VistaMiComunidad.fxml")
+            // Cargar la  ventana MiComunidad
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiComunidad.fxml"));
             AnchorPane root = loader.load();
 
-            // Crear una nueva escena con la vista "Mi comunidad - ConVive"
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Comunidad - ConVive");
-
-            // Mostrar la nueva ventana
             stage.show();
 
-            // Cerrar la ventana actual
             Stage currentStage = (Stage) lbMiComunidad.getScene().getWindow();
-            currentStage.close();
+            currentStage.close(); // Cerrar la ventana actual
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    // Método para abrir la ventana "Lista de Eventos" y cerrar la ventana actual
+    
+    
     @FXML
-    private void abrirListaEventos() {
+    private void abrirListaEventos() { //BOTON ABRIR LISTA DE EVENTOS
         try {
-            // Cargar la nueva ventana ("VistaListaEventos.fxml")
+            // Cargar la  ventana Lista de eventos
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaListaEventos.fxml"));
             AnchorPane root = loader.load();
 
-            // Crear una nueva escena con la vista "Lista de Eventos - ConVive"
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Lista de Eventos - ConVive");
-
-            // Mostrar la nueva ventana
             stage.show();
 
-            // Cerrar la ventana actual
             Stage currentStage = (Stage) lbListaEventos.getScene().getWindow();
-            currentStage.close();
+            currentStage.close(); //cerrar ventana actual
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    
+    
+ 	private void cerrarSesion() { //BOTON CERRAR SESION Y VOLVER AL INICIO
+ 		try {
+ 	        
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
+            AnchorPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Principal - ConVive");
+            stage.show();
+
+            Stage currentStage = (Stage) lbCerrarSesion.getScene().getWindow();
+            currentStage.close(); //cerrar la ventana 
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+         
+ 	}
+    
+    
+    
+    
     
     // Método para abrir la ventana "Nueva Actividad" y cerrar la ventana actual
     @FXML

@@ -146,7 +146,7 @@ public class InicioSesionControlador implements Initializable{
 			Stage escenario = new Stage();
 			escenario.initModality(Modality.APPLICATION_MODAL);
 			escenario.setScene(escena);
-			escenario.setTitle("LOGIN - CONVIVE");
+			escenario.setTitle("Login - ConVive");
 			
 			escenario.showAndWait();
 			

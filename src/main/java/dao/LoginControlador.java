@@ -69,7 +69,68 @@ public class LoginControlador implements Initializable {
             mostrarAlerta("Todos los campos deben estar completos.");
             return;
         }
+        
+        
+        //Validar que el dni tenga 8 num y una letra
+        if (dni.length() == 9) {
+            boolean numerosValidos = true;
+            for (int i = 0; i < 8; i++) {
+                if (!Character.isDigit(dni.charAt(i))) {
+                    numerosValidos = false;
+                    break;
+                }
+            }
+            boolean letraValida = Character.isLetter(dni.charAt(8));
+        	
+            if (!numerosValidos && !letraValida) {
+            	new Alert(Alert.AlertType.ERROR, "El dni se debe componer de 8 numeros y una letra mayuscula").showAndWait();
+    			return;
+            }
+        	
+        }else {
+        	new Alert(Alert.AlertType.ERROR, "El dni se debe componer de 8 numeros y una letra mayuscula").showAndWait();
+			return;
+        }
 
+        
+        //Validar dni en formato correcto
+        int numDni = Integer.parseInt(dni.substring(0, 8)); // coge los num del dni
+        char letraDni;
+        boolean valido;
+        
+        switch (numDni) {
+	        case 0: letraDni = 'T'; valido = true; break;
+	        case 1: letraDni = 'R'; valido = true; break;
+	        case 2: letraDni = 'W'; valido = true; break;
+	        case 3: letraDni = 'A'; valido = true; break;
+	        case 4: letraDni = 'G'; valido = true; break;
+	        case 5: letraDni = 'M'; valido = true; break;
+	        case 6: letraDni = 'Y'; valido = true; break;
+	        case 7: letraDni = 'F'; valido = true; break;
+	        case 8: letraDni = 'P'; valido = true; break;
+	        case 9: letraDni = 'D'; valido = true; break;
+	        case 10: letraDni = 'X'; valido = true; break;
+	        case 11: letraDni = 'B'; valido = true; break;
+	        case 12: letraDni = 'N'; valido = true; break;
+	        case 13: letraDni = 'J'; valido = true; break;
+	        case 14: letraDni = 'Z'; valido = true; break;
+	        case 15: letraDni = 'S'; valido = true; break;
+	        case 16: letraDni = 'Q'; valido = true; break;
+	        case 17: letraDni = 'V'; valido = true; break;
+	        case 18: letraDni = 'H'; valido = true; break;
+	        case 19: letraDni = 'L'; valido = true; break;
+	        case 20: letraDni = 'C'; valido = true; break;
+	        case 21: letraDni = 'K'; valido = true; break;
+	        case 22: letraDni = 'E'; valido = true; break;
+	        default: valido = false; 
+		}
+        
+        if (valido == false) {
+			new Alert(Alert.AlertType.ERROR, "Formato de dni incorrecto").showAndWait();
+			return;
+        }
+        
+        
         // Valida que ambas contraseñas coincidan
         if (!contrasenia.equals(contrasenia2)) {
             mostrarAlerta("Las contraseñas no coinciden.");
