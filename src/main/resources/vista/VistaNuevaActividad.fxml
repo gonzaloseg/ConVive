@@ -40,10 +40,12 @@
       <Label layoutX="398.0" layoutY="325.0" text="Y la hora" textFill="#006d77" />
       <TextField fx:id="txtHoraActividad" layoutX="398.0" layoutY="351.0" prefHeight="26.0" prefWidth="124.0" promptText="hh:mm" style="-fx-background-color: #83C5BE; -fx-background-radius: 18px;" />
       <TextArea fx:id="txtDescripcionActividad" layoutX="660.0" layoutY="276.0" prefHeight="258.0" prefWidth="352.0" style="-fx-background-color: #83C5BE;" />
-      <TextField fx:id="txtEdadActividad" layoutX="196.0" layoutY="430.0" prefHeight="26.0" prefWidth="326.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 18px;" />
-      <Label layoutX="196.0" layoutY="405.0" text="Selecciona el rango de edad para la actividad" textFill="#006d77" />
+      <TextField fx:id="txtEdadMin" layoutX="196.0" layoutY="430.0" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 18px;" />
+      <Label layoutX="196.0" layoutY="405.0" text="Edad mínima" textFill="#006d77" />
       <Label layoutX="199.0" layoutY="480.0" text="Selecciona el sitio donde se realizará" textFill="#006d77" />
       <TextField fx:id="txtLugarActividad" layoutX="196.0" layoutY="507.0" prefHeight="26.0" prefWidth="326.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 18px;" />
-      <Button fx:id="btnAniadirActividad" layoutX="491.0" layoutY="576.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="218.0" style="-fx-background-color: #006D77; -fx-background-radius: 18px;" text="Añadir actividad" textFill="WHITE" />
+      <Button fx:id="btnAniadirActividad" layoutX="491.0" layoutY="576.0" mnemonicParsing="false" onAction="#anadirActividad" prefHeight="46.0" prefWidth="218.0" style="-fx-background-color: #006D77; -fx-background-radius: 18px;" text="Añadir actividad" textFill="WHITE" />
+      <Label layoutX="398.0" layoutY="405.0" text="Edad máxima" textFill="#006d77" />
+      <TextField fx:id="txtEdadMax" layoutX="394.0" layoutY="430.0" prefHeight="26.0" prefWidth="100.0" style="-fx-background-color: #83C5BE; -fx-background-radius: 18px;" />
    </children>
 </AnchorPane>

@@ -2,10 +2,15 @@ package dao;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import dto.Actividades;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,41 +22,42 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-public class PrincipalControlador implements Initializable{
-	
-	@FXML
-	private Button btnMesAnterior; //boton retroceder mes (calendario)
-	@FXML
-	private Button btnMesSiguiente; //boton adelantar mes (calendario)
-	@FXML
-	private Button btnFiltros; //boton para filtrar actividades
-	@FXML
-	private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
-	@FXML
-	private Label lbMiPerfil; //lleva a ventana MiPerfil
-	@FXML
-	private Label lbMiComunidad; //lleva a ventana MiComunidad
-	@FXML
-	private Label lbListaEventos; //lleva a ventana ListaEventos
-	@FXML
-	private Label lbCerrarSesion;
-	@FXML
-	private Label month; //mes (calendario)
-	@FXML
-	private Label year; //año (calendario)
-	@FXML
-	private Stage primaryStage;
-	@FXML
+public class PrincipalControlador implements Initializable {
+    
+    @FXML
+    private Button btnMesAnterior; //boton retroceder mes (calendario)
+    @FXML
+    private Button btnMesSiguiente; //boton adelantar mes (calendario)
+    @FXML
+    private Button btnFiltros; //boton para filtrar actividades
+    @FXML
+    private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
+    @FXML
+    private Label lbMiPerfil; //lleva a ventana MiPerfil
+    @FXML
+    private Label lbMiComunidad; //lleva a ventana MiComunidad
+    @FXML
+    private Label lbListaEventos; //lleva a ventana ListaEventos
+    @FXML
+    private Label lbCerrarSesion;
+    @FXML
+    private Label month; //mes (calendario)
+    @FXML
+    private Label year; //año (calendario)
+    @FXML
+    private Stage primaryStage;
+    @FXML
     private FlowPane calendar;  // Contenedor de los días del mes
     
-	private LocalDate currentDate = LocalDate.now();  // Fecha actual
-
-	
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
-		//Convertir los label en botones
+    private LocalDate currentDate = LocalDate.now();  // Fecha actual
+    
+    // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
+    private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>();
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        
+        // Convertir los labels en botones
         lbMiPerfil.setOnMouseClicked(event -> abrirMiPerfil());
         lbMiComunidad.setOnMouseClicked(event -> abrirMiComunidad());
         lbListaEventos.setOnMouseClicked(event -> abrirListaEventos());
@@ -59,10 +65,10 @@ public class PrincipalControlador implements Initializable{
         
         // Actualizamos el calendario con el mes y año actuales
         actualizarCalendario();
-	}
+    }
     
     @FXML
-	private void abrirMiPerfil() { //BOTON ABRIR PERFIL
+    private void abrirMiPerfil() { 
         try {
             // Cargar la ventana del perfil
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiPerfil.fxml"));
@@ -77,18 +83,14 @@ public class PrincipalControlador implements Initializable{
 
             Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();
             currentStage.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    
-    
     @FXML
-    private void abrirMiComunidad() {  //BOTON ABRIR VENTANA COMUNIDAD
+    private void abrirMiComunidad() {  
         try {
-            // Cargar la  ventana MiComunidad
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiComunidad.fxml"));
             AnchorPane root = loader.load();
 
@@ -101,18 +103,14 @@ public class PrincipalControlador implements Initializable{
 
             Stage currentStage = (Stage) lbMiComunidad.getScene().getWindow();
             currentStage.close(); // Cerrar la ventana actual
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
+
     @FXML
-    private void abrirListaEventos() { //BOTON ABRIR LISTA DE EVENTOS
+    private void abrirListaEventos() { 
         try {
-            // Cargar la  ventana Lista de eventos
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaListaEventos.fxml"));
             AnchorPane root = loader.load();
 
@@ -125,17 +123,13 @@ public class PrincipalControlador implements Initializable{
 
             Stage currentStage = (Stage) lbListaEventos.getScene().getWindow();
             currentStage.close(); //cerrar ventana actual
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    
-    
- 	private void cerrarSesion() { //BOTON CERRAR SESION Y VOLVER AL INICIO
- 		try {
- 	        
+
+    private void cerrarSesion() { 
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
             AnchorPane root = loader.load();
 
@@ -148,59 +142,51 @@ public class PrincipalControlador implements Initializable{
 
             Stage currentStage = (Stage) lbCerrarSesion.getScene().getWindow();
             currentStage.close(); //cerrar la ventana 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
-         
- 	}
+    }
     
     // Método para abrir la ventana "Nueva Actividad" y cerrar la ventana actual
     @FXML
     private void abrirCrearActividad(ActionEvent event) {
         try {
-            // Cargar la nueva ventana ("VistaNuevaActividad.fxml")
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaNuevaActividad.fxml"));
             AnchorPane root = loader.load();
 
-            // Crear una nueva escena con la vista "Nueva Actividad - ConVive"
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Nueva Actividad - ConVive");
             stage.centerOnScreen();
 
-            // Mostrar la nueva ventana
             stage.show();
 
-            // Cerrar la ventana actual
             Stage currentStage = (Stage) btnNuevaActividad.getScene().getWindow();
             currentStage.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
+    // Método para obtener las actividades de un día específico
+    private List<Actividades> obtenerActividadesPorDia(int dia) {
+        return actividadesPorDia.getOrDefault(dia, new ArrayList<>());
+    }
+
     // Método para actualizar el calendario (con días del mes actual)
     private void actualizarCalendario() {
-    	// Crear el formateador para obtener solo el mes en inglés
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM");
-        // Crear el formateador para obtener solo el año
         DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
 
-        // Obtener el mes y el año de la fecha actual
         String monthText = currentDate.format(monthFormatter);
         String yearText = currentDate.format(yearFormatter);
-        
-        // Mostrar el mes y el año en los Labels correspondientes
+
         month.setText(monthText.toUpperCase());  // Muestra el mes en el label month 
         year.setText(yearText);    // Muestra el año en el label year
 
-        // Limpiar el FlowPane (el contenedor de los días)
-        calendar.getChildren().clear();
+        calendar.getChildren().clear();  // Limpiar el FlowPane (contenedor de los días)
 
-        // Obtener la cantidad de días en el mes y el primer día de la semana
         int daysInMonth = currentDate.getMonth().length(currentDate.isLeapYear());
         int firstDayOfWeek = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1).getDayOfWeek().getValue();
 
@@ -208,12 +194,21 @@ public class PrincipalControlador implements Initializable{
         for (int i = 0; i < firstDayOfWeek - 1; i++) {
             calendar.getChildren().add(new Label(""));  // Espacios vacíos
         }
-        
+
         // Crear botones para cada día del mes
         for (int day = 1; day <= daysInMonth; day++) {
             Button dayButton = new Button(String.valueOf(day));
             dayButton.setPrefSize(40, 40);
-            dayButton.setStyle("-fx-background-color: white;");
+
+            // Comprobar si hay actividades programadas para este día
+            List<Actividades> actividadesDelDia = obtenerActividadesPorDia(day);
+            if (!actividadesDelDia.isEmpty()) {
+                // Si hay actividades, poner el botón en verde
+                dayButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+            } else {
+                // Si no hay actividades, el botón es blanco
+                dayButton.setStyle("-fx-background-color: white;");
+            }
 
             // Agregar acción al botón de cada día (para cuando se hace clic)
             dayButton.setOnAction(event -> handleDayClick(event));
@@ -222,7 +217,7 @@ public class PrincipalControlador implements Initializable{
             calendar.getChildren().add(dayButton);
         }
     }
-    
+
     // Método para manejar el clic en un día específico
     @FXML
     private void handleDayClick(ActionEvent event) {
@@ -230,8 +225,14 @@ public class PrincipalControlador implements Initializable{
         String dayText = dayButton.getText();  // Obtener el texto del botón (número del día)
 
         System.out.println("Has seleccionado el día: " + dayText);
+
+        // Mostrar las actividades de ese día
+        List<Actividades> actividadesDelDia = obtenerActividadesPorDia(Integer.parseInt(dayText));
+        for (Actividades actividad : actividadesDelDia) {
+            System.out.println("Actividad programada: " + actividad.getNombre());
+        }
     }
-    
+
     // Método para ir al mes anterior
     @FXML
     private void mesAnterior() {
