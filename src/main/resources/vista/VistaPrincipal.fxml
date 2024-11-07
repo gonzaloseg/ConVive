@@ -16,13 +16,13 @@
 
 <AnchorPane prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
    <children>
-      <Separator layoutX="352.0" layoutY="324.0" prefHeight="0.0" prefWidth="834.0" />
-      <HBox layoutX="359.0" layoutY="51.0" prefHeight="26.0" prefWidth="304.0">
+      <Separator layoutX="352.0" layoutY="324.0" prefHeight="0.0" prefWidth="775.0" style="-fx-background-color: #22504e;" />
+      <HBox layoutX="413.0" layoutY="45.0" prefHeight="26.0" prefWidth="282.0">
          <children>
-            <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="34.0" text="&lt;" />
-            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="mes " />
-            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="74.0" text=" año" />
-            <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="30.0" text="&gt;" />
+            <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="42.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&lt;" />
+            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="mes " textFill="#22504e" />
+            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="74.0" text=" año" textFill="#22504e" />
+            <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="44.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&gt;" />
          </children>
       </HBox>
       <ScrollPane layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0">
@@ -30,50 +30,53 @@
             <ListView fx:id="listviewActividades" prefHeight="330.0" prefWidth="819.0" />
          </content>
       </ScrollPane>
-      <HBox layoutX="349.0" layoutY="77.0" prefHeight="26.0" prefWidth="319.0">
+      <HBox layoutX="408.0" layoutY="72.0" prefHeight="26.0" prefWidth="282.0">
          <children>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="lunes">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="lunes" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="46.0" text="martes">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="46.0" text="martes" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="miércoles">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="66.0" text="miércoles" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="jueves">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="42.0" text="jueves" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="viernes">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="50.0" text="viernes" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="51.0" text="sábado">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="51.0" text="sábado" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="54.0" text="domingo">
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="46.0" text="domingo" textFill="#22504e">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <FlowPane fx:id="calendar" layoutX="349.0" layoutY="103.0" prefHeight="200.0" prefWidth="319.0" style="-fx-background-color: FFFFFF;" />
-      <Label layoutX="352.0" layoutY="358.0" text="Próximas actividades" />
-      <Button fx:id="btnFiltros" layoutX="1135.0" layoutY="346.0" mnemonicParsing="false" text="Filtros" />
-      <Label layoutX="874.0" layoutY="110.0" text="¿Quieres proponer alguna actividad?" />
-      <Button fx:id="btnNuevaActividad" layoutX="903.0" layoutY="155.0" mnemonicParsing="false" onAction="#abrirCrearActividad" text="Añadir nueva actividad" />
+      <FlowPane fx:id="calendar" layoutX="413.0" layoutY="98.0" prefHeight="200.0" prefWidth="282.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 18px;" />
+      <Label layoutX="352.0" layoutY="346.0" text="Próximas actividades" textFill="#22504e">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <Button fx:id="btnFiltros" layoutX="1113.0" layoutY="346.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: ffffff; -fx-background-radius: 18px; -fx-border-radius: 18px;" text="Filtros" textFill="#006d77" />
+      <Label layoutX="874.0" layoutY="110.0" text="¿Quieres proponer alguna actividad?" textFill="#22504e" />
+      <Button fx:id="btnNuevaActividad" layoutX="890.0" layoutY="154.0" mnemonicParsing="false" onAction="#abrirCrearActividad" prefHeight="35.0" prefWidth="162.0" style="-fx-background-color: #006D77; -fx-background-radius: 18px; -fx-border-radius: 18px;" text="Añadir nueva actividad" textFill="WHITE" />
       <VBox prefHeight="750.0" prefWidth="308.0" style="-fx-background-color: FFFFFF;">
          <children>
             <ImageView fx:id="img" fitHeight="328.0" fitWidth="321.0" pickOnBounds="true" preserveRatio="true">
@@ -81,25 +84,37 @@
                   <Image url="@../imagenes/output-onlinepngtools.png" />
                </image>
             </ImageView>
-            <Label fx:id="lbMiPerfil" style="-fx-padding: 25;" text="Mi perfil">
+            <Label fx:id="lbMiPerfil" prefHeight="86.0" prefWidth="302.0" style="-fx-padding: 25;" text="Mi perfil" textFill="#006d77">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </Label>
-            <Label fx:id="lbMiComunidad" style="-fx-padding: 25;" text="Mi comunidad">
+            <Label fx:id="lbMiComunidad" prefHeight="67.0" prefWidth="302.0" style="-fx-padding: 25;" text="Mi comunidad" textFill="#006d77">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </Label>
-            <Label fx:id="lbListaEventos" style="-fx-padding: 25;" text="Lista de eventos">
+            <Label fx:id="lbListaEventos" prefHeight="85.0" prefWidth="293.0" style="-fx-padding: 25;" text="Lista de eventos" textFill="#006d77">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </Label>
-            <Label fx:id="lbCerrarSesion" style="-fx-padding: 25;" text="Cerrar sesión">
+            <Label fx:id="lbCerrarSesion" prefHeight="85.0" prefWidth="294.0" style="-fx-padding: 25;" text="Cerrar sesión" textFill="#006d77">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
+               <font>
+                  <Font size="24.0" />
+               </font>
             </Label>
          </children>
       </VBox>

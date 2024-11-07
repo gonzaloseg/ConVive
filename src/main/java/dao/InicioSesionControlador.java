@@ -96,6 +96,7 @@ public class InicioSesionControlador implements Initializable{
 			        Stage escenarioActual = (Stage) botonIniciarSesion.getScene().getWindow();
 			        escenarioActual.setScene(escena);
 			        escenarioActual.setTitle("Principal - Convive");
+			        escenarioActual.centerOnScreen();
 			        escenarioActual.show();
 			        
 			    } catch (Exception e) {

@@ -60,8 +60,6 @@ public class PrincipalControlador implements Initializable{
         // Actualizamos el calendario con el mes y año actuales
         actualizarCalendario();
 	}
-	
-	
     
     @FXML
 	private void abrirMiPerfil() { //BOTON ABRIR PERFIL
@@ -74,6 +72,7 @@ public class PrincipalControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Perfil - ConVive");
+            stage.centerOnScreen();
             stage.show();
 
             Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();
@@ -97,6 +96,7 @@ public class PrincipalControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Comunidad - ConVive");
+            stage.centerOnScreen();
             stage.show();
 
             Stage currentStage = (Stage) lbMiComunidad.getScene().getWindow();
@@ -120,6 +120,7 @@ public class PrincipalControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Lista de Eventos - ConVive");
+            stage.centerOnScreen();
             stage.show();
 
             Stage currentStage = (Stage) lbListaEventos.getScene().getWindow();
@@ -142,6 +143,7 @@ public class PrincipalControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");
+            stage.centerOnScreen();
             stage.show();
 
             Stage currentStage = (Stage) lbCerrarSesion.getScene().getWindow();
@@ -152,10 +154,6 @@ public class PrincipalControlador implements Initializable{
         }
          
  	}
-    
-    
-    
-    
     
     // Método para abrir la ventana "Nueva Actividad" y cerrar la ventana actual
     @FXML
@@ -170,6 +168,7 @@ public class PrincipalControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Nueva Actividad - ConVive");
+            stage.centerOnScreen();
 
             // Mostrar la nueva ventana
             stage.show();
@@ -214,7 +213,7 @@ public class PrincipalControlador implements Initializable{
         for (int day = 1; day <= daysInMonth; day++) {
             Button dayButton = new Button(String.valueOf(day));
             dayButton.setPrefSize(40, 40);
-            dayButton.setStyle("-fx-background-color: lightgray;");
+            dayButton.setStyle("-fx-background-color: white;");
 
             // Agregar acción al botón de cada día (para cuando se hace clic)
             dayButton.setOnAction(event -> handleDayClick(event));
@@ -246,6 +245,4 @@ public class PrincipalControlador implements Initializable{
         currentDate = currentDate.plusMonths(1);
         actualizarCalendario();
     }
-    
-    
 }
