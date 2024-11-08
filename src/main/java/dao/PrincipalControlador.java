@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -188,12 +190,6 @@ public class PrincipalControlador implements Initializable {
         calendar.getChildren().clear();  // Limpiar el FlowPane (contenedor de los días)
 
         int daysInMonth = currentDate.getMonth().length(currentDate.isLeapYear());
-        int firstDayOfWeek = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), 1).getDayOfWeek().getValue();
-
-        // Añadir espacios vacíos al principio del mes para alinear los días correctamente
-        for (int i = 0; i < firstDayOfWeek - 1; i++) {
-            calendar.getChildren().add(new Label(""));  // Espacios vacíos
-        }
 
         // Crear botones para cada día del mes
         for (int day = 1; day <= daysInMonth; day++) {
@@ -218,19 +214,29 @@ public class PrincipalControlador implements Initializable {
         }
     }
 
+
     // Método para manejar el clic en un día específico
     @FXML
     private void handleDayClick(ActionEvent event) {
-        Button dayButton = (Button) event.getSource();  // Obtener el botón que se ha clickeado
-        String dayText = dayButton.getText();  // Obtener el texto del botón (número del día)
+    	Button dayButton = (Button) event.getSource();
+        int day = Integer.parseInt(dayButton.getText());
 
-        System.out.println("Has seleccionado el día: " + dayText);
-
-        // Mostrar las actividades de ese día
-        List<Actividades> actividadesDelDia = obtenerActividadesPorDia(Integer.parseInt(dayText));
-        for (Actividades actividad : actividadesDelDia) {
-            System.out.println("Actividad programada: " + actividad.getNombre());
+        List<Actividades> actividadesDelDia = obtenerActividadesPorDia(day);
+        if (actividadesDelDia.isEmpty()) {
+            return;  // No mostrar ventana si no hay actividades
         }
+
+        StringBuilder actividadesTexto = new StringBuilder("Actividades para el día " + day + ":\n");
+        for (Actividades actividad : actividadesDelDia) {
+            actividadesTexto.append("- ").append(actividad.getNombre()).append("\n");
+        }
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Actividades del día " + day);
+        alert.setHeaderText(null);
+        alert.setContentText(actividadesTexto.toString());
+        alert.initOwner(primaryStage);  // Asegura que el diálogo sea modal respecto a la ventana principal
+        alert.showAndWait();
     }
 
     // Método para ir al mes anterior
