@@ -1,6 +1,7 @@
 package dao;
 
 import dto.Actividades;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,26 +25,58 @@ import BaseDeDatos.Conexion;
 
 public class NuevaActividadControlador {
 
-    // FXML elements
     @FXML
-    private TextField txtNombreActividad;
+    private Button botonAgregarActividad;
+    @FXML
+    private Button botonVolver;
     @FXML
     private DatePicker dateFechaActividad;
     @FXML
-    private TextField txtHoraActividad;
-    @FXML
     private TextArea txtDescripcionActividad;
     @FXML
-    private TextField txtEdadMin;   // Cambiado de txtEdadMinActividad a txtEdadMin
+    private TextField txtEdadMax;
     @FXML
-    private TextField txtEdadMax;   // Cambiado de txtEdadMaxActividad a txtEdadMax
+    private TextField txtEdadMin;
+    @FXML
+    private TextField txtHoraActividad;
     @FXML
     private TextField txtLugarActividad;
     @FXML
-    private Button btnAniadirActividad;
-    @FXML
-    private Button botonVolver;
+    private TextField txtNombreActividad;
 
+    
+    
+    @FXML
+    void agregarActividad(ActionEvent event) { //BOTON AGREGAR ACTIVIDAD
+
+    }
+    
+    
+    
+    @FXML
+    void volver(ActionEvent event) { //BOTON VOLVER AL HOME
+    	
+    	try {
+        
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+            AnchorPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Principal - ConVive");
+            stage.show();
+
+            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            currentStage.close(); //cerrar la ventana mi perfil
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
     // Método para manejar el evento de añadir actividad
     @FXML
     public void anadirActividad() {
@@ -99,24 +132,7 @@ public class NuevaActividadControlador {
         mostrarExito("Actividad añadida correctamente.");
     }
 
-    @FXML
-    public void volver() { // BOTÓN VOLVER AL HOME
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
-            AnchorPane root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Principal - ConVive");
-            stage.show();
-
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
-            currentStage.close(); // Cerrar la ventana actual
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    
 
     // Métodos auxiliares para mostrar mensajes de error y éxito
     private void mostrarError(String mensaje) {
