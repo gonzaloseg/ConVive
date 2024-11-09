@@ -3,7 +3,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -14,23 +13,22 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
+<AnchorPane prefHeight="750.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
    <children>
-      <Separator layoutX="352.0" layoutY="324.0" prefHeight="0.0" prefWidth="775.0" style="-fx-background-color: #22504e;" />
-      <HBox layoutX="403.0" layoutY="47.0" prefHeight="26.0" prefWidth="282.0">
+      <HBox layoutX="403.0" layoutY="28.0" prefHeight="26.0" prefWidth="282.0">
          <children>
             <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="42.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&lt;" />
-            <Label fx:id="month" alignment="CENTER" prefHeight="18.0" prefWidth="174.0" text="mes " textFill="#22504e" />
-            <Label fx:id="year" alignment="CENTER" prefHeight="18.0" prefWidth="74.0" text=" año" textFill="#22504e" />
+            <Label fx:id="month" alignment="CENTER" prefHeight="27.0" prefWidth="161.0" text="mes " textFill="#22504e" />
+            <Label fx:id="year" alignment="CENTER" prefHeight="26.0" prefWidth="65.0" text=" año" textFill="#22504e" />
             <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="44.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&gt;" />
          </children>
       </HBox>
-      <ScrollPane layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0">
+      <ScrollPane layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0" style="-fx-background-color: #FFFFFF; -fx-padding: 10;">
          <content>
-            <ListView fx:id="listviewActividades" prefHeight="330.0" prefWidth="819.0" />
+            <VBox fx:id="vboxActividades" prefWidth="819.0" spacing="10.0" style="-fx-padding: 10;" />
          </content>
       </ScrollPane>
-      <FlowPane fx:id="calendar" layoutX="403.0" layoutY="90.0" prefHeight="211.0" prefWidth="282.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 18px;" />
+      <FlowPane fx:id="calendar" layoutX="397.0" layoutY="80.0" prefHeight="218.0" prefWidth="294.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 18px;" />
       <Label layoutX="352.0" layoutY="346.0" text="Próximas actividades" textFill="#22504e">
          <font>
             <Font size="24.0" />
@@ -79,5 +77,45 @@
             </Label>
          </children>
       </VBox>
+      <HBox layoutX="403.0" layoutY="63.0" prefHeight="26.0" prefWidth="294.0">
+         <children>
+            <Label prefHeight="18.0" prefWidth="32.0" text="Lunes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="41.0" text="Martes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="50.0" text="Miercoles">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="38.0" text="jueves">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="44.0" text="Viernes">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="42.0" text="Sabado">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="41.0" text="Domingo">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Separator layoutX="352.0" layoutY="324.0" prefHeight="5.0" prefWidth="834.0" />
    </children>
 </AnchorPane>

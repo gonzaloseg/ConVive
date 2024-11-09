@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<!--ejemplo --><?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -10,33 +10,42 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane minHeight="502.0" minWidth="400.0" prefHeight="583.0" prefWidth="400.0" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.LoginControlador">
    <children>
-      <Label layoutX="139.0" layoutY="44.0" text="Regístrate" textFill="#22504e">
+      <Label layoutX="139.0" layoutY="22.0" text="Regístrate" textFill="#22504e">
          <font>
             <Font size="24.0" />
          </font></Label>
-      <Button fx:id="botonVolver" layoutX="77.0" layoutY="510.0" mnemonicParsing="false" onAction="#volver" prefHeight="35.0" prefWidth="87.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="Volver" textFill="WHITE" />
-      <Label layoutX="58.0" layoutY="120.0" text="Nombre" textFill="#006d77" />
-      <Label layoutX="58.0" layoutY="206.0" text="DNI" textFill="#006d77" />
-      <Label layoutX="56.0" layoutY="162.0" text="Apellidos" textFill="#006d77" />
-      <Label layoutX="58.0" layoutY="247.0" text="Fecha de nacimiento" textFill="#006d77" />
+      <Button fx:id="botonVolver" layoutX="77.0" layoutY="521.0" mnemonicParsing="false" onAction="#volver" prefHeight="35.0" prefWidth="87.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="Volver" textFill="WHITE" />
+      <Label layoutX="59.0" layoutY="84.0" text="Nombre" textFill="#006d77" />
+      <Label layoutX="59.0" layoutY="185.0" text="DNI" textFill="#006d77" />
+      <Label layoutX="57.0" layoutY="131.0" text="Apellidos" textFill="#006d77" />
+      <Label layoutX="59.0" layoutY="235.0" text="Fecha de nacimiento" textFill="#006d77" />
       <Label layoutX="57.0" layoutY="289.0" text="Vivienda " textFill="#006d77" />
-      <Label layoutX="56.0" layoutY="335.0" text="Contraseña " textFill="#006d77" />
-      <Label layoutX="56.0" layoutY="379.0" text="Repetir contraseña" textFill="#006d77" />
-      <TextField fx:id="txtnombre" layoutX="193.0" layoutY="116.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
-      <TextField fx:id="txtapellidos" layoutX="193.0" layoutY="158.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
-      <TextField fx:id="txtDNI" layoutX="193.0" layoutY="202.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
-      <PasswordField fx:id="txtcontrasenia" layoutX="193.0" layoutY="331.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
-      <PasswordField fx:id="txtcontrasenia2" layoutX="193.0" layoutY="375.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
-      <Button fx:id="botonNuevoVecino" layoutX="238.0" layoutY="510.0" mnemonicParsing="false" onAction="#crearNuevoVecino" prefHeight="35.0" prefWidth="87.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #006D77;" text="Crear usuario" textFill="WHITE" />
-      <DatePicker fx:id="datepickerFechaN" layoutX="194.0" layoutY="243.0" prefHeight="25.0" prefWidth="149.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: E7ECEF;" />
+      <Label layoutX="60.0" layoutY="348.0" text="Contraseña " textFill="#006d77" />
+      <Label layoutX="56.0" layoutY="392.0" text="Repetir contraseña" textFill="#006d77" />
+      <TextField fx:id="txtnombre" layoutX="193.0" layoutY="80.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
+      <TextField fx:id="txtapellidos" layoutX="193.0" layoutY="127.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
+      <TextField fx:id="txtDNI" layoutX="193.0" layoutY="181.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
+      <PasswordField fx:id="txtcontrasenia" layoutX="194.0" layoutY="344.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
+      <PasswordField fx:id="txtcontrasenia2" layoutX="193.0" layoutY="388.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
+      <Button fx:id="botonNuevoVecino" layoutX="238.0" layoutY="522.0" mnemonicParsing="false" onAction="#crearNuevoVecino" prefHeight="35.0" prefWidth="87.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #006D77;" text="Crear usuario" textFill="WHITE" />
+      <DatePicker fx:id="datepickerFechaN" layoutX="193.0" layoutY="231.0" prefHeight="25.0" prefWidth="149.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: E7ECEF;" />
       <VBox fx:id="vboxPisos" layoutX="193.0" layoutY="288.0" prefHeight="43.0" prefWidth="150.0">
          <children>
             <ComboBox fx:id="comboboxVivienda" prefWidth="150.0" style="-fx-background-color: E7ECEF; -fx-background-radius: 18px;" />
          </children>
       </VBox>
-      <Label layoutX="92.0" layoutY="431.0" text="Si eres menor de edad necesitas un tutor" />
-      <TextField fx:id="txtTutor" layoutX="126.0" layoutY="461.0" />
+      <Label layoutX="92.0" layoutY="449.0" text="Si eres menor de edad necesitas un tutor" />
+      <TextField fx:id="txtTutor" layoutX="126.0" layoutY="483.0" />
+      
+      <!-- Labels invisibles para validaciones a tiempo real -->
+      <Label fx:id="labelErrorDni" layoutX="189.0" layoutY="208.0" prefHeight="17.0" prefWidth="157.0" textFill="RED" />
+      <Label fx:id="labelErrorContrasenia" layoutX="190.0" layoutY="423.0" prefHeight="17.0" prefWidth="157.0" textFill="RED" />
+      <Label fx:id="labelErrorNombre" layoutX="189.0" layoutY="107.0" prefHeight="17.0" prefWidth="157.0" textFill="RED" />
+      <Label fx:id="labelErrorApellidos" layoutX="190.0" layoutY="155.0" prefHeight="17.0" prefWidth="157.0" textFill="RED" />
+      <Label fx:id="labelErrorTutor" layoutX="122.0" layoutY="466.0" prefHeight="17.0" prefWidth="157.0" textFill="RED" />
+   
    </children>
 </AnchorPane>

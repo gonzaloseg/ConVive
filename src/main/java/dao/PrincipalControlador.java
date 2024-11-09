@@ -22,6 +22,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class PrincipalControlador implements Initializable {
@@ -52,6 +54,7 @@ public class PrincipalControlador implements Initializable {
     private FlowPane calendar;  // Contenedor de los días del mes
     
     private LocalDate currentDate = LocalDate.now();  // Fecha actual
+    private VBox vboxActividades; 
     
     // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
     private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>();
@@ -190,6 +193,17 @@ public class PrincipalControlador implements Initializable {
         calendar.getChildren().clear();  // Limpiar el FlowPane (contenedor de los días)
 
         int daysInMonth = currentDate.getMonth().length(currentDate.isLeapYear());
+        LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
+        int dayOfWeekIndex = firstDayOfMonth.getDayOfWeek().getValue(); // 1 para Lunes, 7 para Domingo
+
+        // Insertar botones vacíos hasta el primer día del mes
+        for (int i = 1; i < dayOfWeekIndex; i++) {
+            Button emptyButton = new Button();
+            emptyButton.setPrefSize(40, 40);
+            emptyButton.setDisable(true);  // Botón deshabilitado
+            emptyButton.setStyle("-fx-background-color: transparent;"); // Color transparente
+            calendar.getChildren().add(emptyButton);
+        }
 
         // Crear botones para cada día del mes
         for (int day = 1; day <= daysInMonth; day++) {
@@ -252,4 +266,41 @@ public class PrincipalControlador implements Initializable {
         currentDate = currentDate.plusMonths(1);
         actualizarCalendario();
     }
+    
+    public void mostrarActividades(List<Actividades> actividades) {
+        vboxActividades.getChildren().clear(); // Limpiar el contenido actual
+        
+        for (Actividades actividad : actividades) {
+            // Contenedor horizontal para cada actividad
+            VBox actividadBox = new VBox(10); // Cambia VBox por HBox para mostrar horizontalmente
+            actividadBox.setStyle("-fx-background-color: #e0f7fa; -fx-padding: 10; -fx-background-radius: 10; -fx-border-color: #00796b; -fx-border-radius: 10;");
+
+            // Añadir los elementos de actividad
+            Label titulo = new Label(actividad.getNombre());
+            Label descripcion = new Label("Descripción: " + actividad.getDescripcion());
+            Label fecha = new Label("Fecha: " + actividad.getFecha());
+            Label hora = new Label("Hora: " + actividad.getHora());
+            Label lugar = new Label("Lugar: " + actividad.getLugar());
+            Label edades = new Label("Edad permitida: " + actividad.getEdadMin() + " - " + actividad.getEdadMax() + " años");
+
+            // Botón "Ver más"
+            Button verMas = new Button("Ver más");
+            verMas.setOnAction(event -> verDetallesActividad(actividad));
+
+            // Añadir los elementos a HBox
+            actividadBox.getChildren().addAll(titulo, descripcion, fecha, hora, lugar, edades, verMas);
+
+            // Añadir HBox de la actividad al VBox principal
+            vboxActividades.getChildren().add(actividadBox);
+        }
+    }
+
+
+    // Método para manejar el botón "Ver más"
+    private void verDetallesActividad(Actividades actividad) {
+        // Aquí puedes mostrar una ventana con los detalles de la actividad seleccionada.
+        // Puedes usar una nueva ventana o mostrar una alerta con información detallada.
+        System.out.println("Detalles de la actividad seleccionada: " + actividad);
+    }
+
 }

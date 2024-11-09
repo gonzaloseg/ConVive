@@ -44,20 +44,15 @@ public class NuevaActividadControlador {
     @FXML
     private TextField txtNombreActividad;
 
-    
-    
     @FXML
-    void agregarActividad(ActionEvent event) { //BOTON AGREGAR ACTIVIDAD
-
+    void agregarActividad(ActionEvent event) { 
+        // Este método debe ser usado para agregar la actividad.
+        anadirActividad();
     }
-    
-    
-    
+
     @FXML
-    void volver(ActionEvent event) { //BOTON VOLVER AL HOME
-    	
-    	try {
-        
+    void volver(ActionEvent event) { 
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
             AnchorPane root = loader.load();
 
@@ -75,8 +70,6 @@ public class NuevaActividadControlador {
         }
     }
 
-    
-    
     // Método para manejar el evento de añadir actividad
     @FXML
     public void anadirActividad() {
@@ -119,11 +112,8 @@ public class NuevaActividadControlador {
             return;
         }
 
-        // Convertimos la fecha y la hora en ZonedDateTime
-        ZonedDateTime fechaHoraActividad = ZonedDateTime.of(fecha, horaActividad, ZoneId.systemDefault());
-
         // Crear la actividad (asumimos que el creador es un ID fijo por ahora, puedes cambiarlo según tu lógica)
-        Actividades actividad = new Actividades(nombre, descripcion, fechaHoraActividad, lugar, edadMin, edadMax, 1);  // 1 es el ID del creador
+        Actividades actividad = new Actividades(0, nombre, descripcion, fecha, horaActividad, lugar, edadMin, edadMax, 1);  // 1 es el ID del creador
 
         // Guardar la actividad en la base de datos
         agregarActividadBD(actividad);
@@ -131,8 +121,6 @@ public class NuevaActividadControlador {
         // Confirmación de éxito
         mostrarExito("Actividad añadida correctamente.");
     }
-
-    
 
     // Métodos auxiliares para mostrar mensajes de error y éxito
     private void mostrarError(String mensaje) {
@@ -162,8 +150,8 @@ public class NuevaActividadControlador {
             // Seteamos los parámetros en la consulta SQL
             stmt.setString(1, actividad.getNombre());
             stmt.setString(2, actividad.getDescripcion());
-            stmt.setDate(3, java.sql.Date.valueOf(actividad.getFechaHora().toLocalDate()));  // Convertimos a java.sql.Date
-            stmt.setTime(4, java.sql.Time.valueOf(actividad.getFechaHora().toLocalTime()));   // Convertimos a java.sql.Time
+            stmt.setDate(3, java.sql.Date.valueOf(actividad.getFecha()));  // Convertimos a java.sql.Date
+            stmt.setTime(4, java.sql.Time.valueOf(actividad.getHora()));    // Convertimos a java.sql.Time
             stmt.setString(5, actividad.getLugar());
             stmt.setInt(6, actividad.getEdadMin());
             stmt.setInt(7, actividad.getEdadMax());
