@@ -23,7 +23,63 @@ public class Actividades {
         this.creador = creador;
     }
 
-    // Getters
+    /**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param nombre the nombre to set
+	 */
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	/**
+	 * @param fechaHora the fechaHora to set
+	 */
+	public void setFechaHora(ZonedDateTime fechaHora) {
+		this.fechaHora = fechaHora;
+	}
+
+	/**
+	 * @param lugar the lugar to set
+	 */
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
+	}
+
+	/**
+	 * @param edadMin the edadMin to set
+	 */
+	public void setEdadMin(int edadMin) {
+		this.edadMin = edadMin;
+	}
+
+	/**
+	 * @param edadMax the edadMax to set
+	 */
+	public void setEdadMax(int edadMax) {
+		this.edadMax = edadMax;
+	}
+
+	/**
+	 * @param creador the creador to set
+	 */
+	public void setCreador(int creador) {
+		this.creador = creador;
+	}
+
+	// Getters
     public int getId() {
         return id;
     }
