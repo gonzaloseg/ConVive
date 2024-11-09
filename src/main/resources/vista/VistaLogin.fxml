@@ -10,6 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
+=======
+<!--ejemplo -->
+>>>>>>> a1cef457316fa2e4b472f503cf0ced0976a062bf
 
 <AnchorPane minHeight="502.0" minWidth="400.0" prefHeight="583.0" prefWidth="400.0" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.LoginControlador">
    <children>
