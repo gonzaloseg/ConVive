@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -23,7 +24,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.Initializable; //lola
 
 public class LoginControlador implements Initializable {
     
@@ -40,6 +41,13 @@ public class LoginControlador implements Initializable {
     @FXML private Button botonVolver;
     @FXML private Button botonNuevoVecino;
     
+    @FXML private Label labelErrorDni;
+    @FXML private Label labelErrorContrasenia;
+    @FXML private Label labelErrorNombre;
+    @FXML private Label labelErrorApellidos;
+    @FXML private Label labelErrorTutor;
+    
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +61,11 @@ public class LoginControlador implements Initializable {
 
         // Agrega el listener para verificar el DNI en tiempo real
         txtDNI.setOnKeyReleased(event -> validarDNIEnTiempoReal());
+        txtnombre.setOnKeyReleased(event -> validarNombre());        
+        txtapellidos.setOnKeyReleased(event -> validarApellidos());
+        txtcontrasenia.textProperty().addListener((observable, oldValue, newValue) -> validarContrasenias());
+        txtcontrasenia2.textProperty().addListener((observable, oldValue, newValue) -> validarContrasenias());
+        txtTutor.setOnKeyReleased(event -> validarTutor());
 
         // Rellena el ComboBox con opciones de pisos
         ObservableList<String> pisos = FXCollections.observableArrayList();
@@ -62,7 +75,40 @@ public class LoginControlador implements Initializable {
         }
         comboboxVivienda.setItems(pisos);
     }
+    
+    boolean esMayorDeEdad ;
 
+    
+    //Método para ver que el nombre este escrito solo con letras y espacios
+    private void validarNombre () {
+    	String nombre = txtnombre.getText();
+    	
+    	if (nombre != null && nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+    		txtnombre.setStyle("-fx-border-color: green;"); //Bordes verdes si esta escrito bien
+    		labelErrorNombre.setText("");
+    	}else {
+    		txtnombre.setStyle("-fx-border-color: red;"); //Bordes rojos si no esta escrito bien
+    		labelErrorNombre.setText("Solo puede contener letras");
+    	}
+    }
+    
+    
+    
+    //Método para ver que los apellidos este escrito solo con letras y espacios
+    private void validarApellidos () {
+    	String apellidos = txtapellidos.getText();
+    	
+    	if (apellidos != null && apellidos.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+    		txtapellidos.setStyle("-fx-border-color: green;"); //Bordes verdes si esta escrito bien
+    		labelErrorApellidos.setText("");
+    	}else {
+    		txtapellidos.setStyle("-fx-border-color: red;"); //Bordes rojos si no esta escrito bien
+    		labelErrorApellidos.setText("Solo puede contener letras");
+    	}
+    }
+    
+    
+    
     // Método para validar el DNI en tiempo real
     private void validarDNIEnTiempoReal() {
         String dni = txtDNI.getText().trim();
@@ -79,18 +125,87 @@ public class LoginControlador implements Initializable {
                         'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
                 char letraCorrecta = letrasValidas[numDni % 23];
 
-                // Verifica si la letra es correcta
+             // Verifica si la letra es correcta
                 if (dni.charAt(8) == letraCorrecta) {
                     txtDNI.setStyle("-fx-border-color: green;"); // Bordes verdes si el DNI es válido
+                    labelErrorDni.setText("");
                 } else {
                     txtDNI.setStyle("-fx-border-color: red;"); // Bordes rojos si la letra es incorrecta
+                    labelErrorDni.setText("Letra del dni incorrecta");
                 }
             } else {
                 txtDNI.setStyle("-fx-border-color: red;"); // Bordes rojos si el formato es incorrecto
+                labelErrorDni.setText("Formato de dni incorrecto");
             }
         } else {
-            txtDNI.setStyle("-fx-border-color: red;"); // Bordes rojos si no tiene la longitud correcta
+            txtDNI.setStyle("-fx-border-color: red"); // Bordes rojos si no tiene la longitud correcta
+            labelErrorDni.setText("Longitud del dni incorrecto");
         }
+    }
+    
+    
+    
+    //Método para validar que las contraseñas son iguales 
+    private void validarContrasenias() {
+    	String contrasenia = txtcontrasenia.getText();
+    	String contrasenia2 = txtcontrasenia2.getText();
+
+    	if (contrasenia.equals(contrasenia2)) {
+    		txtcontrasenia.setStyle("-fx-border-color: green;"); //Bordes verdes si las contraseñas coinciden
+            txtcontrasenia2.setStyle("-fx-border-color: green;"); 
+            labelErrorContrasenia.setText("");
+        }else {
+        	txtcontrasenia.setStyle("-fx-border-color: red;");//Bordes rojos si las contraseñas no coinciden
+            txtcontrasenia2.setStyle("-fx-border-color: red;"); 
+            labelErrorContrasenia.setText("Las contraseñas no coinciden");
+        }
+    }
+    
+    
+    
+    //Método para validar que si es menor tenga un tutor 
+    private void validarTutor() {
+    	String tutor = txtTutor.getText();
+        LocalDate fechaNacimiento = datepickerFechaN.getValue();
+        esMayorDeEdad = calcularMayorDeEdad(fechaNacimiento);
+		if (esMayorDeEdad) {
+			
+		}else{
+	    	if (tutor.isEmpty()) {
+	    		txtTutor.setStyle("-fx-border-color: red;"); //Bordes rojos si no hay tutor 
+	    		labelErrorTutor.setText("Los menores deben tener un tutor");
+	    	}else {
+	    		if (tutor.length() == 9) {
+	                boolean numerosValidos = tutor.substring(0, 8).chars().allMatch(Character::isDigit); // Verifica los primeros 8 caracteres
+	                boolean letraValida = Character.isLetter(tutor.charAt(8)); // Verifica el último carácter como letra
+
+	                // Validación de la letra del DNI según el algoritmo
+	                if (numerosValidos && letraValida) {
+	                    int numDni = Integer.parseInt(tutor.substring(0, 8));
+	                    char[] letrasValidas = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X',
+	                    					'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+	                    char letraCorrecta = letrasValidas[numDni % 23];
+
+	                 // Verifica si la letra es correcta
+	                    if (tutor.charAt(8) == letraCorrecta) {
+	                        txtTutor.setStyle("-fx-border-color: green;"); // Bordes verdes si el DNI es válido
+	                        labelErrorTutor.setText("");
+	                    } else {
+	                    	txtTutor.setStyle("-fx-border-color: red;"); // Bordes rojos si la letra es incorrecta
+	                        labelErrorTutor.setText("Letra del dni incorrecta");
+	                    }
+	                } else {
+	                	txtTutor.setStyle("-fx-border-color: red;"); // Bordes rojos si el formato es incorrecto
+	                    labelErrorTutor.setText("Formato de dni incorrecto");
+	                }
+	            } else {
+	            	txtTutor.setStyle("-fx-border-color: red"); // Bordes rojos si no tiene la longitud correcta
+	                labelErrorTutor.setText("Longitud del dni incorrecto");
+	            }
+	    		
+	    	
+	    	}
+		}
     }
 
     @FXML
@@ -110,7 +225,6 @@ public class LoginControlador implements Initializable {
             mostrarAlerta("Todos los campos deben estar completos.");
             return;
         }
-
         if (dni.length() == 9) {
             boolean numerosValidos = true;
             
@@ -146,8 +260,14 @@ public class LoginControlador implements Initializable {
             mostrarAlerta("Las contraseñas no coinciden.");
             return;
         }
+        
+        
+        
 
-        boolean esMayorDeEdad = calcularMayorDeEdad(fechaNacimiento);
+        esMayorDeEdad = calcularMayorDeEdad(fechaNacimiento);
+
+        
+
 
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
             int filasAfectadas;
