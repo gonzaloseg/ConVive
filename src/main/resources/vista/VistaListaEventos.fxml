@@ -5,16 +5,15 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.shape.Rectangle?>
-
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.ListaEventosControlador">
     
     <!-- ScrollPane para las actividades -->
-    <ScrollPane layoutX="20.0" layoutY="144.0" prefHeight="536.0" prefWidth="1139.0" style="-fx-background-color: FFFFFF;">
+    <ScrollPane layoutX="20.0" layoutY="144.0" prefHeight="536.0" prefWidth="1139.0" style="-fx-background-color: #006D77;">
         <VBox fx:id="actividadVBox" spacing="15.0">
-            <!-- Aquí se agregarán los VBox de cada actividad desde el controlador -->
+            <!-- aqui se agregarán los VBox de cada actividad desde el controlador -->
         </VBox>
     </ScrollPane>
     
