@@ -9,10 +9,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,23 +31,7 @@ public class ListaEventosControlador implements Initializable {
 	@FXML
 	private Button botonVolver;
     @FXML
-    private TableView<Actividades> tablaActividades;
-    @FXML
-    private TableColumn<Actividades, String> columnaNombre;
-    @FXML
-    private TableColumn<Actividades, String> columnaDescripcion;
-    @FXML
-    private TableColumn<Actividades, String> columnaFecha;
-    @FXML
-    private TableColumn<Actividades, String> columnaHora;
-    @FXML
-    private TableColumn<Actividades, String> columnaLugar;
-    @FXML
-    private TableColumn<Actividades, Integer> columnaEdadMin;
-    @FXML
-    private TableColumn<Actividades, Integer> columnaEdadMax;
-    @FXML
-    private TableColumn<Actividades, Integer> columnaCreador;
+    private VBox actividadVBox; // Contenedor principal donde se agregan las actividades
     
    
     @Override
@@ -57,7 +44,6 @@ public class ListaEventosControlador implements Initializable {
         listaActividades = FXCollections.observableArrayList();
     }
 
-    // Método que se llama para cargar los datos de la base de datos en la tabla
     public void cargarDatos() {
         String sql = "SELECT * FROM actividad";  // Suponiendo que la tabla en la base de datos se llama "actividad"
 
@@ -65,36 +51,36 @@ public class ListaEventosControlador implements Initializable {
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            listaActividades.clear();  // Limpiar la lista antes de llenarla nuevamente
+            actividadVBox.getChildren().clear(); // Limpiar las actividades previas
 
             while (rs.next()) {
-                // Crear un objeto Actividades con los datos de la base de datos
-                Actividades actividad = new Actividades(
-                    rs.getInt("id"),
-                    rs.getString("nombre"),
-                    rs.getString("descripcion"),
-                    rs.getDate("fecha").toLocalDate(),
-                    rs.getTime("hora").toLocalTime(),
-                    rs.getString("lugar"),
-                    rs.getInt("edad_min"),
-                    rs.getInt("edad_max"),
-                    rs.getInt("creador")
-                );
-                listaActividades.add(actividad);
+                // Obtener los datos de la actividad de la base de datos
+                String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                String fecha = rs.getDate("fecha").toString();
+                String hora = rs.getTime("hora").toString();
+                String lugar = rs.getString("lugar");
+                int edadMin = rs.getInt("edad_min");
+                int edadMax = rs.getInt("edad_max");
+
+                // Crear un VBox para cada actividad
+                VBox actividadBox = new VBox(5);
+                actividadBox.setStyle("-fx-background-color: #FFFFFF; -fx-padding: 10; -fx-border-radius: 10px; -fx-background-radius: 10px;");
+                
+                // Crear etiquetas para cada campo de la actividad
+                Label lblNombre = new Label("Nombre: " + nombre);
+                lblNombre.setFont(new Font(18));
+                Label lblDescripcion = new Label("Descripción: " + descripcion);
+                Label lblFechaHora = new Label("Fecha: " + fecha + " | Hora: " + hora);
+                Label lblLugar = new Label("Lugar: " + lugar);
+                Label lblEdad = new Label("Edades: " + edadMin + " - " + edadMax);
+                
+                // Agregar todas las etiquetas al VBox de la actividad
+                actividadBox.getChildren().addAll(lblNombre, lblDescripcion, lblFechaHora, lblLugar, lblEdad);
+
+                // Agregar el VBox de la actividad al VBox principal en el ScrollPane
+                actividadVBox.getChildren().add(actividadBox);
             }
-
-            // Establecer los valores en las columnas de la tabla
-            columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-            columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-            columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-            columnaHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
-            columnaLugar.setCellValueFactory(new PropertyValueFactory<>("lugar"));
-            columnaEdadMin.setCellValueFactory(new PropertyValueFactory<>("edadMin"));
-            columnaEdadMax.setCellValueFactory(new PropertyValueFactory<>("edadMax"));
-            columnaCreador.setCellValueFactory(new PropertyValueFactory<>("creador"));
-
-            // Asignar la lista de actividades a la tabla
-            tablaActividades.setItems(listaActividades);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,4 +107,6 @@ public class ListaEventosControlador implements Initializable {
             e.printStackTrace();
         }
     }
+    
+
 }

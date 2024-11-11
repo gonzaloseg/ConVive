@@ -2,31 +2,31 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
+
 
 <AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.ListaEventosControlador">
-    <TableView fx:id="tablaActividades" layoutX="20.0" layoutY="144.0" prefHeight="536.0" prefWidth="1139.0" style="-fx-background-color: FFFFFF;">
-    <columns>
-        <TableColumn fx:id="columnaNombre" prefWidth="175.20000839233398" text="Nombre" />
-        <TableColumn fx:id="columnaDescripcion" prefWidth="262.40003967285156" text="Descripción" />
-        <TableColumn fx:id="columnaFecha" prefWidth="129.59994506835938" text="Fecha" />
-        <TableColumn fx:id="columnaHora" prefWidth="115.20001220703125" text="Hora" />
-        <TableColumn fx:id="columnaLugar" prefWidth="167.199951171875" text="Lugar" />
-        <TableColumn fx:id="columnaEdadMin" prefWidth="76.00006103515625" text="Edad Min" />
-        <TableColumn fx:id="columnaEdadMax" prefWidth="82.4000244140625" text="Edad Max" />
-        <TableColumn fx:id="columnaCreador" prefWidth="133.60003662109375" text="Creador" />
-    </columns>
-</TableView>
+    
+    <!-- ScrollPane para las actividades -->
+    <ScrollPane layoutX="20.0" layoutY="144.0" prefHeight="536.0" prefWidth="1139.0" style="-fx-background-color: FFFFFF;">
+        <VBox fx:id="actividadVBox" spacing="15.0">
+            <!-- Aquí se agregarán los VBox de cada actividad desde el controlador -->
+        </VBox>
+    </ScrollPane>
+    
+    <!-- barra de arriba -->
    <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="102.0" layoutX="-1.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1207.0" />
    <Label layoutX="58.0" layoutY="28.0" text="Lista de Eventos" textFill="#22504e">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
+   
+   <!-- boton para volver a principal -->
    <Button fx:id="botonVolver" layoutX="1049.0" layoutY="24.0" mnemonicParsing="false" onAction="#volver" prefHeight="53.0" prefWidth="100.0" style="-fx-background-color: FFFFFF;" text="Volver" textFill="#22504e">
       <font>
          <Font size="24.0" />
