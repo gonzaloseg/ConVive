@@ -5,32 +5,39 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MiPerfilControlador {
 	@FXML
     private Button botonVolver;
-	
-    @FXML
-    void volver(ActionEvent event) { //BOTON VOLVER AL HOME
-    	
-    	try {
-        
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
-            AnchorPane root = loader.load();
+	 @FXML
+	    private ImageView img_volver;
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Principal - ConVive");
-            stage.show();
+	    public void initialize() {
+	        // Asigna un evento de clic a img_volver
+	        img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
+	    }
 
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
-            currentStage.close(); //cerrar la ventana mi perfil
+	    @FXML
+	    void volver(ActionEvent event) {
+	        try {
+	            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+	            AnchorPane root = loader.load();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	            Scene scene = new Scene(root);
+	            Stage stage = new Stage();
+	            stage.setScene(scene);
+	            stage.setTitle("Principal - ConVive");
+	            stage.show();
+
+	            // Cerrar la ventana actual
+	            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+	            currentStage.close();
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 }
