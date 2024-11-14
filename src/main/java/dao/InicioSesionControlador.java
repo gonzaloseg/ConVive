@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-
+import dto.UsuarioGlobal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,6 +99,8 @@ public class InicioSesionControlador implements Initializable{
 			        escenarioActual.centerOnScreen();
 			        escenarioActual.show();
 			        
+			        
+			        
 			    } catch (Exception e) {
 			        e.printStackTrace();
 			        new Alert(Alert.AlertType.ERROR, "No se pudo cargar la ventana principal").showAndWait();
@@ -126,6 +128,8 @@ public class InicioSesionControlador implements Initializable{
         	pst.setString(2, contrasenia);
             
             ResultSet rs = pst.executeQuery();
+            UsuarioGlobal.getInstacne().setDniGlobal(dni);
+            
             return rs.next();
             
         } catch (SQLException e) {

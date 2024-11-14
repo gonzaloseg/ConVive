@@ -14,6 +14,7 @@ public class Actividades {
     int edadMax;
     int creador;
 
+    
     public Actividades(int id, String nombre, String descripcion, LocalDate fecha, LocalTime hora, String lugar, int edadMin,
                        int edadMax, int creador) {
         super();

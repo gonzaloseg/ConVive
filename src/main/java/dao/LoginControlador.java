@@ -24,6 +24,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ResourceBundle;
+
+import dto.UsuarioGlobal;
 import javafx.fxml.Initializable; //lola
 
 public class LoginControlador implements Initializable {
@@ -272,10 +274,10 @@ public class LoginControlador implements Initializable {
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
             int filasAfectadas;
 
-            if (dniExiste(conn, dni)) {
+            /*if (dniExiste(conn, dni)) {
                 mostrarAlerta("Ya existe un usuario registrado con este DNI en la comunidad.");
                 return;
-            }
+            }*/
             
             if (esMayorDeEdad) {
                 String sql = "INSERT INTO adulto (dni, nombre, apellidos, contrasenia, piso , fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?)";
@@ -311,6 +313,8 @@ public class LoginControlador implements Initializable {
             }
             
             if (filasAfectadas > 0) {
+            	
+            	UsuarioGlobal.getInstacne().setDniGlobal(dni);
                 new Alert (Alert.AlertType.INFORMATION, "Usuario creado correctamente.").showAndWait();
                 
                 try {
@@ -354,7 +358,7 @@ public class LoginControlador implements Initializable {
     }
 
     private boolean dniExiste(Connection conn, String dni) throws SQLException {
-        String query = "SELECT COUNT() FROM adulto WHERE dni = ? UNION ALL SELECT COUNT() FROM menor WHERE dni = ?";
+        String query = "SELECT * FROM adulto WHERE dni = ? UNION ALL SELECT * FROM menor WHERE dni = ?";
         PreparedStatement pst = conn.prepareStatement(query);
         pst.setString(1, dni);
         pst.setString(2, dni);
