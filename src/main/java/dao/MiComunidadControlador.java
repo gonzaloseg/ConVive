@@ -17,22 +17,34 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MiComunidadControlador {
-    @FXML
-    private Button botonVolver;
-
-    @FXML
-    private ImageView img_volver;
-
+    
     @FXML
     private BarChart<String, Number> barChart;
 
+    @FXML
+    private ImageView img_volver; 
+    @FXML
+    private Button btn_1;
+    @FXML
+    private Button btn_2;
     public void initialize() {
-        // Configura el evento de clic para img_volver
+    	cargarDatosEnGrafica();
+        // Asigna un evento de clic a img_volver
         img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
-
-        // Configura los datos en la gráfica
-        cargarDatosEnGrafica();
+        btn_1.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_1));
+        btn_1.setOnMouseExited(event -> restaurarColorBoton(btn_1));
+        btn_2.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_2));
+        btn_2.setOnMouseExited(event -> restaurarColorBoton(btn_2));
     }
+
+    private void cambiarColorBotonAmarillo(Button boton) {
+        boton.setStyle("-fx-background-color: yellow;");
+    }
+
+    private void restaurarColorBoton(Button boton) {
+        boton.setStyle(""); // Elimina el estilo en línea, volviendo al estilo original
+    }
+    
 
     @FXML
     void volver(ActionEvent event) {
@@ -47,7 +59,7 @@ public class MiComunidadControlador {
             stage.show();
 
             // Cerrar la ventana actual
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close();
 
         } catch (Exception e) {
@@ -104,6 +116,8 @@ public class MiComunidadControlador {
         return 0; // Retorna 0 si ocurre un error
     }
     
-    // ... El resto de tu código controlador permanece igual.
+    
+
+   
 
 }

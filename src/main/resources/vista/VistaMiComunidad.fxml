@@ -3,6 +3,7 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,9 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiComunidadControlador">
+<AnchorPane prefHeight="700.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiComunidadControlador">
    <children>
-      <BarChart fx:id="barChart" layoutX="683.0" layoutY="198.0" prefHeight="354.0" prefWidth="426.0">
+      <BarChart fx:id="barChart" layoutX="545.0" layoutY="187.0" prefHeight="339.0" prefWidth="399.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -20,7 +21,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <HBox prefHeight="86.0" prefWidth="1238.0">
+      <HBox layoutX="14.0" prefHeight="154.0" prefWidth="1196.0">
          <children>
             <Label prefHeight="154.0" prefWidth="1192.0" text="Mi comunidad">
                <font>
@@ -34,5 +35,20 @@
             </ImageView>
          </children>
       </HBox>
+      <ImageView fitHeight="415.0" fitWidth="360.0" layoutX="42.0" layoutY="299.0" rotate="90.0">
+         <image>
+            <Image url="@../imagenes/rectangle.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="182.0" layoutY="411.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="273.0" layoutY="411.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="273.0" layoutY="458.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="182.0" layoutY="506.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="273.0" layoutY="506.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="182.0" layoutY="458.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="182.0" layoutY="552.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button layoutX="273.0" layoutY="552.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button fx:id="btn_1" layoutX="182.0" layoutY="597.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
+      <Button fx:id="btn_2" layoutX="273.0" layoutY="597.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
    </children>
 </AnchorPane>
