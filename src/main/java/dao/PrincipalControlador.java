@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import dto.Actividades;
+import dto.UsuarioGlobal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,6 +80,10 @@ public class PrincipalControlador implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiPerfil.fxml"));
             AnchorPane root = loader.load();
 
+         // Obtener la instancia del controlador y pasar los datos
+            MiPerfilControlador controller = loader.getController();
+            controller.rellenarPerfil(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
+            
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

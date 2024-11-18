@@ -126,9 +126,11 @@ public class InicioSesionControlador implements Initializable{
         	//guardar datos de la bbdd
         	pst.setString(1, dni);
         	pst.setString(2, contrasenia);
+        	
             
             ResultSet rs = pst.executeQuery();
             UsuarioGlobal.getInstacne().setDniGlobal(dni);
+            UsuarioGlobal.getInstacne().setTabla(tabla);
             
             return rs.next();
             

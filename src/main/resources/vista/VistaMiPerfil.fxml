@@ -32,5 +32,10 @@
             </ImageView>
          </children>
       </HBox>
+      <Label fx:id="labelNombre" layoutX="564.0" layoutY="192.0" text="Nombree" />
+      <Label fx:id="labelApellidos" layoutX="564.0" layoutY="228.0" text="Apellidos" />
+      <Label fx:id="labelPiso" layoutX="564.0" layoutY="262.0" text="Piso" />
+      <Label fx:id="labelFechaN" layoutX="575.0" layoutY="299.0" text="Fecha nacimiento " />
+      <Label fx:id="labelComodin" layoutX="542.0" layoutY="349.0" text="comodin" />
    </children>
 </AnchorPane>

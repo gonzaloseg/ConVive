@@ -4,6 +4,7 @@ public class UsuarioGlobal {
 	
 	private static UsuarioGlobal instance = null;
 	private String dniGlobal;
+	private String tabla;
 	
 	
 
@@ -13,7 +14,7 @@ public class UsuarioGlobal {
 		}
 		return instance;
 	}
-private UsuarioGlobal() {
+	private UsuarioGlobal() {
 		
 	}
 	public String getDniGlobal() {
@@ -22,6 +23,12 @@ private UsuarioGlobal() {
 
 	public void setDniGlobal(String dniGlobal) {
 		this.dniGlobal = dniGlobal;
+	}
+	public String getTabla() {
+		return tabla;
+	}
+	public void setTabla(String tabla) {
+		this.tabla = tabla;
 	}
 	
 	
