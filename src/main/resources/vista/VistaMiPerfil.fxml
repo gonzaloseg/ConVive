@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiPerfilControlador">
    <children>
-      <ImageView fx:id="img_volver" fitHeight="154.0" fitWidth="200.0" layoutX="1000.0">
-         <image>
-            <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
-         </image>
-      </ImageView>
+      <Label layoutX="132.0" layoutY="191.0" prefHeight="18.0" prefWidth="125.0" text="Nombre" />
+      <Label layoutX="132.0" layoutY="236.0" prefHeight="18.0" prefWidth="54.0" text="apellidos" />
+      <Label layoutX="132.0" layoutY="270.0" prefHeight="10.0" prefWidth="37.0" text="DNI" />
+      <Label layoutX="132.0" layoutY="306.0" prefHeight="18.0" prefWidth="54.0" text="Vivienda" />
+      <HBox prefHeight="122.0" prefWidth="1200.0">
+         <children>
+            <ImageView fitHeight="121.0" fitWidth="200.0">
+               <image>
+                  <Image url="@../imagenes/vecteezy_user-icon-on-transparent-background_19879186.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="122.0" prefWidth="916.0" text="mi perfil">
+               <font>
+                  <Font size="64.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="img_volver" fitHeight="92.0" fitWidth="111.0">
+               <image>
+                  <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

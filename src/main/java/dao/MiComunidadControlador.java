@@ -27,6 +27,31 @@ public class MiComunidadControlador {
     private Button btn_1;
     @FXML
     private Button btn_2;
+    @FXML
+    private Button btn_3;
+    @FXML
+    private Button btn_4;
+    @FXML
+    private Button btn_5;
+    @FXML
+    private Button btn_6;
+    @FXML
+    private Button btn_7;
+    @FXML
+    private Button btn_8;
+    @FXML
+    private Button btn_9;
+    @FXML
+    private Button btn_10;
+    @FXML
+    private Button btn_11;
+    @FXML
+    private Button btn_12;
+    @FXML
+    private Button btn_13;
+    @FXML
+    private Button btn_14;
+    
     public void initialize() {
     	cargarDatosEnGrafica();
         // Asigna un evento de clic a img_volver
@@ -35,6 +60,32 @@ public class MiComunidadControlador {
         btn_1.setOnMouseExited(event -> restaurarColorBoton(btn_1));
         btn_2.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_2));
         btn_2.setOnMouseExited(event -> restaurarColorBoton(btn_2));
+        btn_3.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_3));
+        btn_3.setOnMouseExited(event -> restaurarColorBoton(btn_3));
+        btn_4.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_4));
+        btn_4.setOnMouseExited(event -> restaurarColorBoton(btn_4));
+        btn_5.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_5));
+        btn_5.setOnMouseExited(event -> restaurarColorBoton(btn_5));
+        btn_6.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_6));
+        btn_6.setOnMouseExited(event -> restaurarColorBoton(btn_6));
+        btn_7.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_7));
+        btn_7.setOnMouseExited(event -> restaurarColorBoton(btn_7));
+        btn_8.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_8));
+        btn_8.setOnMouseExited(event -> restaurarColorBoton(btn_8));
+        btn_9.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_9));
+        btn_9.setOnMouseExited(event -> restaurarColorBoton(btn_9));
+        btn_10.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_10));
+        btn_10.setOnMouseExited(event -> restaurarColorBoton(btn_10));
+        btn_11.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_11));
+        btn_11.setOnMouseExited(event -> restaurarColorBoton(btn_11));
+        btn_12.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_12));
+        btn_12.setOnMouseExited(event -> restaurarColorBoton(btn_12));
+        btn_13.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_13));
+        btn_13.setOnMouseExited(event -> restaurarColorBoton(btn_13));
+        btn_14.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_14));
+        btn_14.setOnMouseExited(event -> restaurarColorBoton(btn_14));
+       
+
     }
 
     private void cambiarColorBotonAmarillo(Button boton) {
@@ -84,7 +135,6 @@ public class MiComunidadControlador {
         barChart.getData().add(series);
     }
 
-    // Métodos de ejemplo para obtener los datos de la base de datos
     private int getNumeroDeAdultos() {
         String query = "SELECT COUNT(*) AS total FROM adulto";
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
@@ -118,6 +168,5 @@ public class MiComunidadControlador {
     
     
 
-   
 
 }

@@ -10,8 +10,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MiPerfilControlador {
-	@FXML
-    private Button botonVolver;
+
 	 @FXML
 	    private ImageView img_volver;
 
@@ -33,7 +32,7 @@ public class MiPerfilControlador {
 	            stage.show();
 
 	            // Cerrar la ventana actual
-	            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+	            Stage currentStage = (Stage) img_volver.getScene().getWindow();
 	            currentStage.close();
 
 	        } catch (Exception e) {
