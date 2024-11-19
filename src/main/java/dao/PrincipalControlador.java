@@ -80,10 +80,9 @@ public class PrincipalControlador implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiPerfil.fxml"));
             AnchorPane root = loader.load();
 
-         // Obtener la instancia del controlador y pasar los datos
+            // Obtener la instancia del controlador y pasar los datos (MI PERFIL)
             MiPerfilControlador controller = loader.getController();
             controller.rellenarPerfil(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
-            System.out.println(UsuarioGlobal.getInstacne().getTabla()+"  hh"); 
             
             Scene scene = new Scene(root);
             Stage stage = new Stage();

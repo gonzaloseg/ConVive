@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MiPerfilControlador {
@@ -21,14 +22,25 @@ public class MiPerfilControlador {
  @FXML private Label labelApellidos;
  @FXML private Label labelFechaN;
  @FXML private Label labelPiso;
+ @FXML private Label labelDni;
  @FXML private Label labelComodin;
+ 
+ @FXML private Button actividadesPropuestas;
+ @FXML private Button botonClose;
+ @FXML private VBox contenedorTarjeta;
+ @FXML private Label labelTarjeta;
 
 	 
 	public void initialize() {
 	    // Asigna un evento de clic a img_volver
 	    img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
+	    
+        contenedorTarjeta.setVisible(false); // Ocultar el contenedor de la tarjeta inicialmente
 	}
 
+	int idAuxiliar = 0;
+	
+//RELLENAR LOS DATOS DEL USUARIO 
     public void rellenarPerfil(String dniGlobal, String tabla) {
     	
     	String sql = "SELECT * FROM "+tabla+" WHERE dni = ?";
@@ -47,6 +59,8 @@ public class MiPerfilControlador {
     			String apellidos = rs.getString("apellidos");
     			String fechaN = rs.getString("fecha_nacimiento");
     			String piso = rs.getString("piso");
+    			
+    			idAuxiliar= id;
     			
     			//Cuando el usuario es menor de edad aparecera su tutor a cargo 
     			if (tabla.equals("menor")) {
@@ -108,13 +122,12 @@ public class MiPerfilControlador {
 					}
     			}
 
-    		
     			//Imprimirlos en la ventana 
     			labelNombre.setText(nombre);
     			labelApellidos.setText(apellidos);
     			labelPiso.setText(piso);
     			labelFechaN.setText(fechaN);
-    			
+    			labelDni.setText(dni);			
     		}
     		
 		}  catch (Exception e) {
@@ -122,7 +135,44 @@ public class MiPerfilControlador {
 			e.getMessage();
 		}
     }
-	 
+    
+    
+    
+    @FXML
+    void actividadesPropuestas(ActionEvent event) {
+    	
+    	String sql = "SELECT * FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto=?"; //OR ap.id_menor = ?";
+    	try(Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+			PreparedStatement pst = conn.prepareStatement(sql);
+			pst.setInt(1, idAuxiliar); //Establece el valor del parametro ?
+			ResultSet rs = pst.executeQuery();
+			
+			StringBuilder nombreActividades = new StringBuilder();
+			while (rs.next()) {
+				String nombreAct = rs.getString("nombre");
+				System.out.println(nombreAct);
+				
+				if (nombreActividades.length() > 0) {
+					nombreActividades.append("\n");
+				}
+				nombreActividades.append(nombreAct);
+			}
+			labelTarjeta.setText(nombreActividades.toString());
+			contenedorTarjeta.setVisible(true);
+			
+		} catch (Exception e) {
+			e.printStackTrace(); e.getMessage();
+		}
+    }
+    
+    @FXML
+    void close (ActionEvent event ) {
+    	contenedorTarjeta.setVisible(false);
+    }
+    
+    
+    
+    
     
 	
     @FXML

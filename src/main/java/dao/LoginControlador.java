@@ -80,7 +80,9 @@ public class LoginControlador implements Initializable {
     
     boolean esMayorDeEdad ;
 
+
     
+//VALIDACIONES A TIEMPO REAL
     //Método para ver que el nombre este escrito solo con letras y espacios
     private void validarNombre () {
     	String nombre = txtnombre.getText();
@@ -135,10 +137,12 @@ public class LoginControlador implements Initializable {
                     txtDNI.setStyle("-fx-border-color: red;"); // Bordes rojos si la letra es incorrecta
                     labelErrorDni.setText("Letra del dni incorrecta");
                 }
+                
             } else {
                 txtDNI.setStyle("-fx-border-color: red;"); // Bordes rojos si el formato es incorrecto
                 labelErrorDni.setText("Formato de dni incorrecto");
             }
+            
         } else {
             txtDNI.setStyle("-fx-border-color: red"); // Bordes rojos si no tiene la longitud correcta
             labelErrorDni.setText("Longitud del dni incorrecto");
@@ -204,15 +208,17 @@ public class LoginControlador implements Initializable {
 	            	txtTutor.setStyle("-fx-border-color: red"); // Bordes rojos si no tiene la longitud correcta
 	                labelErrorTutor.setText("Longitud del dni incorrecto");
 	            }
-	    		
-	    	
 	    	}
 		}
     }
 
+    
+    
+//AGREGAR UN NUEVO VECINO
     @FXML
     void crearNuevoVecino(ActionEvent event) {
     	
+    	//Guardar los datos intrdoducidos
         String dni = txtDNI.getText().trim();
         String nombre = txtnombre.getText().trim();
         String apellidos = txtapellidos.getText().trim();
@@ -222,11 +228,14 @@ public class LoginControlador implements Initializable {
         LocalDate fechaNacimiento = datepickerFechaN.getValue();
         String tutor = txtTutor.getText();
 
+    //Validaciones: todos los campos rellenos  
         if (dni.isEmpty() || nombre.isEmpty() || apellidos.isEmpty() || contrasenia.isEmpty() ||
                 vivienda == null || fechaNacimiento == null) {
             mostrarAlerta("Todos los campos deben estar completos.");
             return;
         }
+        
+     //Validaciones: dni en formato correcto   
         if (dni.length() == 9) {
             boolean numerosValidos = true;
             
@@ -257,27 +266,19 @@ public class LoginControlador implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Formato de dni incorrecto").showAndWait();
             return;
         }
-
+        
+	//Validaciones: contraseñas iguales
         if (!contrasenia.equals(contrasenia2)) {
             mostrarAlerta("Las contraseñas no coinciden.");
             return;
         }
         
         
-        
-
         esMayorDeEdad = calcularMayorDeEdad(fechaNacimiento);
 
-        
-
-
+   // Conexion con la BBDD para añadir al nuevo vecino     
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
             int filasAfectadas;
-
-            /*if (dniExiste(conn, dni)) {
-                mostrarAlerta("Ya existe un usuario registrado con este DNI en la comunidad.");
-                return;
-            }*/
             
             if (esMayorDeEdad) {
                 String sql = "INSERT INTO adulto (dni, nombre, apellidos, contrasenia, piso , fecha_nacimiento) VALUES (?, ?, ?, ?, ?, ?)";
@@ -289,6 +290,10 @@ public class LoginControlador implements Initializable {
                 pst.setString(4, contrasenia);
                 pst.setString(5, vivienda);
                 pst.setDate(6, java.sql.Date.valueOf(fechaNacimiento));
+                
+                //Cargar dni global y tabla global
+                UsuarioGlobal.getInstacne().setDniGlobal(dni);
+                UsuarioGlobal.getInstacne().setTabla("adulto");
 
                 filasAfectadas = pst.executeUpdate();
                 
@@ -307,7 +312,11 @@ public class LoginControlador implements Initializable {
                 pst.setString(4, contrasenia);
                 pst.setString(5, vivienda);
                 pst.setDate(6, java.sql.Date.valueOf(fechaNacimiento));
-                pst.setString(7, tutorMenor(conn, tutor));
+                pst.setInt(7, tutorMenor(conn, tutor));
+                
+                //Cargar dni global y tabla global
+                UsuarioGlobal.getInstacne().setDniGlobal(dni);
+                UsuarioGlobal.getInstacne().setTabla("menor");
 
                 filasAfectadas = pst.executeUpdate();
             }
@@ -317,6 +326,7 @@ public class LoginControlador implements Initializable {
             	UsuarioGlobal.getInstacne().setDniGlobal(dni);
                 new Alert (Alert.AlertType.INFORMATION, "Usuario creado correctamente.").showAndWait();
                 
+                //Cargar la vista principal (HOME)
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
                     AnchorPane root = loader.load();
@@ -343,6 +353,11 @@ public class LoginControlador implements Initializable {
         }
     }
 
+    
+    
+//METODOS AUXILIARES
+    
+    //Alertas
     private void mostrarAlerta(String mensaje) {
         Alert alerta = new Alert(Alert.AlertType.WARNING);
         alerta.setTitle("Advertencia");
@@ -350,13 +365,17 @@ public class LoginControlador implements Initializable {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
-
+    
+    
+    //Calcular si es mayor de edad 
     private boolean calcularMayorDeEdad(LocalDate fechaNacimiento) {
         LocalDate fechaActual = LocalDate.now();
         Period periodo = Period.between(fechaNacimiento, fechaActual);
         return periodo.getYears() >= 18;
     }
 
+    
+    //Si el dni ya existe en la bbdd
     private boolean dniExiste(Connection conn, String dni) throws SQLException {
         String query = "SELECT * FROM adulto WHERE dni = ? UNION ALL SELECT * FROM menor WHERE dni = ?";
         PreparedStatement pst = conn.prepareStatement(query);
@@ -371,14 +390,17 @@ public class LoginControlador implements Initializable {
         return count > 0;
     }
     
-    private String tutorMenor(Connection conn, String tutor) throws SQLException {
-        String query = "SELECT dni FROM adulto WHERE dni = ?";
+    
+    //Los menores deben tener un tutor
+    private int tutorMenor(Connection conn, String tutor) throws SQLException {
+        String query = "SELECT id FROM adulto WHERE dni = ?";
         PreparedStatement pst = conn.prepareStatement(query);
         pst.setString(1, tutor);
         ResultSet rs = pst.executeQuery();
         
         if (rs.next()) {
-            return tutor;
+        	int id = rs.getInt("id");
+            return id;
         } else {
             mostrarAlerta("No existe un tutor con este dni registrado en el sistema.");
             throw new SQLException("Tutor no registrado");

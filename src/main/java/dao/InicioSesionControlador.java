@@ -72,6 +72,8 @@ public class InicioSesionControlador implements Initializable{
 			boolean autentificar = verificarCredenciales (conn, dni, contrasenia, "adulto") || 
 									verificarCredenciales (conn, dni, contrasenia, "menor");
 			
+			
+			//Comprobar que tabla estamos usando para pasarla a MI PERFIL
 			if( verificarCredenciales (conn, dni, contrasenia, "adulto")) {
 				String tabla = "adulto";
 				UsuarioGlobal.getInstacne().setTabla(tabla);
@@ -130,6 +132,8 @@ public class InicioSesionControlador implements Initializable{
         	
             
             ResultSet rs = pst.executeQuery();
+            
+            //DNI GLOBAL 
             UsuarioGlobal.getInstacne().setDniGlobal(dni);
             
             return rs.next();
