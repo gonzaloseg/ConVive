@@ -39,16 +39,7 @@ public class InicioSesionControlador implements Initializable{
         txtDNI.setPromptText("Ingrese su DNI");
         txtContrasenia.setPromptText("Ingrese su contraseña");
 
-        /*
-        txtDNI.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue) { // Solo validar al perder el foco del campo
-                String dni = txtDNI.getText();
-                if (!dni.matches("\\d{8}[a-zA-Z]")) { // Validar formato
-                    new Alert(Alert.AlertType.WARNING, "El DNI debe tener 8 números seguidos de una letra.").showAndWait();
-                    txtDNI.requestFocus(); // Devuelve el foco a txtDNI si el formato es incorrecto
-                }
-            }
-        });*/
+       
 	}
     
     
@@ -80,6 +71,16 @@ public class InicioSesionControlador implements Initializable{
     		//Enviar al método la tabla menor o adulto 
 			boolean autentificar = verificarCredenciales (conn, dni, contrasenia, "adulto") || 
 									verificarCredenciales (conn, dni, contrasenia, "menor");
+			
+			if( verificarCredenciales (conn, dni, contrasenia, "adulto")) {
+				String tabla = "adulto";
+				UsuarioGlobal.getInstacne().setTabla(tabla);
+				System.out.println(UsuarioGlobal.getInstacne().getTabla());
+			}else {
+				String tabla = "menor";
+				UsuarioGlobal.getInstacne().setTabla(tabla);
+				System.out.println(UsuarioGlobal.getInstacne().getTabla());
+			}
     		
 			//Comprobar si los datos corresponenden con la BBDD
 			if (autentificar) {
@@ -130,7 +131,6 @@ public class InicioSesionControlador implements Initializable{
             
             ResultSet rs = pst.executeQuery();
             UsuarioGlobal.getInstacne().setDniGlobal(dni);
-            UsuarioGlobal.getInstacne().setTabla(tabla);
             
             return rs.next();
             
