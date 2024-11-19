@@ -96,7 +96,11 @@ public class MiPerfilControlador {
     					}
 
     					// Establecer el texto concatenado en el Label
-    					labelComodin.setText("Menores a cargo -> "+nombresMenores.toString());
+    					if (nombresMenores.isEmpty()) {
+    						labelComodin.setText("Menores a cargo -> No tiene menores a cargo");
+    					}else {
+        					labelComodin.setText("Menores a cargo -> "+nombresMenores.toString());
+    					}
     					
 					} catch (Exception e) {
 						e.printStackTrace();
