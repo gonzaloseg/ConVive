@@ -84,6 +84,7 @@ public class PrincipalControlador implements Initializable {
             MiPerfilControlador controller = loader.getController();
             controller.rellenarPerfil(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
             
+            
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

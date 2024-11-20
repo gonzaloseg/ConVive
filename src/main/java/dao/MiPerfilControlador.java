@@ -3,13 +3,22 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+import dto.Actividades;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -25,10 +34,15 @@ public class MiPerfilControlador {
  @FXML private Label labelDni;
  @FXML private Label labelComodin;
  
- @FXML private Button actividadesPropuestas;
+ @FXML private Button actividadesApuntadas;
  @FXML private Button botonClose;
  @FXML private VBox contenedorTarjeta;
  @FXML private Label labelTarjeta;
+ 
+ @FXML private TableView<Actividades> tablaActividadesApuntadas;
+ @FXML private TableColumn<Actividades, String> columnaActividades;
+ @FXML private TableColumn<Actividades, LocalDate> columnaFecha;
+ @FXML private TableColumn<Actividades, LocalTime> columnaHora;
 
 	 
 	public void initialize() {
@@ -36,9 +50,15 @@ public class MiPerfilControlador {
 	    img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
 	    
         contenedorTarjeta.setVisible(false); // Ocultar el contenedor de la tarjeta inicialmente
+        
+     // Configurar las columnas para que usen los nombres de las propiedades del modelo
+        columnaActividades.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        columnaHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
+        
 	}
 
-	int idAuxiliar = 0;
+	 int idAuxiliar = 0;
 	
 //RELLENAR LOS DATOS DEL USUARIO 
     public void rellenarPerfil(String dniGlobal, String tabla) {
@@ -137,32 +157,37 @@ public class MiPerfilControlador {
     }
     
     
-    
+
+//VER LAS ACTIVIDADES DONDE TE HAS APUNTADO 
     @FXML
-    void actividadesPropuestas(ActionEvent event) {
+    void actividadesApuntadas(ActionEvent event) {
+    	ObservableList<Actividades> listaActividades = FXCollections.observableArrayList();
+
+        String sql = "SELECT a.nombre, a.fecha, a.hora FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto = ?";
+
+        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+        	PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, idAuxiliar);
+            
+            try (ResultSet rs = pst.executeQuery()) {
+            	
+                while (rs.next()) { //recorre la bbdd
+                    String nombreAct = rs.getString("nombre");
+                    LocalDate fechaAct = rs.getDate("fecha").toLocalDate();
+                    LocalTime horaAct = rs.getTime("hora").toLocalTime();
+
+                    //hay que rellenar los campos que se van a usar y dejar vacios los campos que no se estan usando
+                    Actividades actividad = new Actividades(0, nombreAct, "", fechaAct, horaAct, "", 0, 0, 0);  
+                    listaActividades.add(actividad);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+
+        tablaActividadesApuntadas.setItems(listaActividades); //añade todas las act a la tabla 
+        contenedorTarjeta.setVisible(true);
     	
-    	String sql = "SELECT * FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto=?"; //OR ap.id_menor = ?";
-    	try(Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
-			PreparedStatement pst = conn.prepareStatement(sql);
-			pst.setInt(1, idAuxiliar); //Establece el valor del parametro ?
-			ResultSet rs = pst.executeQuery();
-			
-			StringBuilder nombreActividades = new StringBuilder();
-			while (rs.next()) {
-				String nombreAct = rs.getString("nombre");
-				System.out.println(nombreAct);
-				
-				if (nombreActividades.length() > 0) {
-					nombreActividades.append("\n");
-				}
-				nombreActividades.append(nombreAct);
-			}
-			labelTarjeta.setText(nombreActividades.toString());
-			contenedorTarjeta.setVisible(true);
-			
-		} catch (Exception e) {
-			e.printStackTrace(); e.getMessage();
-		}
     }
     
     @FXML
