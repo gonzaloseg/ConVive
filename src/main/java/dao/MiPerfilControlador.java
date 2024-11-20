@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import dto.Actividades;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -23,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import dto.Actividades;
 
 public class MiPerfilControlador {
 
@@ -36,13 +38,15 @@ public class MiPerfilControlador {
  
  @FXML private Button actividadesApuntadas;
  @FXML private Button botonClose;
+ @FXML private Button borrarActividad;
  @FXML private VBox contenedorTarjeta;
- @FXML private Label labelTarjeta;
  
  @FXML private TableView<Actividades> tablaActividadesApuntadas;
  @FXML private TableColumn<Actividades, String> columnaActividades;
  @FXML private TableColumn<Actividades, LocalDate> columnaFecha;
  @FXML private TableColumn<Actividades, LocalTime> columnaHora;
+ 
+ private ObservableList<Actividades>listaActividades;
 
 	 
 	public void initialize() {
@@ -51,7 +55,10 @@ public class MiPerfilControlador {
 	    
         contenedorTarjeta.setVisible(false); // Ocultar el contenedor de la tarjeta inicialmente
         
-     // Configurar las columnas para que usen los nombres de las propiedades del modelo
+        // Inicializar la lista
+        listaActividades = FXCollections.observableArrayList();
+        
+        // Configurar las columnas para que usen los nombres de las propiedades del modelo
         columnaActividades.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         columnaHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
@@ -59,6 +66,7 @@ public class MiPerfilControlador {
 	}
 
 	 int idAuxiliar = 0;
+
 	
 //RELLENAR LOS DATOS DEL USUARIO 
     public void rellenarPerfil(String dniGlobal, String tabla) {
@@ -172,9 +180,17 @@ public class MiPerfilControlador {
             try (ResultSet rs = pst.executeQuery()) {
             	
                 while (rs.next()) { //recorre la bbdd
+                	/*
+                	 Con la línea 189 comentada, carga la tabla pero da error al borrar una actividad
+                	 Si pruebas a "descomentarla" veras como la tabla aparece vacia 
+                	 El metodo para borrar los elementos está más abajo, el problema es que no coge el id de la actividad seleccionada
+                	 Mete en tu tabla apuntados mas datos para que un usuario tenga al menos 3 actividades y poder comprobar bien todo
+                	 */
+                	//int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
                     String nombreAct = rs.getString("nombre");
                     LocalDate fechaAct = rs.getDate("fecha").toLocalDate();
                     LocalTime horaAct = rs.getTime("hora").toLocalTime();
+                    
 
                     //hay que rellenar los campos que se van a usar y dejar vacios los campos que no se estan usando
                     Actividades actividad = new Actividades(0, nombreAct, "", fechaAct, horaAct, "", 0, 0, 0);  
@@ -188,6 +204,47 @@ public class MiPerfilControlador {
         tablaActividadesApuntadas.setItems(listaActividades); //añade todas las act a la tabla 
         contenedorTarjeta.setVisible(true);
     	
+    }
+    
+    @FXML
+    void borrarActividad(ActionEvent event) {
+    	Actividades actividadSeleccionada = tablaActividadesApuntadas.getSelectionModel().getSelectedItem();
+		
+		if (actividadSeleccionada != null) {
+			
+			
+	        int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
+	        
+	        if (actividadId > 0) {
+	            // Borrar de la tabla en pantalla
+	            listaActividades.remove(actividadSeleccionada);
+
+	            // Borrar de la base de datos
+	            String sql = "DELETE FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
+	            try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+	                PreparedStatement pst = conn.prepareStatement(sql);
+	                pst.setInt(1, idAuxiliar);  // ID del adulto
+	                pst.setInt(2, actividadId);  // ID de la actividad
+
+	                // Ejecutar la actualización
+	                int rowsAffected = pst.executeUpdate();
+
+	                if (rowsAffected > 0) {
+	                    new Alert(Alert.AlertType.INFORMATION, "Ya no estás apuntado/a a la actividad").show();
+	                } else {
+	                    new Alert(Alert.AlertType.ERROR, "No hemos podido borrarte de la actividad, por favor, inténtelo de nuevo").show();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	                new Alert(Alert.AlertType.ERROR, "Ocurrió un error. Intente nuevamente").show();
+	            }
+	        } else {
+	            new Alert(Alert.AlertType.WARNING, "ID de actividad no válido").show();
+	        }
+	    } else {
+	        new Alert(Alert.AlertType.WARNING, "Debes seleccionar una actividad para eliminar").show();
+	    }
+	
     }
     
     @FXML

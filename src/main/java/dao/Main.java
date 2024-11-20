@@ -23,32 +23,4 @@ public class Main extends Application {
 	}
 
 }
-/*
-¿Por qué así no funciona?
- * 
-@Override
-public void start(Stage primaryStage) {
-	try {
-		
-		//crear objeto cargar de la clase fxml
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
-		//cargar ventana Inicio sesion
-		AnchorPane root = loader.load();					
-				
-		//BorderPane root = new BorderPane(); //viene por defecto 
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setTitle("INICIO SESION"); //Título
-		primaryStage.setScene(scene);
-		primaryStage.show();
-		
-	} catch(Exception e) {
-		e.printStackTrace();
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
-	}
 
-}
-}*/
