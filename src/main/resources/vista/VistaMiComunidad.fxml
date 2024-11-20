@@ -55,5 +55,6 @@
         </yAxis>
       </BarChart>
       <Label layoutX="555.0" layoutY="427.0" prefHeight="208.0" prefWidth="361.0" />
+      <Label fx:id="lbl_informacion" layoutX="541.0" layoutY="428.0" prefHeight="222.0" prefWidth="362.0" />
    </children>
 </AnchorPane>

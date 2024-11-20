@@ -1,6 +1,6 @@
 package dao;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -51,41 +52,35 @@ public class MiComunidadControlador {
     private Button btn_13;
     @FXML
     private Button btn_14;
-    
-    public void initialize() {
-    	cargarDatosEnGrafica();
-        // Asigna un evento de clic a img_volver
-        img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
-        btn_1.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_1));
-        btn_1.setOnMouseExited(event -> restaurarColorBoton(btn_1));
-        btn_2.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_2));
-        btn_2.setOnMouseExited(event -> restaurarColorBoton(btn_2));
-        btn_3.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_3));
-        btn_3.setOnMouseExited(event -> restaurarColorBoton(btn_3));
-        btn_4.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_4));
-        btn_4.setOnMouseExited(event -> restaurarColorBoton(btn_4));
-        btn_5.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_5));
-        btn_5.setOnMouseExited(event -> restaurarColorBoton(btn_5));
-        btn_6.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_6));
-        btn_6.setOnMouseExited(event -> restaurarColorBoton(btn_6));
-        btn_7.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_7));
-        btn_7.setOnMouseExited(event -> restaurarColorBoton(btn_7));
-        btn_8.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_8));
-        btn_8.setOnMouseExited(event -> restaurarColorBoton(btn_8));
-        btn_9.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_9));
-        btn_9.setOnMouseExited(event -> restaurarColorBoton(btn_9));
-        btn_10.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_10));
-        btn_10.setOnMouseExited(event -> restaurarColorBoton(btn_10));
-        btn_11.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_11));
-        btn_11.setOnMouseExited(event -> restaurarColorBoton(btn_11));
-        btn_12.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_12));
-        btn_12.setOnMouseExited(event -> restaurarColorBoton(btn_12));
-        btn_13.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_13));
-        btn_13.setOnMouseExited(event -> restaurarColorBoton(btn_13));
-        btn_14.setOnMouseEntered(event -> cambiarColorBotonAmarillo(btn_14));
-        btn_14.setOnMouseExited(event -> restaurarColorBoton(btn_14));
-       
+    @FXML
+    private Label lbl_informacion; // Para mostrar información en pantalla.
 
+    @FXML
+    public void initialize() {
+        // Asignar eventos a los botones
+        configurarEventosBoton(btn_1, "1ºA");
+        configurarEventosBoton(btn_2, "1ºB");
+        configurarEventosBoton(btn_3, "2ºA");
+        configurarEventosBoton(btn_4, "2ºB");
+        configurarEventosBoton(btn_5, "3ºA");
+        configurarEventosBoton(btn_6, "3ºB");
+        configurarEventosBoton(btn_7, "4ºA");
+        configurarEventosBoton(btn_8, "4ºB");
+        configurarEventosBoton(btn_9, "5ºA");
+        configurarEventosBoton(btn_10, "5ºB");
+        configurarEventosBoton(btn_11, "6ºA");
+        configurarEventosBoton(btn_12, "6ºB");
+        configurarEventosBoton(btn_13, "7ºA");
+        configurarEventosBoton(btn_14, "7ºB");
+    }
+
+    private void configurarEventosBoton(Button boton, String piso) {
+        // Cambiar color al pasar el ratón
+        boton.setOnMouseEntered(event -> cambiarColorBotonAmarillo(boton));
+        boton.setOnMouseExited(event -> restaurarColorBoton(boton));
+
+        // Mostrar habitantes al hacer clic
+        boton.setOnAction(event -> mostrarHabitantes(piso));
     }
 
     private void cambiarColorBotonAmarillo(Button boton) {
@@ -95,78 +90,59 @@ public class MiComunidadControlador {
     private void restaurarColorBoton(Button boton) {
         boton.setStyle(""); // Elimina el estilo en línea, volviendo al estilo original
     }
-    
 
-    @FXML
-    void volver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
-            AnchorPane root = loader.load();
+    private void mostrarHabitantes(String piso) {
+        // Consulta a la base de datos para obtener habitantes
+        String habitantes = getHabitantesPorPiso(piso);
 
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Principal - ConVive");
-            stage.show();
-
-            // Cerrar la ventana actual
-            Stage currentStage = (Stage) img_volver.getScene().getWindow();
-            currentStage.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        // Muestra la información en la etiqueta o ventana emergente
+        if (!habitantes.isEmpty()) {
+            lbl_informacion.setText("Habitantes del piso " + piso + ":\n" + habitantes);
+        } else {
+            lbl_informacion.setText("No hay información disponible para el piso " + piso);
         }
     }
 
-    private void cargarDatosEnGrafica() {
-        // Obtiene los datos de la base de datos
-        int numeroDeAdultos = getNumeroDeAdultos();
-        int numeroDeMenores = getNumeroDeMenores();
+    private String getHabitantesPorPiso(String piso) {
+        StringBuilder habitantes = new StringBuilder();
+        String queryAdultos = "SELECT nombre FROM adulto WHERE piso = ?";
+        String queryMenores = "SELECT nombre FROM menor WHERE piso = ?";
 
-        // Crea una serie de datos para la gráfica
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Distribución por Edad");
-
-        // Añade los datos a la serie
-        series.getData().add(new XYChart.Data<>("Adultos", numeroDeAdultos));
-        series.getData().add(new XYChart.Data<>("Menores", numeroDeMenores));
-
-        // Añade la serie al gráfico de barras
-        barChart.getData().add(series);
-    }
-
-    private int getNumeroDeAdultos() {
-        String query = "SELECT COUNT(*) AS total FROM adulto";
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+             PreparedStatement stmtAdultos = conn.prepareStatement(queryAdultos);
+             PreparedStatement stmtMenores = conn.prepareStatement(queryMenores)) {
 
-            if (rs.next()) {
-                return rs.getInt("total");
+            // Consultar adultos
+            stmtAdultos.setString(1, piso);
+            try (ResultSet rsAdultos = stmtAdultos.executeQuery()) {
+                habitantes.append("Mayores:\n"); // Añadimos el título para adultos
+                if (!rsAdultos.isBeforeFirst()) { // Si no hay resultados
+                    habitantes.append("  No hay adultos registrados en este piso.\n");
+                } else {
+                    while (rsAdultos.next()) {
+                        habitantes.append("  - ").append(rsAdultos.getString("nombre")).append("\n");
+                    }
+                }
             }
+
+            // Consultar menores
+            stmtMenores.setString(1, piso);
+            try (ResultSet rsMenores = stmtMenores.executeQuery()) {
+                habitantes.append("Menores:\n"); // Añadimos el título para menores
+                if (!rsMenores.isBeforeFirst()) { // Si no hay resultados
+                    habitantes.append("  No hay menores registrados en este piso.\n");
+                } else {
+                    while (rsMenores.next()) {
+                        habitantes.append("  - ").append(rsMenores.getString("nombre")).append("\n");
+                    }
+                }
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            return "Error al obtener los habitantes del piso " + piso;
         }
-        return 0; // Retorna 0 si ocurre un error
+
+        return habitantes.toString();
     }
-
-    // Consulta el número de menores en tiempo real desde la tabla 'menores'
-    private int getNumeroDeMenores() {
-        String query = "SELECT COUNT(*) AS total FROM menor";
-        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0; // Retorna 0 si ocurre un error
-    }
-    
-    
-
-
 }
