@@ -15,8 +15,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.Period;
 import java.util.ResourceBundle;
 
 import BaseDeDatos.Conexion;
@@ -133,7 +137,27 @@ public class ListaEventosControlador implements Initializable {
         } else {
             // Si no es el creador, mostrar el botón de "Apuntarse" o "Desapuntarse"
             int finalIdUsuario = idUsuario; // Declarar una nueva variable final
+            int edadUsuario = obtenerEdadUsuario(idUsuario); // Asume que tienes un método para obtener la edad del usuario
 
+            // Verificar si la edad está dentro del rango
+            if (edadUsuario >= actividad.getEdadMin() && edadUsuario <= actividad.getEdadMax()) {
+                // Si la edad está dentro del rango, mostrar el botón "Apuntarse" o "Desapuntarse"
+                if (estaApuntado) {
+                    apuntarButton.setText("Desapuntarse");
+                    apuntarButton.setOnAction(event -> desapuntarse(finalIdUsuario, actividad.getId()));
+                } else {
+                    apuntarButton.setText("Apuntarse");
+                    apuntarButton.setOnAction(event -> apuntarse(finalIdUsuario, actividad.getId()));
+                }
+            } else {
+                // Si la edad no está dentro del rango, deshabilitar el botón
+                apuntarButton.setText("No puedes apuntarte");
+                apuntarButton.setDisable(true); // Deshabilitar el botón
+
+                // Puedes agregar un mensaje adicional si lo deseas
+                Label mensajeRestriccionEdad = new Label("Tu edad no cumple con los requisitos para apuntarte a esta actividad.");
+                container.getChildren().add(mensajeRestriccionEdad);
+            }
             if (estaApuntado) {
                 apuntarButton.setText("Desapuntarse");
                 apuntarButton.setOnAction(event -> desapuntarse(finalIdUsuario, actividad.getId()));
@@ -225,13 +249,116 @@ public class ListaEventosControlador implements Initializable {
 
     /* EDITAR ACTIVIDAD */    
     private void editarActividad(int actividadId) {
-        System.out.println("Editar actividad con ID: " + actividadId + ". PENDIENTE DE CREAR VISTA");
-        // TODO AÑADIR VENTANA PARA EDITARLA
+        System.out.println("Editar actividad con ID: " + actividadId);
+        try {
+            // Cargar la vista FXML para editar la actividad
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
+            AnchorPane root = loader.load();
+
+            // Obtener el controlador de la vista cargada
+            EditarActividadControlador controlador = loader.getController();
+
+            // Recuperar la actividad desde la base de datos
+            Actividades actividad = obtenerActividad(actividadId);
+
+            // Verifica si la actividad existe antes de pasarla al controlador
+            if (actividad != null) {
+                // Pasa la actividad al controlador
+                controlador.setActividad(actividad);
+            } else {
+                // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
+                System.out.println("No se pudo cargar la actividad.");
+                return;
+            }
+
+            // Mostrar la nueva ventana
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Editar Actividad");
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            currentStage.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     
     
+    /* DEVUELVE LA ACTIVIDAD PARA EDITARLA */
+    private Actividades obtenerActividad(int actividadId) {
+        Actividades actividad = null;
+
+        String sql = "SELECT * FROM actividad WHERE id = ?";
+
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setInt(1, actividadId);
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                LocalDate fecha = rs.getDate("fecha").toLocalDate();
+                String horaString = rs.getString("hora");
+                LocalTime hora = null;
+
+                // Parse the String into LocalTime
+                if (horaString != null && !horaString.isEmpty()) {
+                    hora = LocalTime.parse(horaString);
+                }
+
+                String lugar = rs.getString("lugar");
+                int edadMin = rs.getInt("edad_min");
+                int edadMax = rs.getInt("edad_max");
+                int creador = rs.getInt("creador");
+
+                actividad = new Actividades(actividadId, nombre, descripcion, fecha, hora, lugar, edadMin, edadMax, creador);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return actividad;
+    }
+
+
+
     
+    /* DA LA EDAD DEL USUARIO ACTUAL (PARA COMPROBAR SI SE PUEDE APUNTAR A UNA ACTIVIDAD O NO) */
+    private int obtenerEdadUsuario(int idUsuario) {
+        int edad = -1;  // Valor por defecto si no se encuentra la edad
+
+        // Consulta SQL para obtener la fecha de nacimiento del usuario
+        String sql = "SELECT fecha_nacimiento FROM adulto WHERE id = ? UNION SELECT fecha_nacimiento FROM menor WHERE id = ?";
+
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, idUsuario);
+            pst.setInt(2, idUsuario);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                // Obtener la fecha de nacimiento
+                Date fechaNacimiento = rs.getDate("fecha_nacimiento");
+                
+                // Calcular la edad
+                LocalDate hoy = LocalDate.now();
+                LocalDate fechaNacimientoLocal = fechaNacimiento.toLocalDate();
+                edad = Period.between(fechaNacimientoLocal, hoy).getYears();  // Calcula la edad en años
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener la edad del usuario: " + e.getMessage());
+        }
+
+        return edad;  // Retorna la edad calculada o -1 si hubo algún error
+    }
+
     
 	/* BOTÓN PARA VOLVER A LA PÁGINA PRINCIPAL*/
 	@FXML
