@@ -257,7 +257,6 @@ public class MiPerfilControlador {
     
     
 	
-    @FXML
     void volver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));

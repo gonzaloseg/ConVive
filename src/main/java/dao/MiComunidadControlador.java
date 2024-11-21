@@ -75,6 +75,8 @@ public class MiComunidadControlador {
     }
 
     private void configurarEventosBoton(Button boton, String piso) {
+    	 img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
+ 	    
         // Cambiar color al pasar el ratón
         boton.setOnMouseEntered(event -> cambiarColorBotonAmarillo(boton));
         boton.setOnMouseExited(event -> restaurarColorBoton(boton));
@@ -144,5 +146,24 @@ public class MiComunidadControlador {
         }
 
         return habitantes.toString();
+    }
+    void volver(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+            AnchorPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Principal - ConVive");
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
+            currentStage.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
