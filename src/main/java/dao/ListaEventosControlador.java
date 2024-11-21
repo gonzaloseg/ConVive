@@ -239,16 +239,25 @@ public class ListaEventosControlador implements Initializable {
         }
     }
 
-    public void volver(ActionEvent event) {
+    @FXML
+    void volver(ActionEvent event) { 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("pantallaPrincipal.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
             AnchorPane root = loader.load();
 
-            Stage stage = (Stage) botonVolver.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Principal - ConVive");
             stage.show();
-        } catch (IOException e) {
-            System.err.println("Error al cargar la pantalla principal: " + e.getMessage());
+
+            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            currentStage.close(); //cerrar la ventana mi perfil
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+    
+    
 }
