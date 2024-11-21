@@ -15,69 +15,31 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
 import BaseDeDatos.Conexion;
 import dto.Actividades;
+import dto.UsuarioGlobal;
 
 public class ListaEventosControlador implements Initializable {
-    @FXML
-    private Button botonVolver;
-    @FXML
-    private VBox actividadVBox; // Contenedor principal donde se agregan las actividades
+    @FXML private Button botonVolver;
+    @FXML private VBox actividadVBox;
+    private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad ORDER BY fecha DESC";
 
-    private ObservableList<Actividades> listaActividades;
-    private int idUsuarioActual; // ID del usuario actual, pasado al controlador
+    /*__________________________________________________________*/
 
-    // Consultas SQL como constantes
-    private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad";
-    private static final String SQL_OBTENER_USUARIO_POR_DNI = "SELECT id FROM usuarios WHERE dni = ?";
-    private static final String SQL_OBTENER_APUNTADOS = "SELECT COUNT(*) FROM apuntados WHERE id_actividad = ?";
-    private static final String SQL_BORRAR_USUARIO_DE_ACTIVIDAD = "DELETE FROM apuntados WHERE id_actividad = ? AND id_adulto = ?";
-    private static final String SQL_USUARIO_REGISTRADO = "SELECT COUNT(*) FROM apuntados WHERE id_actividad = ? AND id_adulto = ?";
-    private static final String SQL_APUNTAR_USUARIO = "INSERT INTO apuntados (id_adulto, id_actividad) VALUES (?, ?)";
-    private static final String SQL_ELIMINAR_ACTIVIDAD = "DELETE FROM actividad WHERE id = ?";
-
-    public ListaEventosControlador() {
-        listaActividades = FXCollections.observableArrayList();
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        cargarDatos(); // Cargar actividades desde la base de datos
+    	cargarDatos();
     }
-
-    public void setUsuarioActual(int idUsuario) {
-        this.idUsuarioActual = idUsuario;
-    }
-
-    public void inicializarUsuarioActual(String dniGlobal) {
-        try (Connection conn = Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(SQL_OBTENER_USUARIO_POR_DNI)) {
-
-            stmt.setString(1, dniGlobal);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    this.idUsuarioActual = rs.getInt("id");
-                    System.out.println("Usuario actual inicializado con ID: " + idUsuarioActual);
-                } else {
-                    System.err.println("No se encontró un usuario con el DNI proporcionado.");
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al inicializar usuario actual: " + e.getMessage());
-        }
-    }
-
+    
+    /* CARGA LOS DATOS DE CADA ACTIVIDAD */
     public void cargarDatos() {
         try (Connection conn = Conexion.dameConexion("convive");
              PreparedStatement stmt = conn.prepareStatement(SQL_OBTENER_ACTIVIDADES);
              ResultSet rs = stmt.executeQuery()) {
-
+        	String dniGlobal = UsuarioGlobal.getInstacne().getDniGlobal();
             actividadVBox.getChildren().clear(); // Limpiar las actividades previas
 
             while (rs.next()) {
@@ -93,7 +55,7 @@ public class ListaEventosControlador implements Initializable {
                     rs.getInt("creador")
                 );
 
-                VBox actividadBox = crearContainerActividad(actividad);
+                VBox actividadBox = crearContainerActividad(actividad, dniGlobal);
                 actividadVBox.getChildren().add(actividadBox);
             }
         } catch (SQLException e) {
@@ -101,18 +63,19 @@ public class ListaEventosControlador implements Initializable {
         }
     }
 
-    private VBox crearContainerActividad(Actividades actividad) {
+    /* CREAR LOS CONTENEDORES PARA LAS ACTIVIDADES */
+    private VBox crearContainerActividad(Actividades actividad, String dniGlobal) {
         VBox container = new VBox(10);
         container.setPadding(new Insets(10));
-        container.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #22504e; -fx-border-width: 2px;");
+        container.setStyle("-fx-background-color: #FFFFFF;");
 
         // Etiquetas de la actividad
-        Label nombreLabel = new Label("Nombre: " + actividad.getNombre());
-        Label descripcionLabel = new Label("Descripción: " + actividad.getDescripcion());
+        Label nombreLabel = new Label(actividad.getNombre());
+        Label descripcionLabel = new Label(actividad.getDescripcion());
         Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
         Label horaLabel = new Label("Hora: " + actividad.getHora());
         Label edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
-        Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
+        //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
 
         // Aplicar estilos
         nombreLabel.setFont(Font.font(18));
@@ -120,126 +83,75 @@ public class ListaEventosControlador implements Initializable {
         fechaLabel.setFont(Font.font(14));
         horaLabel.setFont(Font.font(14));
         edadesLabel.setFont(Font.font(14));
-        apuntadosLabel.setFont(Font.font(14));
+        //apuntadosLabel.setFont(Font.font(14));
 
-        // Verificar si el usuario es el creador
-        if (actividad.getCreador() == idUsuarioActual) {
-            container.getChildren().addAll(crearBotonEliminar(actividad, container), crearBotonModificar());
-        } else {
-            container.getChildren().add(crearBotonApuntame(actividad, apuntadosLabel));
+        // Obtener el ID del usuario autenticado
+        int idUsuario = -1;
+        String sqlObtenerId = "SELECT id FROM adulto WHERE dni = ? UNION SELECT id FROM menor WHERE dni = ?";
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sqlObtenerId)) {
+            pst.setString(1, dniGlobal);
+            pst.setString(2, dniGlobal);
+
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                idUsuario = rs.getInt("id");
+            }
+            //System.out.println(idUsuario);
+        } catch (SQLException e) {
+            System.err.println("Error al obtener ID del usuario: " + e.getMessage());
         }
 
-        container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, apuntadosLabel);
+        // Verificar si el usuario está inscrito
+        boolean estaApuntado = false;
+        if (idUsuario != -1) {
+            String sqlVerificarApuntado = "SELECT * FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
+            try (Connection conn = Conexion.dameConexion("convive");
+                 PreparedStatement pst = conn.prepareStatement(sqlVerificarApuntado)) {
+                pst.setInt(1, idUsuario);
+                pst.setInt(2, actividad.getId());
+
+                ResultSet rs = pst.executeQuery();
+                estaApuntado = rs.next();
+            } catch (SQLException e) {
+                System.err.println("Error al verificar inscripción: " + e.getMessage());
+            }
+        }
+
+     // Crear botones
+        Button accionButton = new Button();
+        if (idUsuario == actividad.getCreador()) {
+            // Si el usuario es el creador de la actividad, mostrar los botones "Eliminar" y "Editar"
+            Button eliminarButton = new Button("Eliminar actividad");
+            //eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
+
+            Button editarButton = new Button("Editar actividad");
+            //editarButton.setOnAction(event -> editarActividad(actividad.getId()));
+
+            // Agregar los botones al contenedor
+            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, eliminarButton, editarButton);
+        } else {
+            // Si no es el creador, mostrar el botón de "Apuntarse" o "Desapuntarse"
+            if (estaApuntado) {
+                accionButton.setText("Desapuntarse");
+                //acciónButton.setOnAction(event -> desapuntarse(idUsuario, actividad.getId()));
+            } else {
+                accionButton.setText("Apuntarse");
+                //acciónButton.setOnAction(event -> apuntarse(idUsuario, actividad.getId()));
+            }
+            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, accionButton);
+        }
         return container;
     }
-
-    private Button crearBotonEliminar(Actividades actividad, VBox container) {
-        Button deleteButton = new Button("Eliminar");
-        deleteButton.setStyle("-fx-background-color: #FF6B6B; -fx-text-fill: #FFFFFF;");
-        deleteButton.setOnAction(event -> eliminarActividad(actividad.getId(), container));
-        return deleteButton;
-    }
-
-    private Button crearBotonModificar() {
-        Button modifyButton = new Button("Modificar");
-        modifyButton.setStyle("-fx-background-color: #FFA500; -fx-text-fill: #FFFFFF;");
-        return modifyButton;
-    }
-
-    Button crearBotonApuntame(Actividades actividad, Label apuntadosLabel) {
-        Button botonApuntame = new Button();
-        boolean estaApuntadoInicial = estaElUsuarioRegistrado(actividad.getId(), idUsuarioActual);
-
-        // Usamos un array para almacenar el estado mutable
-        boolean[] estaApuntado = { estaApuntadoInicial };
-
-        actualizarBotonApuntame(botonApuntame, estaApuntado[0]);
-
-        botonApuntame.setOnAction(event -> {
-            if (estaApuntado[0]) {
-                borrarUsuarioDeActividad(actividad.getId(), idUsuarioActual);
-            } else {
-                apuntarUsuarioActividad(actividad.getId(), idUsuarioActual);
-            }
-            estaApuntado[0] = !estaApuntado[0];
-            actualizarBotonApuntame(botonApuntame, estaApuntado[0]);
-            apuntadosLabel.setText("Número de apuntados: " + getApuntados(actividad.getId()));
-        });
-
-        return botonApuntame;
-    }
-
-
-    private void actualizarBotonApuntame(Button boton, boolean estaApuntado) {
-        if (estaApuntado) {
-            boton.setText("Elimíname");
-            boton.setStyle("-fx-background-color: #FF6B6B; -fx-text-fill: #FFFFFF;");
-        } else {
-            boton.setText("Apúntame");
-            boton.setStyle("-fx-background-color: #006D77; -fx-text-fill: #FFFFFF;");
-        }
-    }
-
-    private int getApuntados(int actividadId) {
-        try (Connection conn = Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(SQL_OBTENER_APUNTADOS)) {
-
-            stmt.setInt(1, actividadId);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al obtener apuntados: " + e.getMessage());
-        }
-        return 0;
-    }
-
-    private void borrarUsuarioDeActividad(int actividadId, int idUsuarioActual) {
-        ejecutarUpdate(SQL_BORRAR_USUARIO_DE_ACTIVIDAD, actividadId, idUsuarioActual);
-    }
-
-    private boolean estaElUsuarioRegistrado(int actividadId, int idUsuarioActual) {
-        try (Connection conn = Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(SQL_USUARIO_REGISTRADO)) {
-
-            stmt.setInt(1, actividadId);
-            stmt.setInt(2, idUsuarioActual);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al verificar registro del usuario: " + e.getMessage());
-        }
-        return false;
-    }
-
-    private void apuntarUsuarioActividad(int actividadId, int idUsuarioActual) {
-        ejecutarUpdate(SQL_APUNTAR_USUARIO, idUsuarioActual, actividadId);
-    }
-
-    private void eliminarActividad(int actividadId, VBox container) {
-        ejecutarUpdate(SQL_ELIMINAR_ACTIVIDAD, actividadId);
-        actividadVBox.getChildren().remove(container); // Eliminar el contenedor visualmente
-    }
-
-    private void ejecutarUpdate(String sql, Object... params) {
-        try (Connection conn = Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            for (int i = 0; i < params.length; i++) {
-                stmt.setObject(i + 1, params[i]);
-            }
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error al ejecutar la actualización: " + e.getMessage());
-        }
-    }
-
-    @FXML
+	
+    
+    
+    
+    
+    
+    
+	/* BOTÓN PARA VOLVER A LA PÁGINA PRINCIPAL*/
+	@FXML
     void volver(ActionEvent event) { 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
@@ -252,12 +164,11 @@ public class ListaEventosControlador implements Initializable {
             stage.show();
 
             Stage currentStage = (Stage) botonVolver.getScene().getWindow();
-            currentStage.close(); //cerrar la ventana mi perfil
+            currentStage.close(); //cerrar la ventana
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    
+    } 
+
 }
