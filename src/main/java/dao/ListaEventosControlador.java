@@ -118,33 +118,116 @@ public class ListaEventosControlador implements Initializable {
             }
         }
 
-     // Crear botones
-        Button accionButton = new Button();
+        // Crear botones
+        Button apuntarButton = new Button();
         if (idUsuario == actividad.getCreador()) {
             // Si el usuario es el creador de la actividad, mostrar los botones "Eliminar" y "Editar"
             Button eliminarButton = new Button("Eliminar actividad");
-            //eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
+            eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
 
             Button editarButton = new Button("Editar actividad");
-            //editarButton.setOnAction(event -> editarActividad(actividad.getId()));
+            editarButton.setOnAction(event -> editarActividad(actividad.getId()));
 
             // Agregar los botones al contenedor
             container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, eliminarButton, editarButton);
         } else {
             // Si no es el creador, mostrar el botón de "Apuntarse" o "Desapuntarse"
+            int finalIdUsuario = idUsuario; // Declarar una nueva variable final
+
             if (estaApuntado) {
-                accionButton.setText("Desapuntarse");
-                //acciónButton.setOnAction(event -> desapuntarse(idUsuario, actividad.getId()));
+                apuntarButton.setText("Desapuntarse");
+                apuntarButton.setOnAction(event -> desapuntarse(finalIdUsuario, actividad.getId()));
             } else {
-                accionButton.setText("Apuntarse");
-                //acciónButton.setOnAction(event -> apuntarse(idUsuario, actividad.getId()));
+                apuntarButton.setText("Apuntarse");
+                apuntarButton.setOnAction(event -> apuntarse(finalIdUsuario, actividad.getId()));
             }
-            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, accionButton);
+            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, apuntarButton);
         }
         return container;
     }
-	
     
+    /* APUNTARSE A UNA ACTIVIDAD */
+    private void apuntarse(int idUsuario, int idActividad) {
+        String sqlApuntarse = "INSERT INTO apuntados (id_adulto, id_actividad) VALUES (?, ?)";
+        
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sqlApuntarse)) {
+            
+            // Verificar si el usuario ya está inscrito
+            String sqlVerificar = "SELECT * FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
+            try (PreparedStatement pstVerificar = conn.prepareStatement(sqlVerificar)) {
+                pstVerificar.setInt(1, idUsuario);
+                pstVerificar.setInt(2, idActividad);
+                ResultSet rs = pstVerificar.executeQuery();
+                
+                // Si no está inscrito, insertar el registro
+                if (!rs.next()) {
+                    pst.setInt(1, idUsuario);
+                    pst.setInt(2, idActividad);
+                    int rowsAffected = pst.executeUpdate();
+                    if (rowsAffected > 0) {
+                        System.out.println("Usuario apuntado a la actividad.");
+                        cargarDatos(); // Recargar las actividades para actualizar el estado de inscripción
+                    } else {
+                        System.err.println("Error al apuntarse a la actividad.");
+                    }
+                } else {
+                    System.out.println("El usuario ya está inscrito en esta actividad.");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al apuntarse a la actividad: " + e.getMessage());
+        }
+    }
+
+    /* DESAPUNTARSE DE UNA ACTIVIDAD*/
+    private void desapuntarse(int idUsuario, int idActividad) {
+        String sqlDesapuntarse = "DELETE FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
+        
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sqlDesapuntarse)) {
+            
+            pst.setInt(1, idUsuario);
+            pst.setInt(2, idActividad);
+            int rowsAffected = pst.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Usuario desapuntado de la actividad.");
+                cargarDatos(); // Recargar las actividades para actualizar el estado de inscripción
+            } else {
+                System.err.println("Error al desapuntarse de la actividad.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al desapuntarse de la actividad: " + e.getMessage());
+        }
+    }
+
+	
+    /* ELIMINAR ACTIVIDAD */
+    private void eliminarActividad(int actividadId) {
+        String sqlEliminar = "DELETE FROM actividad WHERE id = ?";
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sqlEliminar)) {
+            pst.setInt(1, actividadId);
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Actividad eliminada con éxito.");
+                cargarDatos();
+            } else {
+                System.err.println("No se pudo eliminar la actividad.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar actividad: " + e.getMessage());
+        }
+    }
+
+    /* EDITAR ACTIVIDAD */    
+    private void editarActividad(int actividadId) {
+        System.out.println("Editar actividad con ID: " + actividadId + ". PENDIENTE DE CREAR VISTA");
+        // TODO AÑADIR VENTANA PARA EDITARLA
+    }
     
     
     
