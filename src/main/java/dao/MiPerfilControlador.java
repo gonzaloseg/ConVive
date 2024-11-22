@@ -42,6 +42,7 @@ public class MiPerfilControlador {
  @FXML private Button botonClose1;
  @FXML private Button borrarActividad;
  @FXML private Button borrarActividad1;
+ @FXML private Button editarActividad;
  @FXML private VBox contenedorTarjeta;
  @FXML private VBox contenedorTarjeta1;
  
@@ -190,7 +191,7 @@ public class MiPerfilControlador {
     void actividadesApuntadas(ActionEvent event) {
     	ObservableList<Actividades> listaActividades = FXCollections.observableArrayList();
 
-        String sql = "SELECT a.id, a.nombre, a.fecha, a.hora FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto = ?";
+        String sql = "SELECT a.id, a.nombre, a.fecha, a.hora FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto OR ap.id_menor = ?";
 
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
         	PreparedStatement pst = conn.prepareStatement(sql);
@@ -238,7 +239,7 @@ public class MiPerfilControlador {
 	            listaActividades.remove(actividadSeleccionada);
 
 	            // Borrar de la base de datos
-	            String sql = "DELETE FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
+	            String sql = "DELETE FROM apuntados WHERE id_adulto OR id_menor = ? AND id_actividad = ?";
 	            try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
 	                PreparedStatement pst = conn.prepareStatement(sql);
 	                pst.setInt(1, idAuxiliar);  // ID del adulto
@@ -350,6 +351,11 @@ public class MiPerfilControlador {
 	    } else {
 	        new Alert(Alert.AlertType.WARNING, "Debes seleccionar una actividad para eliminar").show();
 	    }
+    }
+    
+    @FXML
+    private void editarActividad (ActionEvent event) {
+    	
     }
     
     @FXML //Cerrar tarjeta 

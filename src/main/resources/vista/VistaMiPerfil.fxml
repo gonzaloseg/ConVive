@@ -52,7 +52,7 @@
             <Button fx:id="botonClose" mnemonicParsing="false" onAction="#close" text="close" />
          </children>
       </VBox>
-      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="200.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: black; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
+      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: black; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
          <children>
             <TableView fx:id="tablaActividadesPropuestas" prefHeight="200.0" prefWidth="200.0">
                <columns>
@@ -61,6 +61,7 @@
                   <TableColumn fx:id="columnaHora1" prefWidth="78.0" text="Hora" />
                </columns>
             </TableView>
+            <Button fx:id="editarActividad" mnemonicParsing="false" onAction="#editarActividad" text="Editar actividad" />
             <Button fx:id="borrarActividad1" mnemonicParsing="false" onAction="#borrarActividad1" text="Borrar actividad" />
             <Button fx:id="botonClose1" mnemonicParsing="false" onAction="#close1" text="close" />
          </children>
