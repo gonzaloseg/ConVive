@@ -37,16 +37,25 @@ public class MiPerfilControlador {
  @FXML private Label labelComodin;
  
  @FXML private Button actividadesApuntadas;
+ @FXML private Button actividadesPropuestas;
  @FXML private Button botonClose;
+ @FXML private Button botonClose1;
  @FXML private Button borrarActividad;
  @FXML private VBox contenedorTarjeta;
+ @FXML private VBox contenedorTarjeta1;
  
  @FXML private TableView<Actividades> tablaActividadesApuntadas;
  @FXML private TableColumn<Actividades, String> columnaActividades;
  @FXML private TableColumn<Actividades, LocalDate> columnaFecha;
  @FXML private TableColumn<Actividades, LocalTime> columnaHora;
  
+ @FXML private TableView<Actividades> tablaActividadesPropuestas;
+ @FXML private TableColumn<Actividades, String> columnaActividades1;
+ @FXML private TableColumn<Actividades, LocalDate> columnaFecha1;
+ @FXML private TableColumn<Actividades, LocalTime> columnaHora1;
+ 
  private ObservableList<Actividades>listaActividades;
+ private ObservableList<Actividades>listaActividades1;
 
 	 
 	public void initialize() {
@@ -54,6 +63,7 @@ public class MiPerfilControlador {
 	    img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
 	    
         contenedorTarjeta.setVisible(false); // Ocultar el contenedor de la tarjeta inicialmente
+        contenedorTarjeta1.setVisible(false); // Ocultar el contenedor de la tarjeta inicialmente
         
         // Inicializar la lista
         listaActividades = FXCollections.observableArrayList();
@@ -62,6 +72,14 @@ public class MiPerfilControlador {
         columnaActividades.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         columnaHora.setCellValueFactory(new PropertyValueFactory<>("hora"));
+        
+        // Inicializar la lista1
+        listaActividades1 = FXCollections.observableArrayList();
+        
+        // Configurar las columnas para que usen los nombres de las propiedades del modelo
+        columnaActividades1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaFecha1.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        columnaHora1.setCellValueFactory(new PropertyValueFactory<>("hora"));
         
 	}
 
@@ -206,8 +224,6 @@ public class MiPerfilControlador {
     	
     }
     
-    
-    
     @FXML
     void borrarActividad(ActionEvent event) {
     	Actividades actividadSeleccionada = tablaActividadesApuntadas.getSelectionModel().getSelectedItem();
@@ -252,6 +268,58 @@ public class MiPerfilControlador {
     void close (ActionEvent event ) {
     	contenedorTarjeta.setVisible(false);
     }
+    
+    
+    
+    
+    
+    
+  //VER LAS ACTIVIDADES QUE HAS PROPUESTO
+    @FXML
+    void actividadesPropuestas(ActionEvent event) {
+    	ObservableList<Actividades> listaActividades1 = FXCollections.observableArrayList();
+
+        String sql = "SELECT id, nombre, fecha, hora FROM actividad WHERE creador = ?";
+
+        
+        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+        	PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setInt(1, idAuxiliar);
+            
+            try (ResultSet rs = pst.executeQuery()) {
+            	
+                while (rs.next()) { //recorre la bbdd
+                	/*
+                	 Con la línea 189 comentada, carga la tabla pero da error al borrar una actividad
+                	 Si pruebas a "descomentarla" veras como la tabla aparece vacia 
+                	 El metodo para borrar los elementos está más abajo, el problema es que no coge el id de la actividad seleccionada
+                	 Mete en tu tabla apuntados mas datos para que un usuario tenga al menos 3 actividades y poder comprobar bien todo
+                	 */
+                	int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
+                    String nombreAct = rs.getString("nombre");
+                    LocalDate fechaAct = rs.getDate("fecha").toLocalDate();
+                    LocalTime horaAct = rs.getTime("hora").toLocalTime();
+                    
+
+                    //hay que rellenar los campos que se van a usar y dejar vacios los campos que no se estan usando
+                    Actividades actividad = new Actividades(idActividad, nombreAct, "", fechaAct, horaAct, "", 0, 0, 0);  
+                    listaActividades1.add(actividad);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); 
+        }
+
+        tablaActividadesPropuestas.setItems(listaActividades1); //añade todas las act a la tabla 
+        contenedorTarjeta1.setVisible(true);
+    	
+    }
+    @FXML
+    void close1 (ActionEvent event ) {
+    	contenedorTarjeta1.setVisible(false);
+    }
+    
+    
     
     
     
