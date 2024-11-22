@@ -41,6 +41,7 @@ public class MiPerfilControlador {
  @FXML private Button botonClose;
  @FXML private Button botonClose1;
  @FXML private Button borrarActividad;
+ @FXML private Button borrarActividad1;
  @FXML private VBox contenedorTarjeta;
  @FXML private VBox contenedorTarjeta1;
  
@@ -314,7 +315,44 @@ public class MiPerfilControlador {
         contenedorTarjeta1.setVisible(true);
     	
     }
-    @FXML
+    
+    @FXML //Borrar una actividad creada por el usuario logado
+    void borrarActividad1(ActionEvent event) {
+    	Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
+		
+		if (actividadSeleccionada != null) {
+			
+	        int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
+
+	        if (actividadId > 0) {
+	            // Borrar de la tabla en pantalla
+	            listaActividades1.remove(actividadSeleccionada);
+
+	            // Borrar de la base de datos
+	            String sql = "DELETE FROM actividad WHERE id = ?";
+	            try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+	                PreparedStatement pst = conn.prepareStatement(sql);
+	                pst.setInt(1, actividadId);  // ID de la actividad
+
+	                // Ejecutar la actualización
+	                 pst.executeUpdate();
+
+	                
+                    new Alert(Alert.AlertType.INFORMATION, "Ya no estás apuntado/a a la actividad").show();
+	                
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	                new Alert(Alert.AlertType.ERROR, "Ocurrió un error. Intente nuevamente").show();
+	            }
+	        } else {
+	            new Alert(Alert.AlertType.WARNING, "ID de actividad no válido").show();
+	        }
+	    } else {
+	        new Alert(Alert.AlertType.WARNING, "Debes seleccionar una actividad para eliminar").show();
+	    }
+    }
+    
+    @FXML //Cerrar tarjeta 
     void close1 (ActionEvent event ) {
     	contenedorTarjeta1.setVisible(false);
     }

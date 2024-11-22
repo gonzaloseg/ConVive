@@ -61,6 +61,7 @@
                   <TableColumn fx:id="columnaHora1" prefWidth="78.0" text="Hora" />
                </columns>
             </TableView>
+            <Button fx:id="borrarActividad1" mnemonicParsing="false" onAction="#borrarActividad1" text="Borrar actividad" />
             <Button fx:id="botonClose1" mnemonicParsing="false" onAction="#close1" text="close" />
          </children>
       </VBox>
