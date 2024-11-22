@@ -171,7 +171,7 @@ public class MiPerfilControlador {
     void actividadesApuntadas(ActionEvent event) {
     	ObservableList<Actividades> listaActividades = FXCollections.observableArrayList();
 
-        String sql = "SELECT a.nombre, a.fecha, a.hora FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto = ?";
+        String sql = "SELECT a.id, a.nombre, a.fecha, a.hora FROM actividad a JOIN apuntados ap ON a.id = ap.id_actividad WHERE ap.id_adulto = ?";
 
         try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
         	PreparedStatement pst = conn.prepareStatement(sql);
@@ -186,14 +186,14 @@ public class MiPerfilControlador {
                 	 El metodo para borrar los elementos está más abajo, el problema es que no coge el id de la actividad seleccionada
                 	 Mete en tu tabla apuntados mas datos para que un usuario tenga al menos 3 actividades y poder comprobar bien todo
                 	 */
-                	//int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
+                	int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
                     String nombreAct = rs.getString("nombre");
                     LocalDate fechaAct = rs.getDate("fecha").toLocalDate();
                     LocalTime horaAct = rs.getTime("hora").toLocalTime();
                     
 
                     //hay que rellenar los campos que se van a usar y dejar vacios los campos que no se estan usando
-                    Actividades actividad = new Actividades(0, nombreAct, "", fechaAct, horaAct, "", 0, 0, 0);  
+                    Actividades actividad = new Actividades(idActividad, nombreAct, "", fechaAct, horaAct, "", 0, 0, 0);  
                     listaActividades.add(actividad);
                 }
             }
@@ -206,15 +206,16 @@ public class MiPerfilControlador {
     	
     }
     
+    
+    
     @FXML
     void borrarActividad(ActionEvent event) {
     	Actividades actividadSeleccionada = tablaActividadesApuntadas.getSelectionModel().getSelectedItem();
 		
 		if (actividadSeleccionada != null) {
 			
-			
 	        int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
-	        
+
 	        if (actividadId > 0) {
 	            // Borrar de la tabla en pantalla
 	            listaActividades.remove(actividadSeleccionada);
