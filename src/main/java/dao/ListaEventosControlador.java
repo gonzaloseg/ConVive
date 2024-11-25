@@ -30,6 +30,7 @@ import dto.UsuarioGlobal;
 public class ListaEventosControlador implements Initializable {
     @FXML private Button botonVolver;
     @FXML private VBox actividadVBox;
+    
     private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad ORDER BY fecha DESC";
 
     /*__________________________________________________________*/

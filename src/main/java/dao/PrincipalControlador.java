@@ -2,10 +2,13 @@ package dao;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,15 +24,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class PrincipalControlador implements Initializable {
@@ -55,8 +61,9 @@ public class PrincipalControlador implements Initializable {
     //Crear nuevas actividades + proximas Actividades
     @FXML private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
     @FXML private Button btnFiltros; //boton para filtrar actividades
-    private VBox vboxActividades; 
-    
+   // private VBox vboxActividades; 
+    @FXML private ScrollPane proximasActividades;
+    @FXML private VBox vboxActividades;
     
     
     
@@ -390,4 +397,71 @@ public class PrincipalControlador implements Initializable {
             vboxActividades.getChildren().add(actividadBox);
         }
     }
+    
+    
+    
+    
+    /* PROXIMAS ACTIVIDADES */
+    public void datosProximasActividades () {
+    	List<Actividades> actividadesDelMes = new ArrayList<>();
+    	String sql = "SELECT * FROM actividad WHERE MONTH(fecha) "
+    				+ "= MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE())";
+    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")) {
+    		PreparedStatement pst = conn.prepareStatement(sql);
+    		ResultSet rs = pst.executeQuery();
+    		
+    		String dniGlobal = UsuarioGlobal.getInstacne().getDniGlobal();
+    		vboxActividades.getChildren().clear(); // Limpiar las actividades previas
+
+            while (rs.next()) {
+                
+                   int id = rs.getInt("id");
+                   String nombre =  rs.getString("nombre");
+                   String descripcion = rs.getString("descripcion");
+                   LocalDate fecha =  rs.getDate("fecha").toLocalDate();
+                   LocalTime hora = rs.getTime("hora").toLocalTime();
+                   String lugar = rs.getString("lugar");
+                   int edad_min = rs.getInt("edad_min");
+                   int edad_max = rs.getInt("edad_max");
+                   int id_creador = rs.getInt("creador");
+                   
+                   Actividades actividad = new Actividades(id, nombre, descripcion, fecha, hora, lugar, edad_min, edad_max, id_creador);
+                   actividadesDelMes.add(actividad);
+                   VBox actividadBox = crearContainerActividad(actividad);
+                   vboxActividades.getChildren().add(actividadBox);
+            }
+            
+		} catch (Exception e) {
+			e.getMessage(); e.printStackTrace();
+			new Alert (Alert.AlertType.ERROR, "Error al cargar los datos").showAndWait();
+		}
+    	
+    }
+    
+    /* CREAR LOS CONTENEDORES PARA LAS ACTIVIDADES */
+    private VBox crearContainerActividad(Actividades actividad) {
+        VBox container = new VBox(10);
+        container.setPadding(new Insets(10));
+        container.setStyle("-fx-background-color: #FFFFFF;");
+
+        // Etiquetas de la actividad
+        Label nombreLabel = new Label(actividad.getNombre());
+        Label descripcionLabel = new Label(actividad.getDescripcion());
+        Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
+        Label horaLabel = new Label("Hora: " + actividad.getHora());
+        Label edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
+        //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
+
+        // Aplicar estilos
+        nombreLabel.setFont(Font.font(18));
+        descripcionLabel.setFont(Font.font(14));
+        fechaLabel.setFont(Font.font(14));
+        horaLabel.setFont(Font.font(14));
+        edadesLabel.setFont(Font.font(14));
+        //apuntadosLabel.setFont(Font.font(14));
+
+        return container;
+    }
+    
+    
 }
