@@ -1,7 +1,11 @@
 package dao;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import BaseDeDatos.Conexion;
 import dto.Actividades;
 import dto.UsuarioGlobal;
 import javafx.event.ActionEvent;
@@ -59,6 +64,7 @@ public class PrincipalControlador implements Initializable {
     
     // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
     private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>();
+    private List<Actividades> todasLasActividades = new ArrayList<>(); // Lista de actividades cargadas
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,7 +76,10 @@ public class PrincipalControlador implements Initializable {
         lbCerrarSesion.setOnMouseClicked(event -> cerrarSesion());
         
         // Actualizamos el calendario con el mes y año actuales
+        todasLasActividades = obtenerActividadesDesdeBaseDeDatos();
+        cargarActividades();
         actualizarCalendario();
+        
     }
     
     @FXML
@@ -179,11 +188,93 @@ public class PrincipalControlador implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    private void cargarActividades() {
+    	String SQL_OBTENER_ACTIVIDADES = "SELECT id, nombre, descripcion, fecha, hora, lugar, edad_min, edad_max, creador FROM actividad";
 
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement stmt = conn.prepareStatement(SQL_OBTENER_ACTIVIDADES);
+             ResultSet rs = stmt.executeQuery()) {
+
+            // Limpiar la lista de actividades previamente cargadas
+            todasLasActividades.clear();
+            actividadesPorDia.clear();
+
+            while (rs.next()) {
+                // Crear un objeto Actividades basado en los datos del ResultSet
+                Actividades actividad = new Actividades(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("descripcion"),
+                    rs.getDate("fecha").toLocalDate(),
+                    rs.getTime("hora").toLocalTime(),
+                    rs.getString("lugar"),
+                    rs.getInt("edad_min"),
+                    rs.getInt("edad_max"),
+                    rs.getInt("creador")
+                );
+
+                // Agregar la actividad a la lista general
+                todasLasActividades.add(actividad);
+
+                // Organizar actividades por día
+                int dia = actividad.getFecha().getDayOfMonth();
+                actividadesPorDia.computeIfAbsent(dia, k -> new ArrayList<>()).add(actividad);
+            }
+
+            // Actualizar el calendario para reflejar las actividades cargadas
+            actualizarCalendario();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Puedes mostrar una alerta en caso de error si es necesario
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error al cargar actividades");
+            alert.setHeaderText("Ocurrió un problema al intentar cargar las actividades.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+    }
+
+
+    
     // Método para obtener las actividades de un día específico
     private List<Actividades> obtenerActividadesPorDia(int dia) {
         return actividadesPorDia.getOrDefault(dia, new ArrayList<>());
     }
+    
+    private List<Actividades> obtenerActividadesDesdeBaseDeDatos() {
+        List<Actividades> actividades = new ArrayList<>();
+        
+        String query = "SELECT * FROM actividad"; // Asumiendo que la tabla en la base de datos se llama 'actividades'
+        
+        try (Connection connection = Conexion.dameConexion("convive");
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+             
+            // Iterar por cada fila del resultado
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nombre = resultSet.getString("nombre");
+                String descripcion = resultSet.getString("descripcion");
+                LocalDate fecha = resultSet.getDate("fecha").toLocalDate();
+                LocalTime hora = resultSet.getTime("hora") != null ? resultSet.getTime("hora").toLocalTime() : null;
+                String lugar = resultSet.getString("lugar");
+                int edadMin = resultSet.getInt("edad_min");
+                int edadMax = resultSet.getInt("edad_max");
+                int creador = resultSet.getInt("creador");
+                
+                // Crear una instancia de Actividades y agregarla a la lista
+                Actividades actividad = new Actividades(id, nombre, descripcion, fecha, hora, lugar, edadMin, edadMax, creador);
+                actividades.add(actividad);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return actividades;
+    }
+
 
     // Método para actualizar el calendario (con días del mes actual)
     private void actualizarCalendario() {
@@ -238,24 +329,30 @@ public class PrincipalControlador implements Initializable {
     // Método para manejar el clic en un día específico
     @FXML
     private void handleDayClick(ActionEvent event) {
-    	Button dayButton = (Button) event.getSource();
+        Button dayButton = (Button) event.getSource();
         int day = Integer.parseInt(dayButton.getText());
 
         List<Actividades> actividadesDelDia = obtenerActividadesPorDia(day);
         if (actividadesDelDia.isEmpty()) {
-            return;  // No mostrar ventana si no hay actividades
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Sin actividades");
+            alert.setHeaderText(null);
+            alert.setContentText("No hay actividades programadas para este día.");
+            alert.initOwner(primaryStage);
+            alert.showAndWait();
+            return;
         }
 
-        StringBuilder actividadesTexto = new StringBuilder("Actividades para el día " + day + ":\n");
+        StringBuilder mensaje = new StringBuilder("Actividades programadas para el día " + day + ":\n");
         for (Actividades actividad : actividadesDelDia) {
-            actividadesTexto.append("- ").append(actividad.getNombre()).append("\n");
+            mensaje.append("- ").append(actividad.getNombre()).append(": ").append(actividad.getDescripcion()).append("\n");
         }
 
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Actividades del día " + day);
-        alert.setHeaderText(null);
-        alert.setContentText(actividadesTexto.toString());
-        alert.initOwner(primaryStage);  // Asegura que el diálogo sea modal respecto a la ventana principal
+        alert.setTitle("Actividades del día");
+        alert.setHeaderText("Día " + day + " - Actividades");
+        alert.setContentText(mensaje.toString());
+        alert.initOwner(primaryStage);
         alert.showAndWait();
     }
 
