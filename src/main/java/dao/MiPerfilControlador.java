@@ -201,12 +201,7 @@ public class MiPerfilControlador {
             try (ResultSet rs = pst.executeQuery()) {
             	
                 while (rs.next()) { //recorre la bbdd
-                	/*
-                	 Con la línea 189 comentada, carga la tabla pero da error al borrar una actividad
-                	 Si pruebas a "descomentarla" veras como la tabla aparece vacia 
-                	 El metodo para borrar los elementos está más abajo, el problema es que no coge el id de la actividad seleccionada
-                	 Mete en tu tabla apuntados mas datos para que un usuario tenga al menos 3 actividades y poder comprobar bien todo
-                	 */
+                	
                 	int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
                     String nombreAct = rs.getString("nombre");
                     LocalDate fechaAct = rs.getDate("fecha").toLocalDate();
@@ -354,7 +349,7 @@ public class MiPerfilControlador {
 	    }
     }
     
-    @FXML
+    @FXML //Editar las actividades que has propuesto 
     private void editarActividad (ActionEvent event) {
     	Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
         int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
