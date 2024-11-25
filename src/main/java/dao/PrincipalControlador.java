@@ -314,14 +314,14 @@ public class PrincipalControlador implements Initializable {
             Button dayButton = new Button(String.valueOf(day));
             dayButton.setPrefSize(40, 40);
 
+            // Establecer border-radius de 18px
+            dayButton.setStyle("-fx-background-color: white; -fx-border-radius: 18px; -fx-background-radius: 18px;");
+
             // Comprobar si hay actividades programadas para este día
             List<Actividades> actividadesDelDia = obtenerActividadesPorDia(day);
             if (!actividadesDelDia.isEmpty()) {
                 // Si hay actividades, poner el botón en verde
-                dayButton.setStyle("-fx-background-color: green; -fx-text-fill: white;");
-            } else {
-                // Si no hay actividades, el botón es blanco
-                dayButton.setStyle("-fx-background-color: white;");
+                dayButton.setStyle("-fx-background-color: #83C5BE; -fx-text-fill: white; -fx-border-radius: 18px; -fx-background-radius: 18px;");
             }
 
             // Agregar acción al botón de cada día (para cuando se hace clic)
