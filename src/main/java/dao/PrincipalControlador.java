@@ -240,8 +240,15 @@ public class PrincipalControlador implements Initializable {
     
     // Método para obtener las actividades de un día específico
     private List<Actividades> obtenerActividadesPorDia(int dia) {
-        return actividadesPorDia.getOrDefault(dia, new ArrayList<>());
+        List<Actividades> actividadesDelMes = new ArrayList<>();
+        for (Actividades actividad : todasLasActividades) {
+            if (actividad.getFecha().getDayOfMonth() == dia && actividad.getFecha().getMonth() == currentDate.getMonth()) {
+                actividadesDelMes.add(actividad);
+            }
+        }
+        return actividadesDelMes;
     }
+
     
     private List<Actividades> obtenerActividadesDesdeBaseDeDatos() {
         List<Actividades> actividades = new ArrayList<>();
@@ -327,7 +334,6 @@ public class PrincipalControlador implements Initializable {
 
 
     // Método para manejar el clic en un día específico
-    @FXML
     private void handleDayClick(ActionEvent event) {
         Button dayButton = (Button) event.getSource();
         int day = Integer.parseInt(dayButton.getText());
@@ -345,7 +351,8 @@ public class PrincipalControlador implements Initializable {
 
         StringBuilder mensaje = new StringBuilder("Actividades programadas para el día " + day + ":\n");
         for (Actividades actividad : actividadesDelDia) {
-            mensaje.append("- ").append(actividad.getNombre()).append(": ").append(actividad.getDescripcion()).append("\n");
+            mensaje.append("- ").append(actividad.getNombre()).append(" a las ").append(actividad.getHora()).append("\n")
+                   .append("   Edad permitida: ").append(actividad.getEdadMin()).append(" - ").append(actividad.getEdadMax()).append(" años\n");
         }
 
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -355,6 +362,7 @@ public class PrincipalControlador implements Initializable {
         alert.initOwner(primaryStage);
         alert.showAndWait();
     }
+
 
     // Método para ir al mes anterior
     @FXML
@@ -380,10 +388,7 @@ public class PrincipalControlador implements Initializable {
 
             // Añadir los elementos de actividad
             Label titulo = new Label(actividad.getNombre());
-            Label descripcion = new Label("Descripción: " + actividad.getDescripcion());
-            Label fecha = new Label("Fecha: " + actividad.getFecha());
-            Label hora = new Label("Hora: " + actividad.getHora());
-            Label lugar = new Label("Lugar: " + actividad.getLugar());
+            Label hora = new Label("Hora: " + actividad.getHora().toString());
             Label edades = new Label("Edad permitida: " + actividad.getEdadMin() + " - " + actividad.getEdadMax() + " años");
 
             // Botón "Ver más"
@@ -391,12 +396,13 @@ public class PrincipalControlador implements Initializable {
             verMas.setOnAction(event -> verDetallesActividad(actividad));
 
             // Añadir los elementos a HBox
-            actividadBox.getChildren().addAll(titulo, descripcion, fecha, hora, lugar, edades, verMas);
+            actividadBox.getChildren().addAll(titulo, hora, edades, verMas);
 
             // Añadir HBox de la actividad al VBox principal
             vboxActividades.getChildren().add(actividadBox);
         }
     }
+
 
 
     // Método para manejar el botón "Ver más"
