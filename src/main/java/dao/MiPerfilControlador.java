@@ -424,10 +424,7 @@ public class MiPerfilControlador {
 
         return actividad;
     }
-    
-    
-    
-    
+ 
     @FXML //Cerrar tarjeta 
     void close1 (ActionEvent event ) {
     	contenedorTarjeta1.setVisible(false);
