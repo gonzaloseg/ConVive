@@ -84,6 +84,12 @@ public class MiPerfilControlador {
         columnaFecha1.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         columnaHora1.setCellValueFactory(new PropertyValueFactory<>("hora"));
         
+        /* Los menores de edad no tendrán posibilidda de crear nuevas actividades
+           por eso, no le aparecera el boton "Actividades propuestas" con la lista de actividades */
+        if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
+        	actividadesPropuestas.setVisible(false);
+        }
+        
 	}
 
 	 int idAuxiliar = 0;

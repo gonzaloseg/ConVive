@@ -74,6 +74,12 @@ public class PrincipalControlador implements Initializable {
         todasLasActividades = obtenerActividadesDesdeBaseDeDatos();
         cargarActividades();
         actualizarCalendario();   
+        
+        /* Los menores de edad no tendrán posibilidda de crear nuevas actividades
+        por eso, no le aparecera el boton "Añadir nuea actividad" con el formulario donde se crea la actividad*/
+	    if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
+	     	btnNuevaActividad.setVisible(false);
+	    }
     }
     
     
