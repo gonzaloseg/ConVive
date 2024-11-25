@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
+import BaseDeDatos.Conexion;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import dto.Actividades;
+import dto.UsuarioGlobal;
 
 public class MiPerfilControlador {
 
@@ -355,8 +356,82 @@ public class MiPerfilControlador {
     
     @FXML
     private void editarActividad (ActionEvent event) {
-    	
+    	Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
+        int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
+
+        
+    	try {
+            // Cargar la vista FXML para editar la actividad
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
+            AnchorPane root = loader.load();
+            
+            // Obtener la instancia del controlador y pasar los datos (MI PERFIL)
+            EditarActividadControlador controller = loader.getController();
+           
+            // Recuperar la actividad desde la base de datos
+            Actividades actividad = obtenerActividad(actividadId);
+
+            // Verifica si la actividad existe antes de pasarla al controlador
+            if (actividad != null) {
+                // Pasa la actividad al controlador
+            	controller.setActividad(actividad);
+            } else {
+                // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
+                System.out.println("No se pudo cargar la actividad.");
+                return;
+            }
+
+            // Mostrar la nueva ventana
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Editar Actividad");
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    /* DEVUELVE LA ACTIVIDAD PARA EDITARLA */
+    private Actividades obtenerActividad(int actividadId) {
+        Actividades actividad = null;
+
+        String sql = "SELECT * FROM actividad WHERE id = ?";
+
+        try (Connection conn = Conexion.dameConexion("convive");
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setInt(1, actividadId);
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                String descripcion = rs.getString("descripcion");
+                LocalDate fecha = rs.getDate("fecha").toLocalDate();
+                String horaString = rs.getString("hora");
+                LocalTime hora = null;
+
+                // Parse the String into LocalTime
+                if (horaString != null && !horaString.isEmpty()) {
+                    hora = LocalTime.parse(horaString);
+                }
+
+                String lugar = rs.getString("lugar");
+                int edadMin = rs.getInt("edad_min");
+                int edadMax = rs.getInt("edad_max");
+                int creador = rs.getInt("creador");
+
+                actividad = new Actividades(actividadId, nombre, descripcion, fecha, hora, lugar, edadMin, edadMax, creador);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return actividad;
+    }
+    
+    
+    
     
     @FXML //Cerrar tarjeta 
     void close1 (ActionEvent event ) {

@@ -122,21 +122,6 @@ public class EditarActividadControlador implements Initializable {
                 Stage currentStage = (Stage) botonGuardar.getScene().getWindow();
                 currentStage.close();
 
-                // Abrir la ventana de la lista de eventos
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaListaEventos.fxml"));
-                    AnchorPane root = loader.load();
-
-                    Scene scene = new Scene(root);
-                    Stage stage = new Stage();
-                    stage.setScene(scene);
-                    stage.setTitle("Lista de Eventos - ConVive");
-                    stage.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    alertaError("Error al cargar la vista de eventos.");
-                }
-
             } else {
                 alertaError("Ocurrió un error al editar la actividad, inténtelo de nuevo más tarde");
             }
@@ -217,22 +202,14 @@ public class EditarActividadControlador implements Initializable {
     // Método para volver a la ventana de eventos
     @FXML
     private void volver(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaListaEventos.fxml"));
-            AnchorPane root = loader.load();
-
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Lista de Eventos - ConVive");
-            stage.show();
-
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
-            currentStage.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            alertaError("Error al cargar la vista de eventos.");
-        }
+    	Stage escenario = (Stage) this.botonVolver.getScene().getWindow();
+		escenario.close();
+       
     }
+    
+    String ventana (String ventana ) {
+    	return ventana; 
+    }
+    
 }
+
