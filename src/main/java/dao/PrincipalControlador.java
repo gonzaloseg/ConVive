@@ -82,6 +82,10 @@ public class PrincipalControlador implements Initializable {
         
     }
     
+    /*
+     * MÉTODOS DE NAVEGACIÓN ENTRE VISTAS
+     */
+    
     @FXML
     private void abrirMiPerfil() { 
         try {
@@ -189,6 +193,10 @@ public class PrincipalControlador implements Initializable {
         }
     }
     
+    /*
+     * MÉTODOS PARA EL MANEJO DE ACTIVIDADES
+     */
+    
     private List<Actividades> obtenerActividadesDesdeBaseDeDatos() {
         List<Actividades> actividades = new ArrayList<>();
         String query = "SELECT * FROM actividad"; 
@@ -231,7 +239,9 @@ public class PrincipalControlador implements Initializable {
     }
 
 
-
+    /*
+     * MÉTODOS PARA MANEJAR EL CALENDARIO
+     */
     
     // Método para obtener las actividades de un día específico
     private List<Actividades> obtenerActividadesPorDia(int dia) {
