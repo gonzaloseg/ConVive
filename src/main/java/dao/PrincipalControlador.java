@@ -430,6 +430,29 @@ public class PrincipalControlador implements Initializable {
             System.err.println("Error al cargar datos de actividades: " + e.getMessage());
         }
     }
+    
+    
+    
+    //Método para saber el número de vecinos apuntados a una actividad
+    private int vecinosApuntados (int idAct) {
+    	int contadorApuntados = 0;
+    	String sql = "SELECT id FROM apuntados WHERE id_actividad = ?";
+    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")){
+    		PreparedStatement pst = conn.prepareStatement(sql);
+    		pst.setInt(1, idAct);
+    		ResultSet rs = pst.executeQuery();
+    		
+    		while (rs.next()) {
+    			int id = rs.getInt("id");
+    			contadorApuntados ++;
+    		}
+			
+		} catch (Exception e) {
+			e.printStackTrace(); e.getMessage();
+		}
+    	
+    	return contadorApuntados;
+    }
 
     
     
@@ -442,6 +465,7 @@ public class PrincipalControlador implements Initializable {
         // Etiquetas de la actividad
         Label nombreLabel = new Label(actividad.getNombre());
         Label descripcionLabel = new Label(actividad.getDescripcion());
+        System.out.println(actividad.getNombre());
         Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
         Label horaLabel = new Label("Hora: " + actividad.getHora());
         Label edadesLabel;
@@ -451,7 +475,8 @@ public class PrincipalControlador implements Initializable {
         	 edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
         }
         
-        //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
+        Label apuntadosLabel = new Label("Número de apuntados: " + vecinosApuntados(actividad.getId()));
+        System.out.println(vecinosApuntados(actividad.getId())); //comprobar que los cuenta bien 
 
         // Aplicar estilos
         nombreLabel.setFont(Font.font(18));
@@ -459,7 +484,7 @@ public class PrincipalControlador implements Initializable {
         fechaLabel.setFont(Font.font(14));
         horaLabel.setFont(Font.font(14));
         edadesLabel.setFont(Font.font(14));
-        //apuntadosLabel.setFont(Font.font(14));
+        apuntadosLabel.setFont(Font.font(14));
 
         // Obtener el ID del usuario autenticado
         int idUsuario = -1;
