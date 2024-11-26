@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -82,8 +83,8 @@ public class ListaEventosControlador implements Initializable {
         Label edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
         //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
 
-        // Aplicar estilos
-        nombreLabel.setFont(Font.font(18));
+        // Aplicar estilos a los label de las actividades
+        nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
         descripcionLabel.setFont(Font.font(14));
         fechaLabel.setFont(Font.font(14));
         horaLabel.setFont(Font.font(14));
@@ -127,14 +128,28 @@ public class ListaEventosControlador implements Initializable {
         Button apuntarButton = new Button();
         if (idUsuario == actividad.getCreador()) {
             // Si el usuario es el creador de la actividad, mostrar los botones "Eliminar" y "Editar"
-            Button eliminarButton = new Button("Eliminar actividad");
-            eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
-
             Button editarButton = new Button("Editar actividad");
             editarButton.setOnAction(event -> editarActividad(actividad.getId()));
+            editarButton.setStyle(	// Aplicar estilo al botón editar
+                "-fx-background-color: #006D77;" +
+                "-fx-background-radius: 18px;" +
+                "-fx-border-radius: 18px;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;"
+                );
+            
+            Button eliminarButton = new Button("Eliminar actividad");
+            eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
+            eliminarButton.setStyle( // Aplicar estilo al botón eliminar
+                "-fx-background-color: red;" +
+                "-fx-background-radius: 18px;" +
+                "-fx-border-radius: 18px;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;"
+                );
 
             // Agregar los botones al contenedor
-            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, eliminarButton, editarButton);
+            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, editarButton, eliminarButton);
         } else {
             // Si no es el creador, mostrar el botón de "Apuntarse" o "Desapuntarse"
             int finalIdUsuario = idUsuario; // Declarar una nueva variable final
@@ -146,22 +161,50 @@ public class ListaEventosControlador implements Initializable {
                 if (estaApuntado) {
                     apuntarButton.setText("Desapuntarse");
                     apuntarButton.setOnAction(event -> desapuntarse(finalIdUsuario, actividad.getId()));
+                    apuntarButton.setStyle(	// Aplicar estilo al botón desapuntar
+                            "-fx-background-color: #83C5BE;" +
+                            "-fx-background-radius: 18px;" +
+                            "-fx-border-radius: 18px;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-font-weight: bold;"
+                            );
                 } else {
                     apuntarButton.setText("Apuntarse");
                     apuntarButton.setOnAction(event -> apuntarse(finalIdUsuario, actividad.getId()));
+                    apuntarButton.setStyle(	// Aplicar estilo al botón apuntar
+                            "-fx-background-color: #006D77;" +
+                            "-fx-background-radius: 18px;" +
+                            "-fx-border-radius: 18px;" +
+                            "-fx-text-fill: white;" +
+                            "-fx-font-weight: bold;"
+                            );
                 }
             } else {
                 // Si la edad no está dentro del rango, deshabilitar el botón
                 apuntarButton.setText("No puedes apuntarte");
+                apuntarButton.setStyle(	// Aplicar estilo al botón apuntar desabilitado
+                        "-fx-background-color: #CDCDCD;" +
+                        "-fx-background-radius: 18px;" +
+                        "-fx-border-radius: 18px;" +
+                        "-fx-text-fill: #878787;" +
+                        "-fx-font-weight: bold;"
+                        );
                 apuntarButton.setDisable(true); // Deshabilitar el botón
 
-                // Puedes agregar un mensaje adicional si lo deseas
+                // Mensaje adicional + cambio estilo de los label a gris
+                nombreLabel.setStyle("-fx-text-fill: #878787;");
+                descripcionLabel.setStyle("-fx-text-fill: #878787;");
+                fechaLabel.setStyle("-fx-text-fill: #878787;");
+                horaLabel.setStyle("-fx-text-fill: #878787;");
+                edadesLabel.setStyle("-fx-text-fill: #878787;");
+                //apuntadosLabel.setStyle("-fx-text-fill: #878787;");
                 Label mensajeRestriccionEdad = new Label("Tu edad no cumple con los requisitos para apuntarte a esta actividad.");
                 container.getChildren().add(mensajeRestriccionEdad);
             }
             if (estaApuntado) {
                 apuntarButton.setText("Desapuntarse");
                 apuntarButton.setOnAction(event -> desapuntarse(finalIdUsuario, actividad.getId()));
+                
             } else {
                 apuntarButton.setText("Apuntarse");
                 apuntarButton.setOnAction(event -> apuntarse(finalIdUsuario, actividad.getId()));

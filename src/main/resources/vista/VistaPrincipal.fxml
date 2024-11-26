@@ -17,21 +17,15 @@
    <children>
       <HBox layoutX="403.0" layoutY="28.0" prefHeight="26.0" prefWidth="282.0">
          <children>
-            <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="42.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&lt;" />
+            <Button fx:id="btnMesAnterior" mnemonicParsing="false" onAction="#mesAnterior" prefHeight="26.0" prefWidth="42.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&lt;" textFill="WHITE" />
             <Label fx:id="month" alignment="CENTER" prefHeight="27.0" prefWidth="161.0" text="mes " textFill="#22504e" />
             <Label fx:id="year" alignment="CENTER" prefHeight="26.0" prefWidth="65.0" text=" año" textFill="#22504e" />
-            <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="44.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&gt;" />
+            <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="44.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&gt;" textFill="WHITE" />
          </children>
       </HBox>
 
-      <ScrollPane fx:id="proximasActividades" layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0" style="-fx-background-color: #FFFFFF; -fx-padding: 10;">
-         
-            <VBox fx:id="vboxActividades" prefWidth="819.0" spacing="10.0" style="-fx-padding: 10;" />
-         
-      </ScrollPane>
-
       <FlowPane fx:id="calendar" layoutX="397.0" layoutY="80.0" prefHeight="218.0" prefWidth="294.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 18px;" />
-      <Label layoutX="352.0" layoutY="346.0" text="Próximas actividades" textFill="#22504e">
+      <Label layoutX="362.0" layoutY="346.0" text="Actividades del mes" textFill="#22504e">
          <font>
             <Font size="24.0" />
          </font></Label>

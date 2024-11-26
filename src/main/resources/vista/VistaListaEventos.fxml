@@ -8,10 +8,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.ListaEventosControlador">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #83C5BE;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.ListaEventosControlador">
+	<Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="552.0" layoutX="13.0" layoutY="134.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 0, 4);" width="1179.0" />
     
     <!-- ScrollPane para las actividades -->
-    <ScrollPane layoutX="20.0" layoutY="144.0" prefHeight="536.0" prefWidth="1139.0" style="-fx-background-color: #006D77;">
+    <ScrollPane layoutX="20.0" layoutY="145.0" prefHeight="535.0" prefWidth="1166.0" style="-fx-background-color: #FFFFFF;">
         <VBox fx:id="actividadVBox" spacing="15.0">
             <!-- aqui se agregarán los VBox de cada actividad desde el controlador -->
         </VBox>
