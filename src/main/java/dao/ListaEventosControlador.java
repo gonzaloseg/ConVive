@@ -85,10 +85,15 @@ public class ListaEventosControlador implements Initializable {
 
         // Aplicar estilos a los label de las actividades
         nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
+        nombreLabel.setStyle("-fx-text-fill: #22504e;"); 
         descripcionLabel.setFont(Font.font(14));
+        descripcionLabel.setStyle("-fx-text-fill: #006d77;");
         fechaLabel.setFont(Font.font(14));
+        fechaLabel.setStyle("-fx-text-fill: #006d77;");
         horaLabel.setFont(Font.font(14));
+        horaLabel.setStyle("-fx-text-fill: #006d77;");
         edadesLabel.setFont(Font.font(14));
+        edadesLabel.setStyle("-fx-text-fill: #878787;");
         //apuntadosLabel.setFont(Font.font(14));
 
         // Obtener el ID del usuario autenticado
