@@ -444,7 +444,13 @@ public class PrincipalControlador implements Initializable {
         Label descripcionLabel = new Label(actividad.getDescripcion());
         Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
         Label horaLabel = new Label("Hora: " + actividad.getHora());
-        Label edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
+        Label edadesLabel;
+        if (actividad.getEdadMin() == 0 && actividad.getEdadMax() == 99) {
+        	 edadesLabel = new Label("Para todas las edades");
+        }else {
+        	 edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
+        }
+        
         //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
 
         // Aplicar estilos
