@@ -23,6 +23,14 @@
             <Button fx:id="btnMesSiguiente" mnemonicParsing="false" onAction="#mesSiguiente" prefHeight="26.0" prefWidth="44.0" style="-fx-background-radius: 18px; -fx-border-radius: 18px; -fx-background-color: #83C5BE;" text="&gt;" />
          </children>
       </HBox>
+<<<<<<< HEAD
+=======
+      <ScrollPane fx:id="proximasActividades" layoutX="352.0" layoutY="404.0" prefHeight="328.0" prefWidth="834.0" style="-fx-background-color: #FFFFFF; -fx-padding: 10;">
+         
+            <VBox fx:id="vboxActividades" prefWidth="819.0" spacing="10.0" style="-fx-padding: 10;" />
+         
+      </ScrollPane>
+>>>>>>> 098c76eca87e5ba78ac3d6a9e689588a2d9e350d
       <FlowPane fx:id="calendar" layoutX="397.0" layoutY="80.0" prefHeight="218.0" prefWidth="294.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 18px;" />
       <Label layoutX="352.0" layoutY="346.0" text="Próximas actividades" textFill="#22504e">
          <font>
