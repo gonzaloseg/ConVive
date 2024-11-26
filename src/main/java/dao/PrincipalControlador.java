@@ -38,40 +38,39 @@ import javafx.stage.Stage;
 
 public class PrincipalControlador implements Initializable {
     
-    @FXML
-    private Button btnMesAnterior; //boton retroceder mes (calendario)
-    @FXML
-    private Button btnMesSiguiente; //boton adelantar mes (calendario)
-    @FXML
-    private Button btnFiltros; //boton para filtrar actividades
-    @FXML
-    private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
-    @FXML
-    private Label lbMiPerfil; //lleva a ventana MiPerfil
-    @FXML
-    private Label lbMiComunidad; //lleva a ventana MiComunidad
-    @FXML
-    private Label lbListaEventos; //lleva a ventana ListaEventos
-    @FXML
-    private Label lbCerrarSesion;
-    @FXML
-    private Label month; //mes (calendario)
-    @FXML
-    private Label year; //año (calendario)
-    @FXML
-    private Stage primaryStage;
-    @FXML
-    private FlowPane calendar;  // Contenedor de los días del mes
-    
+	//Botones-labels izquierda home (navegabilidad)
+	@FXML private Label lbMiPerfil; //lleva a ventana MiPerfil
+    @FXML private Label lbMiComunidad; //lleva a ventana MiComunidad
+    @FXML private Label lbListaEventos; //lleva a ventana ListaEventos
+    @FXML private Label lbCerrarSesion;
+	
+    //Calendario
+    @FXML private Button btnMesAnterior; //boton retroceder mes (calendario)
+    @FXML private Button btnMesSiguiente; //boton adelantar mes (calendario)
+    @FXML private Label month; //mes (calendario)
+    @FXML private Label year; //año (calendario)
+    @FXML private FlowPane calendar;  // Contenedor de los días del mes
     private LocalDate currentDate = LocalDate.now();  // Fecha actual
+     
+    //Proximas actividades (del mes) 
+    @FXML  private VBox actividadVBox;
     private VBox vboxActividades; 
-    @FXML 
-    private VBox actividadVBox;
+    @FXML private Button btnFiltros; //boton para filtrar actividades
+    
+    
+    @FXML private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
+    @FXML private Label labelNuevaActividad;
+    @FXML private Stage primaryStage;
+
     private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
     
     // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
-    private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>();
+    private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>(); //calendario
     private List<Actividades> todasLasActividades = new ArrayList<>(); // Lista de actividades cargadas
+    
+    
+    
+    
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -87,11 +86,19 @@ public class PrincipalControlador implements Initializable {
         cargarActividades();
         actualizarCalendario();
         cargarDatos();
+        
+        //Si eres menor no puedes añadir activades, por tanto, no te aparecerá el botón 
+        if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
+        	btnNuevaActividad.setVisible(false);
+        	labelNuevaActividad.setVisible(false);
+        }
     }
     
-    /*
-     * MÉTODOS DE NAVEGACIÓN ENTRE VISTAS
-     */
+    
+    
+    
+    
+/* MÉTODOS DE NAVEGACIÓN ENTRE VISTAS */
     
     @FXML
     private void abrirMiPerfil() { 
@@ -104,7 +111,6 @@ public class PrincipalControlador implements Initializable {
             MiPerfilControlador controller = loader.getController();
             controller.rellenarPerfil(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
             
-            
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -113,11 +119,13 @@ public class PrincipalControlador implements Initializable {
             stage.show();
 
             Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();
-            currentStage.close();
+            currentStage.close(); //cerrar ventana actual 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    
     
     @FXML
     private void abrirMiComunidad() {  
@@ -139,6 +147,8 @@ public class PrincipalControlador implements Initializable {
         }
     }
 
+    
+    
     @FXML
     private void abrirListaEventos() { 
         try {
@@ -159,6 +169,9 @@ public class PrincipalControlador implements Initializable {
         }
     }
 
+    
+    
+    @FXML
     private void cerrarSesion() { 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
@@ -167,7 +180,7 @@ public class PrincipalControlador implements Initializable {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("Principal - ConVive");
+            stage.setTitle("Inicio de sesión - ConVive");
             stage.centerOnScreen();
             stage.show();
 
@@ -178,7 +191,9 @@ public class PrincipalControlador implements Initializable {
         }
     }
     
-    // Método para abrir la ventana "Nueva Actividad" y cerrar la ventana actual
+    
+    
+    // Método para abrir la ventana "Nueva Actividad" 
     @FXML
     private void abrirCrearActividad(ActionEvent event) {
         try {
@@ -194,15 +209,32 @@ public class PrincipalControlador implements Initializable {
             stage.show();
 
             Stage currentStage = (Stage) btnNuevaActividad.getScene().getWindow();
-            currentStage.close();
+            currentStage.close(); //cerrar ventana actual 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
-    /*
-     * MÉTODOS PARA EL MANEJO DE ACTIVIDADES
-     */
+    
+    
+    
+       
+/* MÉTODOS PARA MANEJAR EL CALENDARIO */
+    
+    // Método para ir al mes anterior
+    @FXML
+    private void mesAnterior(ActionEvent event) {
+        currentDate = currentDate.minusMonths(1);
+        actualizarCalendario();
+    }
+    // Método para ir al mes siguiente
+    @FXML
+    private void mesSiguiente(ActionEvent event) {
+        currentDate = currentDate.plusMonths(1);
+        actualizarCalendario();
+    }
+    
+    
     
     private List<Actividades> obtenerActividadesDesdeBaseDeDatos() {
         List<Actividades> actividades = new ArrayList<>();
@@ -244,11 +276,8 @@ public class PrincipalControlador implements Initializable {
 
         actualizarCalendario();
     }
-
-
-    /*
-     * MÉTODOS PARA MANEJAR EL CALENDARIO
-     */
+    
+    
     
     // Método para obtener las actividades de un día específico
     private List<Actividades> obtenerActividadesPorDia(int dia) {
@@ -262,6 +291,7 @@ public class PrincipalControlador implements Initializable {
     }
 
 
+    
     // Método para actualizar el calendario (con días del mes actual)
     private void actualizarCalendario() {
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM");
@@ -312,6 +342,7 @@ public class PrincipalControlador implements Initializable {
     }
 
 
+    
     // Método para manejar el clic en un día específico
     private void handleDayClick(ActionEvent event) {
         Button dayButton = (Button) event.getSource();
@@ -343,19 +374,6 @@ public class PrincipalControlador implements Initializable {
     }
 
 
-    // Método para ir al mes anterior
-    @FXML
-    private void mesAnterior() {
-        currentDate = currentDate.minusMonths(1);
-        actualizarCalendario();
-    }
-
-    // Método para ir al mes siguiente
-    @FXML
-    private void mesSiguiente() {
-        currentDate = currentDate.plusMonths(1);
-        actualizarCalendario();
-    }
     
     public void mostrarActividades(List<Actividades> actividades) {
         vboxActividades.getChildren().clear(); // Limpiar el contenido actual
@@ -370,33 +388,21 @@ public class PrincipalControlador implements Initializable {
             Label hora = new Label("Hora: " + actividad.getHora().toString());
             Label edades = new Label("Edad permitida: " + actividad.getEdadMin() + " - " + actividad.getEdadMax() + " años");
 
-            // Botón "Ver más"
-            Button verMas = new Button("Ver más");
-            verMas.setOnAction(event -> verDetallesActividad(actividad));
-
             // Añadir los elementos a HBox
-            actividadBox.getChildren().addAll(titulo, hora, edades, verMas);
+            actividadBox.getChildren().addAll(titulo, hora, edades);
 
             // Añadir HBox de la actividad al VBox principal
             vboxActividades.getChildren().add(actividadBox);
         }
     }
 
-
-
-    // Método para manejar el botón "Ver más"
-    private void verDetallesActividad(Actividades actividad) {
-        // Aquí puedes mostrar una ventana con los detalles de la actividad seleccionada.
-        // Puedes usar una nueva ventana o mostrar una alerta con información detallada.
-        System.out.println("Detalles de la actividad seleccionada: " + actividad);
-    }
-    
-
-    /*__________________________________________________________*/
-
   
+
     
-    /* CARGA LOS DATOS DE CADA ACTIVIDAD */
+    
+/* PROXIMAS ACTIVIDADES DEL MES */
+    
+    //cargar los datos de cada actividad
     public void cargarDatos() {
         try (Connection conn = Conexion.dameConexion("convive");
              PreparedStatement stmt = conn.prepareStatement(SQL_OBTENER_ACTIVIDADES);
@@ -425,7 +431,9 @@ public class PrincipalControlador implements Initializable {
         }
     }
 
-    /* CREAR LOS CONTENEDORES PARA LAS ACTIVIDADES */
+    
+    
+    //Crear un contenedor para cada actividad
     private VBox crearContainerActividad(Actividades actividad, String dniGlobal) {
         VBox container = new VBox(10);
         container.setPadding(new Insets(10));
@@ -528,7 +536,9 @@ public class PrincipalControlador implements Initializable {
         return container;
     }
     
-    /* APUNTARSE A UNA ACTIVIDAD */
+    
+    
+    //Apuntarse a una actividad
     private void apuntarse(int idUsuario, int idActividad) {
         String sqlApuntarse = "INSERT INTO apuntados (id_adulto, id_actividad) VALUES (?, ?)";
         
@@ -563,7 +573,9 @@ public class PrincipalControlador implements Initializable {
         }
     }
 
-    /* DESAPUNTARSE DE UNA ACTIVIDAD*/
+    
+    
+    //Borrarse de una actividad
     private void desapuntarse(int idUsuario, int idActividad) {
         String sqlDesapuntarse = "DELETE FROM apuntados WHERE id_adulto = ? AND id_actividad = ?";
         
@@ -578,16 +590,17 @@ public class PrincipalControlador implements Initializable {
                 System.out.println("Usuario desapuntado de la actividad.");
                 cargarDatos(); // Recargar las actividades para actualizar el estado de inscripción
             } else {
-                System.err.println("Error al desapuntarse de la actividad.");
+                System.err.println("Error al borrarse de la actividad.");
             }
 
         } catch (SQLException e) {
-            System.err.println("Error al desapuntarse de la actividad: " + e.getMessage());
+            System.err.println("Error al borrarse de la actividad: " + e.getMessage());
         }
     }
 
 	
-    /* ELIMINAR ACTIVIDAD */
+    
+    //Eliminar una actividad creada por ti
     private void eliminarActividad(int actividadId) {
         String sqlEliminar = "DELETE FROM actividad WHERE id = ?";
         try (Connection conn = Conexion.dameConexion("convive");
@@ -604,7 +617,10 @@ public class PrincipalControlador implements Initializable {
             System.err.println("Error al eliminar actividad: " + e.getMessage());
         }
     }
-    /* DEVUELVE LA ACTIVIDAD PARA EDITARLA */
+    
+    
+    
+    //Devolver la actividad para editarla
     private Actividades obtenerActividad(int actividadId) {
         Actividades actividad = null;
 
@@ -641,7 +657,10 @@ public class PrincipalControlador implements Initializable {
 
         return actividad;
     }
-    /* EDITAR ACTIVIDAD */    
+    
+    
+    
+    //Editar actividad   
     private void editarActividad(int actividadId) {
         System.out.println("Editar actividad con ID: " + actividadId);
         try {

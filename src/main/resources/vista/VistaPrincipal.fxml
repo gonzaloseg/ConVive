@@ -30,7 +30,7 @@
             <Font size="24.0" />
          </font></Label>
       <Button fx:id="btnFiltros" layoutX="1113.0" layoutY="346.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="72.0" style="-fx-background-color: ffffff; -fx-background-radius: 18px; -fx-border-radius: 18px;" text="Filtros" textFill="#006d77" />
-      <Label layoutX="874.0" layoutY="110.0" text="¿Quieres proponer alguna actividad?" textFill="#22504e" />
+      <Label fx:id="labelNuevaActividad" layoutX="874.0" layoutY="110.0" text="¿Quieres proponer alguna actividad?" textFill="#22504e" />
       <Button fx:id="btnNuevaActividad" layoutX="890.0" layoutY="154.0" mnemonicParsing="false" onAction="#abrirCrearActividad" prefHeight="35.0" prefWidth="162.0" style="-fx-background-color: #006D77; -fx-background-radius: 18px; -fx-border-radius: 18px;" text="Añadir nueva actividad" textFill="WHITE" />
       <VBox prefHeight="750.0" prefWidth="308.0" style="-fx-background-color: FFFFFF;">
          <children>
