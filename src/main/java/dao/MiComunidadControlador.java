@@ -184,6 +184,11 @@ public class MiComunidadControlador {
             lbl_informacion.setText("No hay información disponible para el piso " + piso);
         }
     }
+    
+    
+    
+    
+    
 
     private void cargarDatosEnGrafica() {
         // Datos ficticios para graficar (debes usar datos reales)
@@ -202,6 +207,31 @@ public class MiComunidadControlador {
         barChart.getData().clear(); // Limpiar datos anteriores
         barChart.getData().add(series);
     }
+    
+    
+    
+    
+    private int obtenerNumeroHabitantes(String tipo) {
+        String query = tipo.equals("adulto") 
+            ? "SELECT COUNT(*) AS total FROM adulto" 
+            : "SELECT COUNT(*) AS total FROM menor";
+
+        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0; // Por defecto, 0 si hay error
+    }
+    
+    
+    
 
     private String getHabitantesPorPiso(String piso) {
         StringBuilder habitantes = new StringBuilder();
@@ -252,6 +282,12 @@ public class MiComunidadControlador {
         String infoPiso = getMiInfoPiso(id);
         lbl_mipiso.setText(infoPiso); // Actualiza el Label con la información del piso
     }
+    
+    
+    
+    
+    
+    
 
     private String getMiInfoPiso(String id) {
         StringBuilder habitantes = new StringBuilder();
@@ -333,24 +369,8 @@ public class MiComunidadControlador {
 
     
 
-    private int obtenerNumeroHabitantes(String tipo) {
-        String query = tipo.equals("adulto") 
-            ? "SELECT COUNT(*) AS total FROM adulto" 
-            : "SELECT COUNT(*) AS total FROM menor";
-
-        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            if (rs.next()) {
-                return rs.getInt("total");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return 0; // Por defecto, 0 si hay error
-    }
+   
+    
 
     void volver(ActionEvent event) {
         try {

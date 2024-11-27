@@ -29,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -61,14 +62,12 @@ public class PrincipalControlador implements Initializable {
     @FXML private Button btnNuevaActividad; //boton que lleva a ventana CreacionActividad
     @FXML private Label labelNuevaActividad;
     @FXML private Stage primaryStage;
-
-    private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
+    @FXML private ComboBox <String>  actividades_combox; 
+    private static String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
     
     // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
     private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>(); //calendario
     private List<Actividades> todasLasActividades = new ArrayList<>(); // Lista de actividades cargadas
-    
-    
     
     
     
@@ -86,13 +85,42 @@ public class PrincipalControlador implements Initializable {
         cargarActividades();
         actualizarCalendario();
         cargarDatos();
-        
+        filtros();
+        //editarSQL(null);
         //Si eres menor no puedes añadir activades, por tanto, no te aparecerá el botón 
         if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
         	btnNuevaActividad.setVisible(false);
         	labelNuevaActividad.setVisible(false);
         }
     }
+    
+    
+    
+    
+    private void filtros() {
+    	actividades_combox.getItems().addAll("menor de edad", "mayor de edad", "todas las edades");
+    }
+    
+    /*private void editarSQL(String opcion) {
+         String sql = "";
+
+        switch (opcion) {
+            case "menor de edad":
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad <= 17 ORDER BY fecha DESC";
+                break;
+            case "mayor de edad":
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad >= 18 ORDER BY fecha DESC";
+                break;
+            case "todas las edades":
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
+                break;
+            default:
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
+        }
+        SQL_OBTENER_ACTIVIDADES =sql;
+    }
+*/
+    
     
     
     
@@ -758,6 +786,6 @@ public class PrincipalControlador implements Initializable {
         }
 
         return edad;  // Retorna la edad calculada o -1 si hubo algún error
-    }
 
-}
+    }
+    }
