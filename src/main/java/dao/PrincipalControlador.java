@@ -63,7 +63,6 @@ public class PrincipalControlador implements Initializable {
     @FXML private Label labelNuevaActividad;
     @FXML private Stage primaryStage;
     @FXML private ComboBox <String>  actividades_combox; 
-    private static String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
     
     // Mapa para almacenar actividades por día (usando int como clave para el día del mes)
     private Map<Integer, List<Actividades>> actividadesPorDia = new HashMap<>(); //calendario
@@ -86,7 +85,7 @@ public class PrincipalControlador implements Initializable {
         actualizarCalendario();
         cargarDatos();
         filtros();
-        //editarSQL(null);
+        
         //Si eres menor no puedes añadir activades, por tanto, no te aparecerá el botón 
         if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
         	btnNuevaActividad.setVisible(false);
@@ -97,29 +96,8 @@ public class PrincipalControlador implements Initializable {
     
     
     
-    private void filtros() {
-    	actividades_combox.getItems().addAll("menor de edad", "mayor de edad", "todas las edades");
-    }
-    
-    /*private void editarSQL(String opcion) {
-         String sql = "";
+   
 
-        switch (opcion) {
-            case "menor de edad":
-            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad <= 17 ORDER BY fecha DESC";
-                break;
-            case "mayor de edad":
-            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad >= 18 ORDER BY fecha DESC";
-                break;
-            case "todas las edades":
-            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
-                break;
-            default:
-            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
-        }
-        SQL_OBTENER_ACTIVIDADES =sql;
-    }
-*/
     
     
     
@@ -433,6 +411,48 @@ public class PrincipalControlador implements Initializable {
     
     
 /* PROXIMAS ACTIVIDADES DEL MES */
+    
+    
+    
+    
+    
+    private  String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
+    
+    private void filtros() {
+        // Agregar opciones al ComboBox
+        actividades_combox.getItems().addAll("menor de edad", "mayor de edad", "todas las edades");
+
+        // Agregar listener para manejar selecciones
+        actividades_combox.setOnAction(event -> {
+            String opcionSeleccionada = actividades_combox.getValue();
+            
+            if (opcionSeleccionada != null && !opcionSeleccionada.isEmpty()) {
+                editarSQL(opcionSeleccionada);  // Cambiar la consulta SQL
+                cargarDatos();                 // Recargar actividades con la nueva consulta
+            }
+        });
+    }
+    
+    private void editarSQL(String opcion) {
+    	
+         String sql = "";
+
+        switch (opcion) {
+            case "menor de edad":
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad_max <= 17 ORDER BY fecha DESC";
+                break;
+            case "mayor de edad":
+            	sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) AND edad_min >= 18 ORDER BY fecha DESC";
+                break;
+            case "todas las edades":
+            default:
+                sql = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
+                break;
+                }
+        SQL_OBTENER_ACTIVIDADES =sql;
+    }
+    
+    
     
     //cargar los datos de cada actividad
     public void cargarDatos() {

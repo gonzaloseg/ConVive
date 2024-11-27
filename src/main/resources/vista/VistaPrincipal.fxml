@@ -118,6 +118,6 @@
             <VBox fx:id="actividadVBox" prefHeight="342.0" prefWidth="834.0" />
          </content>
       </ScrollPane>
-      <ComboBox fx:id="actividades_combox" layoutX="1035.0" layoutY="351.0" prefWidth="150.0" />
+      <ComboBox fx:id="actividades_combox" layoutX="1035.0" layoutY="351.0" prefWidth="150.0" promptText="filtros" />
    </children>
 </AnchorPane>
