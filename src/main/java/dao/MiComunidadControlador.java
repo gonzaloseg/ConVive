@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,44 +20,32 @@ import javafx.stage.Stage;
 
 public class MiComunidadControlador {
     
+    //Información de los residentes del bloque
+    @FXML private ImageView img_volver; 
+    @FXML private Button btn_1;
+    @FXML private Button btn_2;
+    @FXML private Button btn_3;
+    @FXML private Button btn_4;
+    @FXML private Button btn_5;
+    @FXML private Button btn_6;
+    @FXML private Button btn_7;
+    @FXML private Button btn_8;
+    @FXML private Button btn_9;
+    @FXML private Button btn_10;
+    @FXML private Button btn_11;
+    @FXML private Button btn_12;
+    @FXML private Button btn_13;
+    @FXML private Button btn_14;
+    
+    //Información de los residentes del piso
+    @FXML private Label lbl_mipiso;
+    @FXML private Label labelPiso;
+    
+    
+    @FXML private Label lbl_informacion; // Para mostrar información en pantalla.
     @FXML
     private BarChart<String, Number> barChart;
     private String userId; // Variable para almacenar el ID del usuario
-
-    @FXML
-    private ImageView img_volver; 
-    @FXML
-    private Button btn_1;
-    @FXML
-    private Button btn_2;
-    @FXML
-    private Button btn_3;
-    @FXML
-    private Button btn_4;
-    @FXML
-    private Button btn_5;
-    @FXML
-    private Button btn_6;
-    @FXML
-    private Button btn_7;
-    @FXML
-    private Button btn_8;
-    @FXML
-    private Button btn_9;
-    @FXML
-    private Button btn_10;
-    @FXML
-    private Button btn_11;
-    @FXML
-    private Button btn_12;
-    @FXML
-    private Button btn_13;
-    @FXML
-    private Button btn_14;
-    @FXML
-    private Label lbl_informacion; // Para mostrar información en pantalla.
-    @FXML
-    private Label lbl_mipiso;
     
     @FXML
     public void initialize() {
@@ -76,8 +65,94 @@ public class MiComunidadControlador {
         configurarEventosBoton(btn_13, "7ºA");
         configurarEventosBoton(btn_14, "7ºB");
         cargarDatosEnGrafica();
+        
+        //lbl_informacion.setVisible(false);
     }
-
+    
+    
+    
+    
+    
+/* RELLENAR LA INFORMACIÓN DEL PISO DEL USUARIO LOGADO */ 
+    
+    public void rellenarMiVivienda (String dniGlobal, String tabla) {
+    	String sql = "SELECT piso FROM " +tabla+ " WHERE dni = ?";
+    	String piso= "";
+    	
+    	//Guarda el piso del usuario logado y lo imprime en el cuadro de información
+    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")){
+    		PreparedStatement pst= conn.prepareStatement(sql);
+    		pst.setString(1, dniGlobal);
+    		ResultSet rs = pst.executeQuery();
+    		
+    		//Guarda el piso del usuario logado 
+    		while (rs.next()) {
+    			piso = rs.getString("piso");
+    			labelPiso.setText("Bloque 1, piso "+piso);
+    		}
+		} catch (Exception e) {
+			e.printStackTrace(); e.getMessage();
+		}
+    	
+    	StringBuilder residentes = new StringBuilder(); //lista para almacenar los residentes del piso
+    	residentes.append("Residentes: ").append("\n");
+    	
+    	sql= "SELECT dni, nombre, apellidos FROM adulto WHERE piso = ?";
+    	
+    	//Guarda en la lista los adultos que habitan en el piso
+    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")){
+    		PreparedStatement pst= conn.prepareStatement(sql);
+    		pst.setString(1, piso);
+    		ResultSet rs = pst.executeQuery();
+    		
+    		while (rs.next()) {
+    			String dni = rs.getString("dni");
+    			String nombre = rs.getString("nombre");
+    			String apellidos = rs.getString("apellidos");
+    			
+    			if (dni.equals(dniGlobal)) { //Si es el usuario logado, lo indica en el cuadro de información
+    				residentes.append("  - ").append(nombre+" "+apellidos+"  (yo)").append("\n");
+    			}else {
+    				residentes.append("  - ").append(nombre+" "+apellidos).append("\n");
+    			}	
+    		}
+		} catch (Exception e) {
+			e.printStackTrace(); e.getMessage();
+		}
+    	
+    	sql= "SELECT dni, nombre, apellidos FROM menor WHERE piso = ?";
+    	
+    	//Guarda en la lista los menores que habitan en el piso
+    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")){
+    		PreparedStatement pst= conn.prepareStatement(sql);
+    		pst.setString(1, piso);
+    		ResultSet rs = pst.executeQuery();
+    		
+    		while (rs.next()) {
+    			String dni = rs.getString("dni");
+    			String nombre = rs.getString("nombre");
+    			String apellidos = rs.getString("apellidos");
+    			
+    			if (dni.equals(dniGlobal)) { //Si es el usuario logado, lo indica en el cuadro de información
+    				residentes.append("  - ").append(nombre+" "+apellidos+"  (yo)").append("\n");
+    			}else {
+    				residentes.append("  - ").append(nombre+" "+apellidos).append("\n");
+    			}	
+    		}	
+		} catch (Exception e) {
+			e.printStackTrace(); e.getMessage();
+		}
+    	
+    	//rellena los residentes en el cuadro de información
+    	lbl_mipiso.setText(residentes.toString());
+    }
+    
+    
+    
+    
+    
+/* COMENTA LO QUE VIENE AHORA -> (INFORMACIÓN DEL BLOQUE / GRÁFICA)*/    
+    
     private void configurarEventosBoton(Button boton, String piso) {
         img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
 
@@ -103,6 +178,7 @@ public class MiComunidadControlador {
 
         // Muestra la información en la etiqueta o ventana emergente
         if (!habitantes.isEmpty()) {
+        	
             lbl_informacion.setText("Habitantes del piso " + piso + ":\n" + habitantes);
         } else {
             lbl_informacion.setText("No hay información disponible para el piso " + piso);

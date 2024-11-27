@@ -54,7 +54,9 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#30d4d9" height="52.0" layoutX="156.0" layoutY="711.0" stroke="#119fa6" strokeType="INSIDE" width="30.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="11.0" layoutX="77.0" layoutY="766.0" stroke="#11797e" strokeType="INSIDE" width="539.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="235.0" layoutX="36.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" width="311.0" />
-      <Label fx:id="lbl_mipiso" layoutX="95.0" layoutY="160.0" prefHeight="195.0" prefWidth="216.0" />
+      <Label fx:id="lbl_mipiso" layoutX="56.0" layoutY="221.0" prefHeight="134.0" prefWidth="255.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="4.0" layoutX="172.0" layoutY="737.0" stroke="BLACK" strokeType="INSIDE" width="3.0" />
+      <Label layoutX="58.0" layoutY="159.0" text="MI VIVIENDA" />
+      <Label fx:id="labelPiso" layoutX="56.0" layoutY="185.0" text="Piso" />
    </children>
 </AnchorPane>

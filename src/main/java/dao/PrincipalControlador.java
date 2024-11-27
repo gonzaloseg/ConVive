@@ -132,6 +132,10 @@ public class PrincipalControlador implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaMiComunidad.fxml"));
             AnchorPane root = loader.load();
+            
+            //Obtener instancia del controlador y pasarle los datos (MI COMUNIDAD)
+            MiComunidadControlador controller = loader.getController();
+            controller.rellenarMiVivienda(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
