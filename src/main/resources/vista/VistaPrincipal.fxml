@@ -85,7 +85,7 @@
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label prefHeight="18.0" prefWidth="50.0" text="Miercoles">
+            <Label prefHeight="18.0" prefWidth="50.0" text="Miércoles">
                <font>
                   <Font size="9.0" />
                </font>
@@ -100,7 +100,7 @@
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label prefHeight="18.0" prefWidth="42.0" text="Sabado">
+            <Label prefHeight="18.0" prefWidth="42.0" text="Sábado">
                <font>
                   <Font size="9.0" />
                </font>
@@ -118,6 +118,6 @@
             <VBox fx:id="actividadVBox" prefHeight="342.0" prefWidth="834.0" />
          </content>
       </ScrollPane>
-      <ComboBox fx:id="actividades_combox" layoutX="1035.0" layoutY="351.0" prefWidth="150.0" promptText="filtros" />
+      <ComboBox fx:id="actividades_combox" layoutX="1035.0" layoutY="351.0" prefWidth="150.0" promptText="Filtros" style="-fx-background-color: #FFFFFF; -fx-border-radius: 18px; -fx-background-radius: 18px;" />
    </children>
 </AnchorPane>

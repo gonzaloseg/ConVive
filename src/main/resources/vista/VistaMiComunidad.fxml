@@ -11,24 +11,24 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="757.0" prefWidth="1252.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiComunidadControlador">
+<AnchorPane prefHeight="757.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiComunidadControlador">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="364.0" layoutX="77.0" layoutY="403.0" stroke="#158991" strokeType="INSIDE" width="189.0" />
-      <Button fx:id="btn_9" layoutX="113.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_10" layoutX="204.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_8" layoutX="204.0" layoutY="571.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_5" layoutX="113.0" layoutY="617.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_6" layoutX="204.0" layoutY="617.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_7" layoutX="113.0" layoutY="571.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_3" layoutX="113.0" layoutY="662.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_4" layoutX="204.0" layoutY="662.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_1" layoutX="113.0" layoutY="711.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_2" layoutX="204.0" layoutY="711.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_11" layoutX="113.0" layoutY="476.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_12" layoutX="202.0" layoutY="476.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <Button fx:id="btn_13" layoutX="113.0" layoutY="433.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="30.0" />
-      <Button fx:id="btn_14" layoutX="202.0" layoutY="432.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" />
-      <BarChart fx:id="barChart" layoutX="662.0" layoutY="124.0" prefHeight="332.0" prefWidth="539.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="364.0" layoutX="77.0" layoutY="403.0" stroke="#15898f00" strokeType="INSIDE" width="189.0" />
+      <Button fx:id="btn_9" layoutX="113.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_10" layoutX="204.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_8" layoutX="204.0" layoutY="571.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_5" layoutX="113.0" layoutY="617.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_6" layoutX="204.0" layoutY="617.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_7" layoutX="113.0" layoutY="571.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_3" layoutX="113.0" layoutY="662.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_4" layoutX="204.0" layoutY="662.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_1" layoutX="113.0" layoutY="711.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_2" layoutX="204.0" layoutY="711.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_11" layoutX="113.0" layoutY="476.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_12" layoutX="202.0" layoutY="476.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_13" layoutX="113.0" layoutY="433.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <Button fx:id="btn_14" layoutX="202.0" layoutY="432.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
+      <BarChart fx:id="barChart" layoutX="494.0" layoutY="122.0" prefHeight="332.0" prefWidth="683.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -36,27 +36,36 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="288.0" layoutX="417.0" layoutY="455.0" stroke="BLACK" strokeType="INSIDE" width="419.0" />
-      <Label fx:id="lbl_informacion" layoutX="451.0" layoutY="474.0" prefHeight="250.0" prefWidth="362.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="242.0" layoutX="533.0" layoutY="490.0" stroke="TRANSPARENT" strokeType="INSIDE" width="419.0" />
+      <Label fx:id="lbl_informacion" layoutX="561.0" layoutY="506.0" prefHeight="217.0" prefWidth="362.0" textFill="#006d77">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font></Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="110.0" layoutX="10.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="1233.0" />
-      <ImageView fx:id="img_volver" fitHeight="93.0" fitWidth="121.0" layoutX="1103.0" layoutY="22.0">
-         <image>
-            <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="109.0" prefWidth="762.0" text="mi comunidad" textFill="#22504e">
+      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="110.0" layoutX="-2.0" layoutY="2.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1252.0" />
+      <Label layoutX="56.0" layoutY="21.0" prefHeight="71.0" prefWidth="218.0" text="Mi comunidad" textFill="#22504e">
          <font>
             <Font size="30.0" />
          </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#30d4d9" height="52.0" layoutX="156.0" layoutY="711.0" stroke="#119fa6" strokeType="INSIDE" width="30.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="11.0" layoutX="77.0" layoutY="766.0" stroke="#11797e" strokeType="INSIDE" width="539.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="235.0" layoutX="36.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" width="311.0" />
-      <Label fx:id="lbl_mipiso" layoutX="56.0" layoutY="221.0" prefHeight="134.0" prefWidth="255.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="11.0" layoutX="77.0" layoutY="766.0" stroke="WHITE" strokeType="INSIDE" width="539.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="235.0" layoutX="36.0" layoutY="140.0" stroke="TRANSPARENT" strokeType="INSIDE" width="311.0" />
+      <Label fx:id="lbl_mipiso" layoutX="56.0" layoutY="221.0" prefHeight="134.0" prefWidth="255.0" textFill="#006d77">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="4.0" layoutX="172.0" layoutY="737.0" stroke="BLACK" strokeType="INSIDE" width="3.0" />
-      <Label layoutX="58.0" layoutY="159.0" text="MI VIVIENDA" />
-      <Label fx:id="labelPiso" layoutX="56.0" layoutY="185.0" text="Piso" />
+      <Label layoutX="58.0" layoutY="159.0" text="Mi vivienda" textFill="#22504e">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <ImageView fx:id="img_volver" fitHeight="93.0" fitWidth="121.0" layoutX="1056.0" layoutY="11.0">
+         <image>
+            <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelPiso" layoutX="58.0" layoutY="201.0" text="Piso" textFill="#006d77">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>
