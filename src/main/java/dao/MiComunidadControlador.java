@@ -368,20 +368,20 @@ public class MiComunidadControlador {
    
    
     void volver(ActionEvent event) {
-        try {
-            String vistaDestino = vistaPrevia.equals("vistaMiPerfil") ? "/vista/VistaMiPerfil.fxml" : "/vista/VistaListaEventos.fxml";
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
+    	try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("ConVive");
+            stage.setTitle("Principal - ConVive");
             stage.show();
 
             // Cerrar la ventana actual
             Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
