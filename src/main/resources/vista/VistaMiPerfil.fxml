@@ -9,37 +9,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiPerfilControlador">
    <children>
-      <HBox prefHeight="122.0" prefWidth="1200.0">
-         <children>
-            <ImageView fitHeight="121.0" fitWidth="200.0">
-               <image>
-                  <Image url="@../imagenes/vecteezy_user-icon-on-transparent-background_19879186.png" />
-               </image>
-            </ImageView>
-            <Label prefHeight="122.0" prefWidth="916.0" text="mi perfil">
-               <font>
-                  <Font size="64.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="img_volver" fitHeight="92.0" fitWidth="111.0">
-               <image>
-                  <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
-               </image>
-            </ImageView>
-         </children>
-      </HBox>
-      <Label fx:id="labelNombre" layoutX="88.0" layoutY="192.0" text="Nombree" />
-      <Label fx:id="labelApellidos" layoutX="88.0" layoutY="220.0" text="Apellidos" />
-      <Label fx:id="labelPiso" layoutX="88.0" layoutY="248.0" text="Piso" />
-      <Label fx:id="labelFechaN" layoutX="88.0" layoutY="275.0" text="Fecha nacimiento " />
-      <Label fx:id="labelComodin" layoutX="87.0" layoutY="335.0" text="tutor " />
-      <Label fx:id="labelDni" layoutX="91.0" layoutY="299.0" text="dni" />
-      <Button fx:id="actividadesApuntadas" layoutX="415.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesApuntadas" text="Actividades apuntadas" />
-      <VBox fx:id="contenedorTarjeta" layoutX="415.0" layoutY="192.0" prefHeight="200.0" prefWidth="395.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: black; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="206.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="345.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="412.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="273.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="550.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Label fx:id="labelNombre" layoutX="88.0" layoutY="220.0" text="Nombre" textFill="WHITE" />
+      <Label fx:id="labelApellidos" layoutX="80.0" layoutY="287.0" text="Apellidos" textFill="WHITE" />
+      <Label fx:id="labelPiso" layoutX="81.0" layoutY="358.0" prefHeight="18.0" prefWidth="34.0" text="Piso" textFill="WHITE" />
+      <Label fx:id="labelFechaN" layoutX="84.0" layoutY="426.0" text="Fecha nacimiento " textFill="WHITE" />
+      <Label fx:id="labelComodin" layoutX="88.0" layoutY="564.0" prefHeight="18.0" prefWidth="34.0" text="Tutor" textFill="WHITE" />
+      <Label fx:id="labelDni" layoutX="90.0" layoutY="495.0" text="DNI" textFill="WHITE" />
+      <Button fx:id="actividadesApuntadas" layoutX="415.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesApuntadas" style="-fx-background-color: #0ca4ac; -fx-background-radius: 18px;" text="Actividades apuntadas" textFill="WHITE" />
+      <VBox fx:id="contenedorTarjeta" layoutX="415.0" layoutY="192.0" prefHeight="200.0" prefWidth="395.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #0ca4ac; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
          <children>
             <TableView fx:id="tablaActividadesApuntadas" prefHeight="200.0" prefWidth="200.0">
               <columns>
@@ -48,11 +36,14 @@
                   <TableColumn fx:id="columnaHora" prefWidth="90.0" text="Hora" />
               </columns>
             </TableView>
-            <Button fx:id="borrarActividad" mnemonicParsing="false" onAction="#borrarActividad" text="Borrar actividad" />
-            <Button fx:id="botonClose" mnemonicParsing="false" onAction="#close" text="close" />
+            <Button fx:id="borrarActividad" mnemonicParsing="false" onAction="#borrarActividad" style="-fx-background-color: #ff6669; -fx-background-radius: 18px;" text="Desapuntarme" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="botonClose" mnemonicParsing="false" onAction="#close" style="-fx-background-radius: 18px; -fx-background-color: #999999;" text="Cerrar" textFill="WHITE" />
          </children>
       </VBox>
-      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: black; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
+      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #0ca4ac;">
          <children>
             <TableView fx:id="tablaActividadesPropuestas" prefHeight="200.0" prefWidth="200.0">
                <columns>
@@ -61,12 +52,37 @@
                   <TableColumn fx:id="columnaHora1" prefWidth="78.0" text="Hora" />
                </columns>
             </TableView>
-            <Button fx:id="editarActividad" mnemonicParsing="false" onAction="#editarActividad" text="Editar actividad" />
-            <Button fx:id="borrarActividad1" mnemonicParsing="false" onAction="#borrarActividad1" text="Borrar actividad" />
-            <Button fx:id="botonClose1" mnemonicParsing="false" onAction="#close1" text="close" />
+            <Button fx:id="editarActividad" mnemonicParsing="false" onAction="#editarActividad" style="-fx-background-color: #83c5be; -fx-background-radius: 18px;" text="Editar actividad" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="borrarActividad1" mnemonicParsing="false" onAction="#borrarActividad1" style="-fx-background-color: #ff6669; -fx-background-radius: 18px;" text="Borrar actividad" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="botonClose1" mnemonicParsing="false" onAction="#close1" style="-fx-background-color: #999999; -fx-background-radius: 18px;" text="Cerrar" textFill="WHITE" />
          </children>
       </VBox>
-      <Button fx:id="actividadesPropuestas" layoutX="815.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesPropuestas" text="Actividades propuestas" />
-      
+      <Button fx:id="actividadesPropuestas" layoutX="815.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesPropuestas" style="-fx-background-color: #0ca4ac; -fx-border-radius: 18px; -fx-background-radius: 18px;" text="Actividades propuestas" textFill="WHITE" />
+      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="122.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1260.0" />
+      <HBox layoutX="13.0" layoutY="14.0" prefHeight="122.0" prefWidth="1200.0">
+         <children>
+            <ImageView fitHeight="91.0" fitWidth="149.0">
+               <image>
+                  <Image url="@../imagenes/vecteezy_user-icon-on-transparent-background_19879186.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="122.0" prefWidth="916.0" text="Mi perfil" textFill="#22504e">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="img_volver" fitHeight="92.0" fitWidth="111.0">
+               <image>
+                  <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>      
    </children>
 </AnchorPane>

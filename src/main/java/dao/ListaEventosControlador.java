@@ -146,7 +146,7 @@ public class ListaEventosControlador implements Initializable {
             Button eliminarButton = new Button("Eliminar actividad");
             eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
             eliminarButton.setStyle( // Aplicar estilo al botón eliminar
-                "-fx-background-color: red;" +
+                "-fx-background-color: #ff6669;" +
                 "-fx-background-radius: 18px;" +
                 "-fx-border-radius: 18px;" +
                 "-fx-text-fill: white;" +

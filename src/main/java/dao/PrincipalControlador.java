@@ -584,7 +584,7 @@ public class PrincipalControlador implements Initializable {
             Button eliminarButton = new Button("Eliminar actividad");
             eliminarButton.setOnAction(event -> eliminarActividad(actividad.getId()));
             eliminarButton.setStyle( // Aplicar estilo al botón eliminar
-                    "-fx-background-color: red;" +
+                    "-fx-background-color: #ff6669;" +
                     "-fx-background-radius: 18px;" +
                     "-fx-border-radius: 18px;" +
                     "-fx-text-fill: white;" +
@@ -602,7 +602,7 @@ public class PrincipalControlador implements Initializable {
                     );
 
             // Agregar los botones al contenedor
-            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, eliminarButton, editarButton);
+            container.getChildren().addAll(nombreLabel, descripcionLabel, fechaLabel, horaLabel, edadesLabel, editarButton, eliminarButton);
         } else {
             // Si no es el creador, mostrar el botón de "Apuntarse" o "Desapuntarse"
             int finalIdUsuario = idUsuario; // Declarar una nueva variable final
