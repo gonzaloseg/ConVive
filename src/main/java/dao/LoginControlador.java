@@ -336,8 +336,12 @@ public class LoginControlador implements Initializable {
                     Scene scene = new Scene(root);
                     Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
             	    scene.setCursor(new ImageCursor(cursorImage));
+            	    
+
                     Stage stage = new Stage();
-                    stage.setScene(scene);
+                    Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+            	    stage.getIcons().add(icon);
+            	    stage.setScene(scene);
                     stage.setTitle("Mi Perfil - ConVive");
                     stage.centerOnScreen();
                     stage.show();

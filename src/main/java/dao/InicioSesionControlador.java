@@ -101,9 +101,13 @@ public class InicioSesionControlador implements Initializable{
 			        
 			        // Obtener el escenario actual y reemplazarlo con la nueva escena
 			        Stage escenarioActual = (Stage) botonIniciarSesion.getScene().getWindow();
+			        
 			        escenarioActual.setScene(escena);
 			        escenarioActual.setTitle("Principal - Convive");
 			        escenarioActual.centerOnScreen();
+			        Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+			        escenarioActual.getIcons().add(icon);
+
 			        escenarioActual.show();
 			        
 			        

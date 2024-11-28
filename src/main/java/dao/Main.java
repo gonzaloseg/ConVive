@@ -17,6 +17,9 @@ public class Main extends Application {
 	    FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
 	    AnchorPane root = loader.load();
 	    Scene scene = new Scene(root);
+	    
+	    Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+	    primaryStage.getIcons().add(icon);
 
 	    Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
 	    scene.setCursor(new ImageCursor(cursorImage));
