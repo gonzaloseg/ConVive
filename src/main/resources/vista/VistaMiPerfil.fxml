@@ -14,12 +14,12 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiPerfilControlador">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="206.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="345.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="412.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="273.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="550.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="206.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="345.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="412.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="273.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="550.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
       <Label fx:id="labelNombre" layoutX="88.0" layoutY="220.0" text="Nombre" textFill="WHITE" />
       <Label fx:id="labelApellidos" layoutX="80.0" layoutY="287.0" text="Apellidos" textFill="WHITE" />
       <Label fx:id="labelPiso" layoutX="81.0" layoutY="358.0" prefHeight="18.0" prefWidth="34.0" text="Piso" textFill="WHITE" />
@@ -29,7 +29,7 @@
       <Button fx:id="actividadesApuntadas" layoutX="415.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesApuntadas" style="-fx-background-color: #0ca4ac; -fx-background-radius: 18px;" text="Actividades apuntadas" textFill="WHITE" />
       <VBox fx:id="contenedorTarjeta" layoutX="415.0" layoutY="192.0" prefHeight="200.0" prefWidth="395.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #0ca4ac; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
          <children>
-            <TableView fx:id="tablaActividadesApuntadas" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tablaActividadesApuntadas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
               <columns>
                 <TableColumn fx:id="columnaActividades" prefWidth="182.0" text="Actividades" />
                 <TableColumn fx:id="columnaFecha" prefWidth="98.0" text="Fecha " />
@@ -45,7 +45,7 @@
       </VBox>
       <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #0ca4ac;">
          <children>
-            <TableView fx:id="tablaActividadesPropuestas" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tablaActividadesPropuestas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                <columns>
                   <TableColumn fx:id="columnaActividades1" prefWidth="182.0" text="Actividades" />
                   <TableColumn fx:id="columnaFecha1" prefWidth="86.0" text="Fecha " />
