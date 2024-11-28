@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -42,6 +43,8 @@ public class EditarActividadControlador implements Initializable {
     @FXML private Label labelErrorEdad;
 
     private Actividades actividad;
+    private String vistaPrevia;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,13 +60,11 @@ public class EditarActividadControlador implements Initializable {
 
     @FXML
     private void guardarCambios(ActionEvent event) {
-        // Comprobar que la actividad no es null
         if (actividad == null) {
             alertaError("La actividad no está inicializada.");
             return;
         }
-        
-        // Obtener los valores de los campos del formulario
+
         String nombre = txtNombreActividad.getText();
         LocalDate fecha = dateFechaActividad.getValue();
         String hora = txtHoraActividad.getText();
@@ -72,19 +73,16 @@ public class EditarActividadControlador implements Initializable {
         int edadMax = spinnerEdadMax.getValue();
         String lugar = txtLugarActividad.getText();
 
-        // Validar campos vacíos
         if (nombre.isEmpty() || fecha == null || hora.isEmpty() || descripcion.isEmpty() || lugar.isEmpty()) {
             alertaError("Se deben rellenar todos los campos");
             return;
         }
-        
-        // Validar que el nombre contiene solo letras
+
         if (!nombre.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
             alertaError("Solo pueden aparecer letras en el nombre");
             return;
         }
 
-        // Validar el formato de la hora
         LocalTime horaActividad = null;
         try {
             horaActividad = LocalTime.parse(hora);
@@ -93,13 +91,11 @@ public class EditarActividadControlador implements Initializable {
             return;
         }
 
-        // Comprobar que la edad mínima no sea mayor que la edad máxima
         if (edadMin > edadMax) {
             alertaError("La edad mínima no puede ser mayor que la edad máxima.");
             return;
         }
 
-        // Actualización de la actividad en la base de datos
         try (Connection conn = Conexion.dameConexion("convive")) {
             String sql = "UPDATE actividad SET nombre = ?, descripcion = ?, fecha = ?, hora = ?, lugar = ?, edad_min = ?, edad_max = ? WHERE id = ?";
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -113,15 +109,51 @@ public class EditarActividadControlador implements Initializable {
             pst.setInt(7, edadMax);
             pst.setInt(8, actividad.getId());
 
-            int filasAfectadas = pst.executeUpdate();
+	            int filasAfectadas = pst.executeUpdate();
+	
+	            if (filasAfectadas > 0) {
+	                alertaInformacion("Actividad editada correctamente");
+	                try {
+	                    // Determinar la vista de destino según el valor de vistaPrevia
+	                    String vistaDestino;
+	                    switch (vistaPrevia) {
+	                        case "vistaMiPerfil":
+	                            vistaDestino = "/vista/VistaMiPerfil.fxml";
+	                            break;
+	                        case "vistaListaEventos":
+	                            vistaDestino = "/vista/VistaListaEventos.fxml";
+	                            break;
+	                        case "vistaPrincipal":
+	                            vistaDestino = "/vista/VistaPrincipal.fxml";
+	                            break;
+	                        default:
+	                            // Si no hay un valor válido, retornar a una vista por defecto
+	                            vistaDestino = "/vista/VistaPrincipal.fxml";
+	                    }
 
-            if (filasAfectadas > 0) {
-                alertaInformacion("Actividad editada correctamente");
-                
-                // Cerrar la ventana actual (VistaEditarActividad)
-                Stage currentStage = (Stage) botonGuardar.getScene().getWindow();
-                currentStage.close();
+	                    // Cargar la vista correspondiente
+	                    FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
+	                    AnchorPane root = loader.load();
 
+	                    // Crear nueva escena y etapa
+	                    Scene scene = new Scene(root);
+	                    Stage stage = new Stage();
+	                    stage.setScene(scene);
+	                    stage.setTitle(vistaPrevia + " - ConVive");
+	                    
+	                    // Agregar el ícono de la app
+	                    Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+	                    stage.getIcons().add(icon);
+
+	                    stage.show();
+
+	                    // Cerrar la ventana actual
+	                    Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+	                    currentStage.close();
+
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
             } else {
                 alertaError("Ocurrió un error al editar la actividad, inténtelo de nuevo más tarde");
             }
@@ -131,6 +163,7 @@ public class EditarActividadControlador implements Initializable {
             alertaError("Error en la base de datos. Por favor, inténtelo de nuevo.");
         }
     }
+
 
 
     // Método para recibir la actividad y asignarla al controlador
@@ -198,7 +231,6 @@ public class EditarActividadControlador implements Initializable {
         alerta.showAndWait();
     }
     
-    private String vistaPrevia;
 
     public void setVistaPrevia(String vistaPrevia) {
         this.vistaPrevia = vistaPrevia;
@@ -210,14 +242,37 @@ public class EditarActividadControlador implements Initializable {
     @FXML
     void volver(ActionEvent event) {
         try {
-            String vistaDestino = vistaPrevia.equals("vistaMiPerfil") ? "/vista/VistaMiPerfil.fxml" : "/vista/VistaListaEventos.fxml";
+            // Determinar la vista de destino según el valor de vistaPrevia
+            String vistaDestino;
+            switch (vistaPrevia) {
+                case "vistaMiPerfil":
+                    vistaDestino = "/vista/VistaMiPerfil.fxml";
+                    break;
+                case "vistaListaEventos":
+                    vistaDestino = "/vista/VistaListaEventos.fxml";
+                    break;
+                case "vistaPrincipal":
+                    vistaDestino = "/vista/VistaPrincipal.fxml";
+                    break;
+                default:
+                    // Si no hay un valor válido, retornar a una vista por defecto
+                    vistaDestino = "/vista/VistaPrincipal.fxml";
+            }
+
+            // Cargar la vista correspondiente
             FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
             AnchorPane root = loader.load();
 
+            // Crear nueva escena y etapa
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("ConVive");
+            stage.setTitle(vistaPrevia + " - ConVive");
+            
+            // Agregar el ícono de la app
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+            stage.getIcons().add(icon);
+
             stage.show();
 
             // Cerrar la ventana actual

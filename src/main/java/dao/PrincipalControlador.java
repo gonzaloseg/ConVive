@@ -127,6 +127,8 @@ public class PrincipalControlador implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Perfil - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.centerOnScreen();
             stage.show();
 
@@ -156,6 +158,8 @@ public class PrincipalControlador implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Comunidad - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.centerOnScreen();
             stage.show();
 
@@ -181,6 +185,8 @@ public class PrincipalControlador implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Lista de Eventos - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.centerOnScreen();
             stage.show();
 
@@ -206,6 +212,8 @@ public class PrincipalControlador implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Inicio de sesión - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.centerOnScreen();
             stage.show();
 
@@ -232,6 +240,8 @@ public class PrincipalControlador implements Initializable {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Nueva Actividad - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.centerOnScreen();
 
             stage.show();
@@ -826,8 +836,9 @@ public class PrincipalControlador implements Initializable {
 
             // Verifica si la actividad existe antes de pasarla al controlador
             if (actividad != null) {
-                // Pasa la actividad al controlador
                 controlador.setActividad(actividad);
+                controlador.setVistaPrevia("vistaPrincipal");
+
             } else {
                 // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
                 System.out.println("No se pudo cargar la actividad.");
@@ -841,7 +852,9 @@ public class PrincipalControlador implements Initializable {
 
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("Editar Actividad");
+            stage.setTitle("Editar Actividad - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.show();
             
             Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();

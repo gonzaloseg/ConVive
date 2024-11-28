@@ -253,6 +253,8 @@ public class NuevaActividadControlador implements Initializable{
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.show();
 
             Stage currentStage = (Stage) botonVolver.getScene().getWindow();

@@ -408,6 +408,8 @@ public class MiPerfilControlador {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Editar Actividad");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.show();
             
             // Cerrar la ventana actual
@@ -462,13 +464,7 @@ public class MiPerfilControlador {
     	contenedorTarjeta1.setVisible(false);
     }
     
-    
-    
-    
-    
-    
-    
-	
+   
     void volver(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
@@ -481,6 +477,8 @@ public class MiPerfilControlador {
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
             stage.show();
 
             // Cerrar la ventana actual
