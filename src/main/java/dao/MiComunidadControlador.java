@@ -152,7 +152,7 @@ public class MiComunidadControlador {
     
     
 /* COMENTA LO QUE VIENE AHORA -> (INFORMACIÓN DEL BLOQUE / GRÁFICA)*/    
-    
+//EVENTO EFECTO DE BOTONES    
     private void configurarEventosBoton(Button boton, String piso) {
         img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
 
@@ -287,7 +287,7 @@ public class MiComunidadControlador {
     
     
     
-    
+  //MUESTRA INFORMACIÓN DE LA COMUNIDAD  
 
     private String getMiInfoPiso(String id) {
         StringBuilder habitantes = new StringBuilder();
@@ -321,12 +321,6 @@ public class MiComunidadControlador {
                     }
                 }
             }
-
-            // Si no se encuentra el piso, retornar un mensaje de error
-            if (piso == null) {
-                return "No se pudo determinar el piso del usuario con ID: " + id;
-            }
-
             // Consultar adultos y menores que viven en el piso
             try (PreparedStatement stmtAdultos = conn.prepareStatement(queryAdultos);
                  PreparedStatement stmtMenores = conn.prepareStatement(queryMenores)) {

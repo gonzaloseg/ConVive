@@ -120,6 +120,9 @@ public class InicioSesionControlador implements Initializable{
     }
     
     
+    
+    
+    
     // Método para verificar credenciales (si es un menor o un adulto)
     private boolean verificarCredenciales(Connection conn, String dni, String contrasenia, String tabla) {
         String sql = "SELECT * FROM " + tabla + " WHERE dni = ? AND contrasenia = ?";

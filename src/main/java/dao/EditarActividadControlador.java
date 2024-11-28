@@ -199,6 +199,10 @@ public class EditarActividadControlador implements Initializable {
     }
     
     
+    
+    
+    
+    
     // Método para volver a la ventana de eventos
     @FXML
     private void volver(ActionEvent event) {
