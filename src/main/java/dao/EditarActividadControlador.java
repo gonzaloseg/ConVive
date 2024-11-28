@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 public class EditarActividadControlador implements Initializable {
 
     @FXML private Button botonGuardar;
-    @FXML private Button botonVolver;
+    @FXML private ImageView img_volver; 
     
     @FXML private DatePicker dateFechaActividad;
     @FXML private TextArea txtDescripcionActividad;
@@ -56,6 +57,8 @@ public class EditarActividadControlador implements Initializable {
         txtHoraActividad.setOnKeyReleased(event -> validarHora());
         spinnerEdadMax.setOnKeyReleased(event -> validarEdad());
         spinnerEdadMin.setOnKeyReleased(event -> validarEdad());
+        
+        img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
     }
 
     @FXML
@@ -148,7 +151,7 @@ public class EditarActividadControlador implements Initializable {
 	                    stage.show();
 
 	                    // Cerrar la ventana actual
-	                    Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+	                    Stage currentStage = (Stage) img_volver.getScene().getWindow();
 	                    currentStage.close();
 
 	                } catch (Exception e) {
@@ -276,7 +279,7 @@ public class EditarActividadControlador implements Initializable {
             stage.show();
 
             // Cerrar la ventana actual
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close();
 
         } catch (Exception e) {

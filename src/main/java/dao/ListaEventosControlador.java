@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -31,7 +32,7 @@ import dto.Actividades;
 import dto.UsuarioGlobal;
 
 public class ListaEventosControlador implements Initializable {
-    @FXML private Button botonVolver;
+    @FXML private ImageView img_volver; 
     @FXML private VBox actividadVBox;
     
     private static final String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad ORDER BY fecha DESC";
@@ -40,6 +41,8 @@ public class ListaEventosControlador implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
     	cargarDatos();
+        img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
+
     }
     
     /* CARGA LOS DATOS DE CADA ACTIVIDAD */
@@ -76,6 +79,7 @@ public class ListaEventosControlador implements Initializable {
         VBox container = new VBox(10);
         container.setPadding(new Insets(10));
         container.setStyle("-fx-background-color: #FFFFFF;");
+        container.setPrefWidth(1150);
 
         // Etiquetas de la actividad
         Label nombreLabel = new Label(actividad.getNombre());
@@ -85,6 +89,20 @@ public class ListaEventosControlador implements Initializable {
         Label edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
         //Label apuntadosLabel = new Label("Número de apuntados: " + getApuntados(actividad.getId()));
 
+        // Configurar etiquetas para adaptarse al ancho del VBox
+        nombreLabel.setMaxWidth(Double.MAX_VALUE);
+        descripcionLabel.setMaxWidth(Double.MAX_VALUE);
+        fechaLabel.setMaxWidth(Double.MAX_VALUE);
+        horaLabel.setMaxWidth(Double.MAX_VALUE);
+        edadesLabel.setMaxWidth(Double.MAX_VALUE);
+
+        // Permitir que el texto se ajuste al ancho disponible
+        nombreLabel.setWrapText(true);
+        descripcionLabel.setWrapText(true);
+        fechaLabel.setWrapText(true);
+        horaLabel.setWrapText(true);
+        edadesLabel.setWrapText(true);
+        
         // Aplicar estilos a los label de las actividades
         nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
         nombreLabel.setStyle("-fx-text-fill: #22504e;"); 
@@ -338,7 +356,7 @@ public class ListaEventosControlador implements Initializable {
             stage.show();
             
             // Cerrar la ventana actual
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close();
 
         } catch (Exception e) {
@@ -420,9 +438,9 @@ public class ListaEventosControlador implements Initializable {
 
     
 	/* BOTÓN PARA VOLVER A LA PÁGINA PRINCIPAL*/
-	@FXML
-    void volver(ActionEvent event) { 
-        try {
+    @FXML
+    public void volver(ActionEvent event) {
+    	try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
             AnchorPane root = loader.load();
 
@@ -437,12 +455,14 @@ public class ListaEventosControlador implements Initializable {
     	    stage.getIcons().add(icon);
             stage.show();
 
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
-            currentStage.close(); //cerrar la ventana
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
+            currentStage.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
+    }
 
 }

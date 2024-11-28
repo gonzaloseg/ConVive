@@ -6,18 +6,15 @@
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1201.0" style="-fx-background-color: #006D77;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.EditarActividadControlador">
    <children>
-      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="102.0" layoutX="-1.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1201.0" />
-      <Button fx:id="botonVolver" layoutX="1017.0" layoutY="24.0" mnemonicParsing="false" onAction="#volver" prefHeight="53.0" prefWidth="100.0" style="-fx-background-color: FFFFFF;" text="Volver" textFill="#22504e">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Button>
+      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="112.0" layoutX="-1.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1201.0" />
       <Label layoutX="78.0" layoutY="28.0" text="Editar actividad" textFill="#22504e">
          <font>
             <Font size="30.0" />
@@ -54,5 +51,10 @@
       <Label fx:id="labelErrorNombre" layoutX="205.0" layoutY="302.0" prefHeight="17.0" prefWidth="311.0" textAlignment="CENTER" textFill="RED" />
       <Label fx:id="labelErrorHora" layoutX="398.0" layoutY="377.0" prefHeight="17.0" prefWidth="124.0" textAlignment="CENTER" textFill="RED" />
       <Label fx:id="labelErrorEdad" layoutX="196.0" layoutY="458.0" prefHeight="17.0" prefWidth="302.0" textAlignment="CENTER" textFill="RED" />
+      <ImageView fx:id="img_volver" fitHeight="93.0" fitWidth="121.0" layoutX="1012.0" layoutY="10.0">
+         <image>
+            <Image url="@../imagenes/Captura%20de%20pantalla%202024-11-12%20184826.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

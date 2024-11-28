@@ -361,13 +361,7 @@ public class MiComunidadControlador {
 
         return habitantes.toString();
     }
-    
-    private String vistaPrevia;
-
-    public void setVistaPrevia(String vistaPrevia) {
-        this.vistaPrevia = vistaPrevia;
-    }
-   
+       
    
     void volver(ActionEvent event) {
     	try {

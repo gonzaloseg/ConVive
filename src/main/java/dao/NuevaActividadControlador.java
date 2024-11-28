@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -37,7 +38,7 @@ import BaseDeDatos.Conexion;
 public class NuevaActividadControlador implements Initializable{
 
     @FXML private Button botonAgregarActividad;
-    @FXML private Button botonVolver;
+    @FXML private ImageView img_volver; 
     
     @FXML private DatePicker dateFechaActividad;
     @FXML private TextArea txtDescripcionActividad;
@@ -70,6 +71,8 @@ public class NuevaActividadControlador implements Initializable{
         txtHoraActividad.setOnKeyReleased(event -> validarHora());
         spinnerEdadMax.setOnKeyReleased(event -> validarEdad());
         spinnerEdadMin.setOnKeyReleased(event -> validarEdad());
+        
+        img_volver.setOnMouseClicked(event -> volver(new ActionEvent()));
 	}
     
     
@@ -257,7 +260,7 @@ public class NuevaActividadControlador implements Initializable{
     	    stage.getIcons().add(icon);
             stage.show();
 
-            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close(); //cerrar la ventana mi perfil
 
         } catch (Exception e) {
