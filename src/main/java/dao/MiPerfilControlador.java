@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -355,9 +357,22 @@ public class MiPerfilControlador {
 	    }
     }
     
-    @FXML // Editar las actividades que has propuesto
+    @FXML
     private void editarActividad(ActionEvent event) {
+        // Obtener la actividad seleccionada de la tabla
         Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
+
+        // Validar si se ha seleccionado una actividad
+        if (actividadSeleccionada == null) {
+            // Mostrar un mensaje de advertencia al usuario
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText("Ninguna actividad seleccionada");
+            alert.setContentText("Por favor, selecciona una actividad para editar.");
+            alert.showAndWait();
+            return; // Salir del método si no se ha seleccionado ninguna actividad
+        }
+
         int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
 
         try {
@@ -365,22 +380,23 @@ public class MiPerfilControlador {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
             AnchorPane root = loader.load();
 
-            // Obtener la instancia del controlador y pasar los datos (MI PERFIL)
+            // Obtener la instancia del controlador y pasar los datos
             EditarActividadControlador controller = loader.getController();
 
             // Recuperar la actividad desde la base de datos
             Actividades actividad = obtenerActividad(actividadId);
 
-            // Verifica si la actividad existe antes de pasarla al controlador
+            // Verificar si la actividad existe antes de pasarla al controlador
             if (actividad != null) {
-                // Pasa la actividad al controlador
                 controller.setActividad(actividad);
-
-                // Configurar la vista previa como "vistaMiPerfil"
                 controller.setVistaPrevia("vistaMiPerfil");
             } else {
-                // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
-                System.out.println("No se pudo cargar la actividad.");
+                // Mostrar un mensaje si no se encuentra la actividad
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Actividad no encontrada");
+                alert.setContentText("No se pudo cargar la actividad seleccionada.");
+                alert.showAndWait();
                 return;
             }
 
@@ -394,11 +410,11 @@ public class MiPerfilControlador {
             // Cerrar la ventana actual
             Stage currentStage = (Stage) img_volver.getScene().getWindow();
             currentStage.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     /* DEVUELVE LA ACTIVIDAD PARA EDITARLA */
     private Actividades obtenerActividad(int actividadId) {
