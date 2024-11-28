@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -420,6 +422,9 @@ public class ListaEventosControlador implements Initializable {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");

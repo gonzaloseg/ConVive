@@ -472,6 +472,9 @@ public class MiPerfilControlador {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");

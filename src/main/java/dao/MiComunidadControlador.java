@@ -9,11 +9,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -373,6 +375,9 @@ public class MiComunidadControlador {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Principal - ConVive");

@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -13,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -332,6 +334,8 @@ public class LoginControlador implements Initializable {
                     AnchorPane root = loader.load();
 
                     Scene scene = new Scene(root);
+                    Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+            	    scene.setCursor(new ImageCursor(cursorImage));
                     Stage stage = new Stage();
                     stage.setScene(scene);
                     stage.setTitle("Mi Perfil - ConVive");

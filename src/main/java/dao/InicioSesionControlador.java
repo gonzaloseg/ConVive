@@ -12,12 +12,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.ImageCursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -94,6 +96,8 @@ public class InicioSesionControlador implements Initializable{
 			        
 			        // Crear una nueva escena con la vista principal
 			        Scene escena = new Scene(root);
+			        Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+			        escena.setCursor(new ImageCursor(cursorImage));
 			        
 			        // Obtener el escenario actual y reemplazarlo con la nueva escena
 			        Stage escenarioActual = (Stage) botonIniciarSesion.getScene().getWindow();

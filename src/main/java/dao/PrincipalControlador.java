@@ -25,9 +25,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -119,6 +121,9 @@ public class PrincipalControlador implements Initializable {
             controller.rellenarPerfil(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
             
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Perfil - ConVive");
@@ -145,6 +150,9 @@ public class PrincipalControlador implements Initializable {
             controller.rellenarMiVivienda(UsuarioGlobal.getInstacne().getDniGlobal(), UsuarioGlobal.getInstacne().getTabla());
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Mi Comunidad - ConVive");
@@ -167,6 +175,9 @@ public class PrincipalControlador implements Initializable {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Lista de Eventos - ConVive");
@@ -189,6 +200,9 @@ public class PrincipalControlador implements Initializable {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Inicio de sesión - ConVive");
@@ -212,6 +226,9 @@ public class PrincipalControlador implements Initializable {
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Nueva Actividad - ConVive");
@@ -795,6 +812,8 @@ public class PrincipalControlador implements Initializable {
     private void editarActividad(int actividadId) {
         System.out.println("Editar actividad con ID: " + actividadId);
         try {
+        	
+        	
             // Cargar la vista FXML para editar la actividad
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
             AnchorPane root = loader.load();
