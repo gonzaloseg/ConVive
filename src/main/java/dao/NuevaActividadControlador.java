@@ -201,6 +201,15 @@ public class NuevaActividadControlador implements Initializable{
             }else {
             	alertaError("Ocurrio un error al añadir la actividad, intentelo de nuevo mas tarde");
             }
+            
+            // Limpiar todos los campos después de añadir la actividad
+            txtNombreActividad.clear();
+            dateFechaActividad.setValue(null);
+            txtHoraActividad.clear();
+            txtDescripcionActividad.clear();
+            spinnerEdadMin.getValueFactory().setValue(0); 
+            spinnerEdadMax.getValueFactory().setValue(0);
+            txtLugarActividad.clear();
         	
         }catch (SQLException e) {
             e.printStackTrace();

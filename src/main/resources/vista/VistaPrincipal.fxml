@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
+<AnchorPane maxHeight="750.0" maxWidth="1238.0" minHeight="750.0" minWidth="1238.0" prefHeight="750.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.PrincipalControlador">
    <children>
       <HBox layoutX="403.0" layoutY="28.0" prefHeight="26.0" prefWidth="282.0">
          <children>
@@ -41,7 +41,7 @@
             </ImageView>
             <Label fx:id="lbMiPerfil" prefHeight="86.0" prefWidth="302.0" style="-fx-padding: 25;" text="Mi perfil" textFill="#006d77">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <font>
                   <Font size="24.0" />
@@ -49,7 +49,7 @@
             </Label>
             <Label fx:id="lbMiComunidad" prefHeight="67.0" prefWidth="302.0" style="-fx-padding: 25;" text="Mi comunidad" textFill="#006d77">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <font>
                   <Font size="24.0" />
@@ -57,7 +57,7 @@
             </Label>
             <Label fx:id="lbListaEventos" prefHeight="85.0" prefWidth="293.0" style="-fx-padding: 25;" text="Lista de eventos" textFill="#006d77">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <font>
                   <Font size="24.0" />
@@ -65,7 +65,7 @@
             </Label>
             <Label fx:id="lbCerrarSesion" prefHeight="85.0" prefWidth="294.0" style="-fx-padding: 25;" text="Cerrar sesión" textFill="#006d77">
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
                <font>
                   <Font size="24.0" />

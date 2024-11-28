@@ -843,6 +843,9 @@ public class PrincipalControlador implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Editar Actividad");
             stage.show();
+            
+            Stage currentStage = (Stage) lbMiPerfil.getScene().getWindow();
+            currentStage.close(); //cerrar ventana actual 
 
            
 
