@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="757.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiComunidadControlador">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="364.0" layoutX="77.0" layoutY="403.0" stroke="#15898f00" strokeType="INSIDE" width="189.0" />
+      <Rectangle arcHeight="18.0" arcWidth="5.0" fill="#0ca4ac" height="364.0" layoutX="77.0" layoutY="403.0" stroke="#15898f00" strokeType="INSIDE" width="189.0" />
       <Button fx:id="btn_9" layoutX="113.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
       <Button fx:id="btn_10" layoutX="204.0" layoutY="523.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
       <Button fx:id="btn_8" layoutX="204.0" layoutY="571.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="30.0" style="-fx-background-color: #FFFFFF;" />
@@ -36,7 +36,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="242.0" layoutX="533.0" layoutY="490.0" stroke="TRANSPARENT" strokeType="INSIDE" width="419.0" />
+      <Rectangle arcHeight="18.0" arcWidth="5.0" fill="#83c5be" height="242.0" layoutX="533.0" layoutY="490.0" stroke="TRANSPARENT" strokeType="INSIDE" width="419.0" />
       <Label fx:id="lbl_informacion" layoutX="561.0" layoutY="506.0" prefHeight="217.0" prefWidth="362.0" textFill="#006d77">
          <font>
             <Font size="14.0" />
@@ -48,7 +48,7 @@
          </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#30d4d9" height="52.0" layoutX="156.0" layoutY="711.0" stroke="#119fa6" strokeType="INSIDE" width="30.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0ca4ac" height="11.0" layoutX="77.0" layoutY="766.0" stroke="WHITE" strokeType="INSIDE" width="539.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#83c5be" height="235.0" layoutX="36.0" layoutY="140.0" stroke="TRANSPARENT" strokeType="INSIDE" width="311.0" />
+      <Rectangle arcHeight="18.0" arcWidth="5.0" fill="#83c5be" height="235.0" layoutX="36.0" layoutY="140.0" stroke="TRANSPARENT" strokeType="INSIDE" width="311.0" />
       <Label fx:id="lbl_mipiso" layoutX="56.0" layoutY="221.0" prefHeight="134.0" prefWidth="255.0" textFill="#006d77">
          <font>
             <Font size="14.0" />

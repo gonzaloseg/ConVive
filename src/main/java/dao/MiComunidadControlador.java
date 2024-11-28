@@ -359,22 +359,24 @@ public class MiComunidadControlador {
 
         return habitantes.toString();
     }
-
-
     
+    private String vistaPrevia;
 
+    public void setVistaPrevia(String vistaPrevia) {
+        this.vistaPrevia = vistaPrevia;
+    }
    
-    
-
+   
     void volver(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaPrincipal.fxml"));
+            String vistaDestino = vistaPrevia.equals("vistaMiPerfil") ? "/vista/VistaMiPerfil.fxml" : "/vista/VistaListaEventos.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
             AnchorPane root = loader.load();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
-            stage.setTitle("Principal - ConVive");
+            stage.setTitle("ConVive");
             stage.show();
 
             // Cerrar la ventana actual
@@ -385,4 +387,5 @@ public class MiComunidadControlador {
             e.printStackTrace();
         }
     }
+
 }

@@ -304,8 +304,8 @@ public class ListaEventosControlador implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
             AnchorPane root = loader.load();
 
-            // Obtener el controlador de la vista cargada
-            EditarActividadControlador controlador = loader.getController();
+            // Obtener la instancia del controlador y pasar los datos (LISTA EVENTOS)
+            EditarActividadControlador controller = loader.getController();
 
             // Recuperar la actividad desde la base de datos
             Actividades actividad = obtenerActividad(actividadId);
@@ -313,7 +313,10 @@ public class ListaEventosControlador implements Initializable {
             // Verifica si la actividad existe antes de pasarla al controlador
             if (actividad != null) {
                 // Pasa la actividad al controlador
-                controlador.setActividad(actividad);
+                controller.setActividad(actividad);
+
+                // Configurar la vista previa como "vistaListaEventos"
+                controller.setVistaPrevia("vistaListaEventos");
             } else {
                 // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
                 System.out.println("No se pudo cargar la actividad.");
@@ -326,7 +329,7 @@ public class ListaEventosControlador implements Initializable {
             stage.setScene(scene);
             stage.setTitle("Editar Actividad");
             stage.show();
-
+            
             // Cerrar la ventana actual
             Stage currentStage = (Stage) botonVolver.getScene().getWindow();
             currentStage.close();

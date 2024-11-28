@@ -198,18 +198,37 @@ public class EditarActividadControlador implements Initializable {
         alerta.showAndWait();
     }
     
-    
-    
-    
-    
-    
-    // Método para volver a la ventana de eventos
-    @FXML
-    private void volver(ActionEvent event) {
-    	Stage escenario = (Stage) this.botonVolver.getScene().getWindow();
-		escenario.close();
-       
+    private String vistaPrevia;
+
+    public void setVistaPrevia(String vistaPrevia) {
+        this.vistaPrevia = vistaPrevia;
     }
+
+    
+    
+    // Método para volver a la ventana de la que venga
+    @FXML
+    void volver(ActionEvent event) {
+        try {
+            String vistaDestino = vistaPrevia.equals("vistaMiPerfil") ? "/vista/VistaMiPerfil.fxml" : "/vista/VistaListaEventos.fxml";
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
+            AnchorPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("ConVive");
+            stage.show();
+
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) botonVolver.getScene().getWindow();
+            currentStage.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     
     String ventana (String ventana ) {
     	return ventana; 

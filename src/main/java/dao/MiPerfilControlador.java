@@ -355,27 +355,29 @@ public class MiPerfilControlador {
 	    }
     }
     
-    @FXML //Editar las actividades que has propuesto 
-    private void editarActividad (ActionEvent event) {
-    	Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
+    @FXML // Editar las actividades que has propuesto
+    private void editarActividad(ActionEvent event) {
+        Actividades actividadSeleccionada = tablaActividadesPropuestas.getSelectionModel().getSelectedItem();
         int actividadId = actividadSeleccionada.getId(); // Recupera el ID de la actividad
 
-        
-    	try {
+        try {
             // Cargar la vista FXML para editar la actividad
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaEditarActividad.fxml"));
             AnchorPane root = loader.load();
-            
+
             // Obtener la instancia del controlador y pasar los datos (MI PERFIL)
             EditarActividadControlador controller = loader.getController();
-           
+
             // Recuperar la actividad desde la base de datos
             Actividades actividad = obtenerActividad(actividadId);
 
             // Verifica si la actividad existe antes de pasarla al controlador
             if (actividad != null) {
                 // Pasa la actividad al controlador
-            	controller.setActividad(actividad);
+                controller.setActividad(actividad);
+
+                // Configurar la vista previa como "vistaMiPerfil"
+                controller.setVistaPrevia("vistaMiPerfil");
             } else {
                 // Si no se encuentra la actividad, mostrar un mensaje o manejar el error
                 System.out.println("No se pudo cargar la actividad.");
@@ -388,11 +390,16 @@ public class MiPerfilControlador {
             stage.setScene(scene);
             stage.setTitle("Editar Actividad");
             stage.show();
+            
+            // Cerrar la ventana actual
+            Stage currentStage = (Stage) img_volver.getScene().getWindow();
+            currentStage.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     /* DEVUELVE LA ACTIVIDAD PARA EDITARLA */
     private Actividades obtenerActividad(int actividadId) {
         Actividades actividad = null;
