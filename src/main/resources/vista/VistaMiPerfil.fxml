@@ -14,20 +14,20 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dao.MiPerfilControlador">
    <children>
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="206.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="345.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="412.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="273.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
-      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="550.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1126.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="206.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="345.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="412.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="482.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="273.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
+      <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#83c5be" height="45.0" layoutX="67.0" layoutY="550.0" stroke="TRANSPARENT" strokeType="INSIDE" width="538.0" />
       <Label fx:id="labelNombre" layoutX="88.0" layoutY="220.0" text="Nombre" textFill="WHITE" />
       <Label fx:id="labelApellidos" layoutX="80.0" layoutY="287.0" text="Apellidos" textFill="WHITE" />
       <Label fx:id="labelPiso" layoutX="81.0" layoutY="358.0" prefHeight="18.0" prefWidth="34.0" text="Piso" textFill="WHITE" />
       <Label fx:id="labelFechaN" layoutX="84.0" layoutY="426.0" text="Fecha nacimiento " textFill="WHITE" />
       <Label fx:id="labelComodin" layoutX="88.0" layoutY="564.0" prefHeight="18.0" prefWidth="34.0" text="Tutor" textFill="WHITE" />
       <Label fx:id="labelDni" layoutX="90.0" layoutY="495.0" text="DNI" textFill="WHITE" />
-      <Button fx:id="actividadesApuntadas" layoutX="415.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesApuntadas" style="-fx-background-color: #0ca4ac; -fx-background-radius: 18px;" text="Actividades apuntadas" textFill="WHITE" />
-      <VBox fx:id="contenedorTarjeta" layoutX="415.0" layoutY="192.0" prefHeight="200.0" prefWidth="395.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #0ca4ac; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
+      <Button fx:id="actividadesApuntadas" layoutX="632.0" layoutY="243.0" mnemonicParsing="false" onAction="#actividadesApuntadas" style="-fx-background-color: #0ca4ac; -fx-background-radius: 18px;" text="Actividades apuntadas" textFill="WHITE" />
+      <VBox fx:id="contenedorTarjeta" layoutX="815.0" layoutY="201.0" prefHeight="200.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #0ca4ac; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
          <children>
             <TableView fx:id="tablaActividadesApuntadas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
               <columns>
@@ -43,7 +43,7 @@
             <Button fx:id="botonClose" mnemonicParsing="false" onAction="#close" style="-fx-background-radius: 18px; -fx-background-color: #999999;" text="Cerrar" textFill="WHITE" />
          </children>
       </VBox>
-      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="192.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #0ca4ac;">
+      <VBox fx:id="contenedorTarjeta1" layoutX="815.0" layoutY="203.0" prefHeight="232.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #0ca4ac;">
          <children>
             <TableView fx:id="tablaActividadesPropuestas" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;">
                <columns>
@@ -63,7 +63,7 @@
             <Button fx:id="botonClose1" mnemonicParsing="false" onAction="#close1" style="-fx-background-color: #999999; -fx-background-radius: 18px;" text="Cerrar" textFill="WHITE" />
          </children>
       </VBox>
-      <Button fx:id="actividadesPropuestas" layoutX="815.0" layoutY="153.0" mnemonicParsing="false" onAction="#actividadesPropuestas" style="-fx-background-color: #0ca4ac; -fx-border-radius: 18px; -fx-background-radius: 18px;" text="Actividades propuestas" textFill="WHITE" />
+      <Button fx:id="actividadesPropuestas" layoutX="630.0" layoutY="203.0" mnemonicParsing="false" onAction="#actividadesPropuestas" style="-fx-background-color: #0ca4ac; -fx-border-radius: 18px; -fx-background-radius: 18px;" text="Actividades propuestas" textFill="WHITE" />
       <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="122.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1260.0" />
       <HBox layoutX="13.0" layoutY="14.0" prefHeight="122.0" prefWidth="1200.0">
          <children>

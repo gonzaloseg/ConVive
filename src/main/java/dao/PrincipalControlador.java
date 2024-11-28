@@ -836,6 +836,9 @@ public class PrincipalControlador implements Initializable {
 
             // Mostrar la nueva ventana
             Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Editar Actividad");
