@@ -24,7 +24,7 @@
       <Label fx:id="labelApellidos" layoutX="80.0" layoutY="287.0" text="Apellidos" textFill="WHITE" />
       <Label fx:id="labelPiso" layoutX="81.0" layoutY="358.0" prefHeight="18.0" prefWidth="34.0" text="Piso" textFill="WHITE" />
       <Label fx:id="labelFechaN" layoutX="84.0" layoutY="426.0" text="Fecha nacimiento " textFill="WHITE" />
-      <Label fx:id="labelComodin" layoutX="88.0" layoutY="564.0" prefHeight="18.0" prefWidth="34.0" text="Tutor" textFill="WHITE" />
+      <Label fx:id="labelComodin" layoutX="88.0" layoutY="564.0" prefHeight="18.0" prefWidth="502.0" text="Tutor" textFill="WHITE" />
       <Label fx:id="labelDni" layoutX="90.0" layoutY="495.0" text="DNI" textFill="WHITE" />
       <Button fx:id="actividadesApuntadas" layoutX="632.0" layoutY="243.0" mnemonicParsing="false" onAction="#actividadesApuntadas" style="-fx-background-color: #0ca4ac; -fx-background-radius: 18px;" text="Actividades apuntadas" textFill="WHITE" />
       <VBox fx:id="contenedorTarjeta" layoutX="815.0" layoutY="201.0" prefHeight="200.0" prefWidth="371.0" spacing="10.0" style="-fx-padding: 10; -fx-border-color: #0ca4ac; -fx-border-width: 2; -fx-background-color: white; -fx-background-radius: 5;">
@@ -83,6 +83,7 @@
                </image>
             </ImageView>
          </children>
-      </HBox>      
+      </HBox>
+      <Label fx:id="lblCerrarSesion" layoutX="1146.0" layoutY="619.0" prefHeight="18.0" prefWidth="86.0" text="cerrar sesión" textFill="#ef3535" />      
    </children>
 </AnchorPane>

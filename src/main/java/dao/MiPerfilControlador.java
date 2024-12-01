@@ -38,7 +38,7 @@ public class MiPerfilControlador {
  @FXML private Label labelPiso;
  @FXML private Label labelDni;
  @FXML private Label labelComodin;
- 
+ @FXML private Label lblCerrarSesion;
  @FXML private Button actividadesApuntadas;
  @FXML private Button actividadesPropuestas;
  @FXML private Button botonClose;
@@ -58,7 +58,7 @@ public class MiPerfilControlador {
  @FXML private TableColumn<Actividades, String> columnaActividades1;
  @FXML private TableColumn<Actividades, LocalDate> columnaFecha1;
  @FXML private TableColumn<Actividades, LocalTime> columnaHora1;
- 
+
  private ObservableList<Actividades>listaActividades;
  private ObservableList<Actividades>listaActividades1;
 
@@ -85,7 +85,7 @@ public class MiPerfilControlador {
         columnaActividades1.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaFecha1.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         columnaHora1.setCellValueFactory(new PropertyValueFactory<>("hora"));
-        
+        lblCerrarSesion.setOnMouseClicked(event -> cerrarSesion());
         /* Los menores de edad no tendrán posibilidda de crear nuevas actividades
            por eso, no le aparecera el boton "Actividades propuestas" con la lista de actividades */
         if (UsuarioGlobal.getInstacne().getTabla().equals("menor")) {
@@ -464,6 +464,30 @@ public class MiPerfilControlador {
     	contenedorTarjeta1.setVisible(false);
     }
     
+    @FXML
+    private void cerrarSesion() { 
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/VistaInicioSesion.fxml"));
+            AnchorPane root = loader.load();
+
+            Scene scene = new Scene(root);
+            Image cursorImage = new Image(getClass().getResourceAsStream("/imagenes/cursor.png"));
+    	    scene.setCursor(new ImageCursor(cursorImage));
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Inicio de sesión - ConVive");
+            Image icon = new Image(getClass().getResourceAsStream("/imagenes/icono.png"));
+    	    stage.getIcons().add(icon);
+            stage.centerOnScreen();
+            stage.show();
+
+            Stage currentStage = (Stage) lblCerrarSesion.getScene().getWindow();
+            currentStage.close(); //cerrar la ventana 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
    
     void volver(ActionEvent event) {
         try {

@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MiComunidadControlador {
@@ -42,8 +43,8 @@ public class MiComunidadControlador {
     //Información de los residentes del piso
     @FXML private Label lbl_mipiso;
     @FXML private Label labelPiso;
-    
-    
+    @FXML private Label lbl_residentes;
+    @FXML private VBox contenedorinfo;
     @FXML private Label lbl_informacion; // Para mostrar información en pantalla.
     @FXML
     private BarChart<String, Number> barChart;
@@ -67,7 +68,8 @@ public class MiComunidadControlador {
         configurarEventosBoton(btn_13, "7ºA");
         configurarEventosBoton(btn_14, "7ºB");
         cargarDatosEnGrafica();
-        
+        contador_de_vecinos();
+        contenedorinfo.setVisible(true);
         //lbl_informacion.setVisible(false);
     }
     
@@ -285,7 +287,46 @@ public class MiComunidadControlador {
         lbl_mipiso.setText(infoPiso); // Actualiza el Label con la información del piso
     }
     
-    
+    private void contador_de_vecinos() {
+        StringBuilder habitantes = new StringBuilder();
+        String queryAdultos = "SELECT COUNT(*) AS total FROM adulto";
+        String queryMenores = "SELECT COUNT(*) AS total FROM menor";
+
+        int totalAdultos = 0;
+        int totalMenores = 0;
+
+        try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive");
+             PreparedStatement stmtAdultos = conn.prepareStatement(queryAdultos);
+             PreparedStatement stmtMenores = conn.prepareStatement(queryMenores)) {
+
+            // Consultar total de adultos
+            try (ResultSet rsAdultos = stmtAdultos.executeQuery()) {
+                if (rsAdultos.next()) {
+                    totalAdultos = rsAdultos.getInt("total");
+                }
+            }
+
+            // Consultar total de menores
+            try (ResultSet rsMenores = stmtMenores.executeQuery()) {
+                if (rsMenores.next()) {
+                    totalMenores = rsMenores.getInt("total");
+                }
+            }
+
+            // Agregar totales al texto
+            habitantes.append("\nResumen:\n");
+            habitantes.append("  Total de adultos----> ").append(totalAdultos).append("\n");
+            habitantes.append("  Total de menores----> ").append(totalMenores).append("\n");
+            habitantes.append("  Total general: ").append(totalAdultos + totalMenores).append("\n");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            lbl_residentes.setText("Error al obtener los datos.");
+            return;
+        }
+
+        lbl_residentes.setText(habitantes.toString());
+    }
     
     
     
@@ -358,8 +399,9 @@ public class MiComunidadControlador {
             e.printStackTrace();
             return "Error al obtener los habitantes del piso del usuario con ID: " + id;
         }
-
+       
         return habitantes.toString();
+
     }
        
    
