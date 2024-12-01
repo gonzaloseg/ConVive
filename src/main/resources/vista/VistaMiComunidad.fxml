@@ -38,9 +38,9 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <VBox fx:id="contenedorinfo" layoutX="396.0" layoutY="460.0" prefHeight="224.0" prefWidth="402.0">
+      <VBox fx:id="contenedorinfo" layoutX="396.0" layoutY="460.0" prefHeight="224.0" prefWidth="402.0" style="-fx-background-color: #83c5be; -fx-background-radius: 18px;">
          <children>
-            <Label fx:id="lbl_informacion" prefHeight="232.0" prefWidth="402.0" textFill="#006d77">
+            <Label fx:id="lbl_informacion" prefHeight="224.0" prefWidth="368.0" style="-fx-padding: 20px;" textFill="#006d77">
                <font>
                   <Font size="14.0" />
                </font>
