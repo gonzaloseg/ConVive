@@ -73,6 +73,8 @@ public class PrincipalControlador implements Initializable {
     
     
     
+    
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         
@@ -95,20 +97,14 @@ public class PrincipalControlador implements Initializable {
         	labelNuevaActividad.setVisible(false);
         }
     }
-    
-    
-    
-    
-   
 
-    
-    
     
     
     
     
 /* MÉTODOS DE NAVEGACIÓN ENTRE VISTAS */
     
+    // Método para abrir la ventana "Mi perfil" 
     @FXML
     private void abrirMiPerfil() { 
         try {
@@ -141,6 +137,7 @@ public class PrincipalControlador implements Initializable {
     
     
     
+    // Método para abrir la ventana "Mi comunidad" 
     @FXML
     private void abrirMiComunidad() {  
         try {
@@ -172,6 +169,7 @@ public class PrincipalControlador implements Initializable {
 
     
     
+    // Método para abrir la ventana "Lista de eventos" 
     @FXML
     private void abrirListaEventos() { 
         try {
@@ -199,6 +197,7 @@ public class PrincipalControlador implements Initializable {
 
     
     
+    // Método para cerrar sesión (te envia a inicio sesión)
     @FXML
     private void cerrarSesion() { 
         try {
@@ -258,6 +257,8 @@ public class PrincipalControlador implements Initializable {
     
        
 /* MÉTODOS PARA MANEJAR EL CALENDARIO */
+    
+    /* MÉTODOS PARA MANEJAR LAS PROXIMAS ACTIVIDADES*/
     
     // Método para ir al mes anterior
     @FXML
@@ -439,11 +440,7 @@ public class PrincipalControlador implements Initializable {
     
     
 /* PROXIMAS ACTIVIDADES DEL MES */
-    
-    
-    
-    
-    
+
     private  String SQL_OBTENER_ACTIVIDADES = "SELECT * FROM actividad WHERE MONTH(fecha) = MONTH(CURRENT_DATE()) AND YEAR(fecha) = YEAR(CURRENT_DATE()) ORDER BY fecha DESC";
     
     private void filtros() {
@@ -511,28 +508,6 @@ public class PrincipalControlador implements Initializable {
         }
     }
     
-    
-    
-    //Método para saber el número de vecinos apuntados a una actividad
-    private int vecinosApuntados (int idAct) {
-    	int contadorApuntados = 0;
-    	String sql = "SELECT id FROM apuntados WHERE id_actividad = ?";
-    	try (Connection conn = BaseDeDatos.Conexion.dameConexion("convive")){
-    		PreparedStatement pst = conn.prepareStatement(sql);
-    		pst.setInt(1, idAct);
-    		ResultSet rs = pst.executeQuery();
-    		
-    		while (rs.next()) {
-    			int id = rs.getInt("id");
-    			contadorApuntados ++;
-    		}
-			
-		} catch (Exception e) {
-			e.printStackTrace(); e.getMessage();
-		}
-    	
-    	return contadorApuntados;
-    }
 
     
     
@@ -554,9 +529,7 @@ public class PrincipalControlador implements Initializable {
         }else {
         	 edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
         }
-        
-        Label apuntadosLabel = new Label("Número de apuntados: " + vecinosApuntados(actividad.getId()));
-        System.out.println(vecinosApuntados(actividad.getId())); //comprobar que los cuenta bien 
+       
 
         // Aplicar estilos a los label de las actividades
         nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
@@ -569,7 +542,7 @@ public class PrincipalControlador implements Initializable {
         horaLabel.setStyle("-fx-text-fill: #006d77;");
         edadesLabel.setFont(Font.font(14));
         edadesLabel.setStyle("-fx-text-fill: #878787;");
-        //apuntadosLabel.setFont(Font.font(14));
+       
 
         // Obtener el ID del usuario autenticado
         int idUsuario = -1;
