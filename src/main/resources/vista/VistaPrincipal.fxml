@@ -113,9 +113,9 @@
          </children>
       </HBox>
       <Separator layoutX="352.0" layoutY="324.0" prefHeight="5.0" prefWidth="834.0" />
-      <ScrollPane layoutX="362.0" layoutY="394.0" prefHeight="338.0" prefWidth="834.0">
+      <ScrollPane layoutX="362.0" layoutY="394.0" prefHeight="338.0" prefWidth="834.0" fitToWidth="true">
          <content>
-            <VBox fx:id="actividadVBox" prefHeight="342.0" prefWidth="834.0" />
+            <VBox fx:id="actividadVBox" spacing="10.0"/>
          </content>
       </ScrollPane>
       <ComboBox fx:id="actividades_combox" layoutX="1035.0" layoutY="351.0" prefWidth="150.0" promptText="Filtros" style="-fx-background-color: #FFFFFF; -fx-border-radius: 18px; -fx-background-radius: 18px;" />

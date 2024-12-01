@@ -508,41 +508,57 @@ public class PrincipalControlador implements Initializable {
         }
     }
     
-
     
-    
-    //Crear un contenedor para cada actividad
-    private VBox crearContainerActividad(Actividades actividad, String dniGlobal) {
-        VBox container = new VBox(10);
-        container.setPadding(new Insets(10));
-        container.setStyle("-fx-background-color: #FFFFFF;");
-
-        // Etiquetas de la actividad
-        Label nombreLabel = new Label(actividad.getNombre());
-        Label descripcionLabel = new Label(actividad.getDescripcion());
-        System.out.println(actividad.getNombre());
-        Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
-        Label horaLabel = new Label("Hora: " + actividad.getHora());
-        Label edadesLabel;
-        if (actividad.getEdadMin() == 0 && actividad.getEdadMax() == 99) {
-        	 edadesLabel = new Label("Para todas las edades");
-        }else {
-        	 edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
-        }
-       
-
-        // Aplicar estilos a los label de las actividades
-        nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
-        nombreLabel.setStyle("-fx-text-fill: #22504e;"); 
-        descripcionLabel.setFont(Font.font(14));
-        descripcionLabel.setStyle("-fx-text-fill: #006d77;");
-        fechaLabel.setFont(Font.font(14));
-        fechaLabel.setStyle("-fx-text-fill: #006d77;");
-        horaLabel.setFont(Font.font(14));
-        horaLabel.setStyle("-fx-text-fill: #006d77;");
-        edadesLabel.setFont(Font.font(14));
-        edadesLabel.setStyle("-fx-text-fill: #878787;");
-       
+    //* CREAR LOS CONTENEDORES PARA LAS ACTIVIDADES */
+	private VBox crearContainerActividad(Actividades actividad, String dniGlobal) {
+	    VBox container = new VBox(10);
+	    container.setPadding(new Insets(10));
+	    container.setStyle("-fx-background-color: #FFFFFF;");
+	    container.setPrefWidth(834);
+	    container.setMaxWidth(Double.MAX_VALUE);
+	    
+	    // Etiquetas de la actividad
+	    Label nombreLabel = new Label(actividad.getNombre());
+	    Label descripcionLabel = new Label(actividad.getDescripcion());
+	    Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
+	    Label horaLabel = new Label("Hora: " + actividad.getHora());
+	    Label edadesLabel;
+	
+	    // Verificar rango de edades
+	    if (actividad.getEdadMin() == 0 && actividad.getEdadMax() == 99) {
+	        edadesLabel = new Label("Para todas las edades");
+	    } else {
+	        edadesLabel = new Label("Edades: " + actividad.getEdadMin() + " - " + actividad.getEdadMax());
+	    }
+	
+	    // Configurar etiquetas para adaptarse al ancho del VBox
+	    nombreLabel.setPrefWidth(1100);
+	    descripcionLabel.setPrefWidth(800);	    
+	    fechaLabel.setPrefWidth(1100);
+	    horaLabel.setPrefWidth(1100);
+	    edadesLabel.setPrefWidth(1100);
+	
+	    // Permitir que el texto se ajuste al ancho disponible
+	    nombreLabel.setWrapText(true);
+	    descripcionLabel.setWrapText(true);
+	    fechaLabel.setWrapText(true);
+	    horaLabel.setWrapText(true);
+	    edadesLabel.setWrapText(true);
+	
+	    // Eliminar recorte de la descripcion
+	    descripcionLabel.setStyle("-fx-text-overrun: clip;"); 
+	
+	    // Aplicar estilos a los label de las actividades
+	    nombreLabel.setFont(Font.font("System", FontWeight.BOLD, 18));
+	    nombreLabel.setStyle("-fx-text-fill: #22504e;");
+	    descripcionLabel.setFont(Font.font(14));
+	    descripcionLabel.setStyle("-fx-text-fill: #006d77;");
+	    fechaLabel.setFont(Font.font(14));
+	    fechaLabel.setStyle("-fx-text-fill: #006d77;");
+	    horaLabel.setFont(Font.font(14));
+	    horaLabel.setStyle("-fx-text-fill: #006d77;");
+	    edadesLabel.setFont(Font.font(14));
+	    edadesLabel.setStyle("-fx-text-fill: #878787;");
 
         // Obtener el ID del usuario autenticado
         int idUsuario = -1;
