@@ -180,11 +180,11 @@ public class MiPerfilControlador {
     			}
 
     			//Imprimirlos en la ventana 
-    			labelNombre.setText(nombre);
-    			labelApellidos.setText(apellidos);
-    			labelPiso.setText(piso);
-    			labelFechaN.setText(fechaN);
-    			labelDni.setText(dni);			
+    			labelNombre.setText("Nombre: "+nombre);
+    			labelApellidos.setText("Apellidos: "+apellidos);
+    			labelPiso.setText("Vivienda: "+piso);
+    			labelFechaN.setText("Fecha de nacimiento: "+fechaN);
+    			labelDni.setText("DNI: "+dni);			
     		}
     		
 		}  catch (Exception e) {
@@ -295,12 +295,7 @@ public class MiPerfilControlador {
             try (ResultSet rs = pst.executeQuery()) {
             	
                 while (rs.next()) { //recorre la bbdd
-                	/*
-                	 Con la línea 189 comentada, carga la tabla pero da error al borrar una actividad
-                	 Si pruebas a "descomentarla" veras como la tabla aparece vacia 
-                	 El metodo para borrar los elementos está más abajo, el problema es que no coge el id de la actividad seleccionada
-                	 Mete en tu tabla apuntados mas datos para que un usuario tenga al menos 3 actividades y poder comprobar bien todo
-                	 */
+                	
                 	int idActividad = rs.getInt("id"); // Recupera el ID de la actividad
                     String nombreAct = rs.getString("nombre");
                     LocalDate fechaAct = rs.getDate("fecha").toLocalDate();

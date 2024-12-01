@@ -69,7 +69,7 @@ public class MiComunidadControlador {
         configurarEventosBoton(btn_14, "7ºB");
         cargarDatosEnGrafica();
         contador_de_vecinos();
-        contenedorinfo.setVisible(true);
+        contenedorinfo.setVisible(false);
         //lbl_informacion.setVisible(false);
     }
     
@@ -182,7 +182,7 @@ public class MiComunidadControlador {
 
         // Muestra la información en la etiqueta o ventana emergente
         if (!habitantes.isEmpty()) {
-        	
+        	contenedorinfo.setVisible(true); //se visibiliza
             lbl_informacion.setText("Habitantes del piso " + piso + ":\n" + habitantes);
         } else {
             lbl_informacion.setText("No hay información disponible para el piso " + piso);
@@ -399,7 +399,7 @@ public class MiComunidadControlador {
             e.printStackTrace();
             return "Error al obtener los habitantes del piso del usuario con ID: " + id;
         }
-       
+      
         return habitantes.toString();
 
     }

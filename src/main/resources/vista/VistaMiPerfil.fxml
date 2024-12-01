@@ -21,7 +21,7 @@
       <Rectangle arcHeight="30.0" arcWidth="18.0" fill="#84c4bd4d" height="45.0" layoutX="62.0" layoutY="566.0" stroke="TRANSPARENT" strokeType="INSIDE" width="936.0" />
       <Label fx:id="labelNombre" layoutX="83.0" layoutY="236.0" text="Nombre" textFill="#006d77" />
       <Label fx:id="labelApellidos" layoutX="75.0" layoutY="303.0" text="Apellidos" textFill="#006d77" />
-      <Label fx:id="labelPiso" layoutX="76.0" layoutY="374.0" prefHeight="18.0" prefWidth="34.0" text="Piso" textFill="#006d77" />
+      <Label fx:id="labelPiso" layoutX="76.0" layoutY="374.0" prefHeight="18.0" prefWidth="454.0" text="Piso" textFill="#006d77" />
       <Label fx:id="labelFechaN" layoutX="79.0" layoutY="442.0" text="Fecha nacimiento " textFill="#006d77" />
       <Label fx:id="labelComodin" layoutX="83.0" layoutY="580.0" prefHeight="18.0" prefWidth="502.0" text="Tutor" textFill="#006d77" />
       <Label fx:id="labelDni" layoutX="85.0" layoutY="511.0" text="DNI" textFill="#006d77" />

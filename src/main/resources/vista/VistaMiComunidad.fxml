@@ -38,7 +38,7 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </BarChart>
-      <VBox fx:id="contenedorinfo" layoutX="396.0" layoutY="460.0" prefHeight="224.0" prefWidth="402.0" style="-fx-background-color: #83c5be; -fx-background-radius: 18px;">
+      <VBox fx:id="contenedorinfo" layoutX="396.0" layoutY="460.0" prefHeight="224.0" prefWidth="402.0" style="-fx-background-color: #83c5be; -fx-background-radius: 18px;" visible="false">
          <children>
             <Label fx:id="lbl_informacion" prefHeight="224.0" prefWidth="368.0" style="-fx-padding: 20px;" textFill="#006d77">
                <font>
@@ -47,7 +47,7 @@
             </Label>
          </children>
       </VBox>
-      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="110.0" layoutX="-2.0" layoutY="2.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1252.0" />
+      <Rectangle arcHeight="18.0" arcWidth="18.0" fill="WHITE" height="110.0" layoutY="2.0" stroke="WHITE" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="3.0" width="1252.0" />
       <Label layoutX="56.0" layoutY="21.0" prefHeight="71.0" prefWidth="218.0" text="Mi comunidad" textFill="#22504e">
          <font>
             <Font size="30.0" />
@@ -78,6 +78,9 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lbl_residentes" layoutX="841.0" layoutY="178.0" prefHeight="205.0" prefWidth="218.0" />
+      <Label fx:id="lbl_residentes" layoutX="841.0" layoutY="178.0" prefHeight="205.0" prefWidth="218.0" textFill="#006d77">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
    </children>
 </AnchorPane>
