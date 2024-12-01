@@ -523,7 +523,7 @@ public class PrincipalControlador implements Initializable {
 	    Label fechaLabel = new Label("Fecha: " + actividad.getFecha());
 	    Label horaLabel = new Label("Hora: " + actividad.getHora());
 	    Label edadesLabel;
-	 
+	
 	    // Verificar rango de edades
 	    if (actividad.getEdadMin() == 0 && actividad.getEdadMax() == 99) {
 	        edadesLabel = new Label("Para todas las edades");
