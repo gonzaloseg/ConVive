@@ -132,7 +132,7 @@ public class MiPerfilControlador {
     		    		
     		    		while (r.next()) {
     		    			String nombreTutor = r.getString("nombre"); //Nombre del tutor (tabla adultos)
-    		    			labelComodin.setText(nombreTutor);
+    		    			labelComodin.setText("Tutor legal: "+nombreTutor);
     		    		}
     		    		
     				} catch (Exception e) {
